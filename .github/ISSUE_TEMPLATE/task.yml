@@ -1,0 +1,38 @@
+name: Backlog task
+description: An issue-sized task from docs/development/BACKLOG.md.
+title: "LL-000: "
+labels: ["type/task"]
+body:
+  - type: input
+    id: backlog_id
+    attributes:
+      label: Backlog ID
+      placeholder: LL-037
+    validations:
+      required: true
+  - type: input
+    id: milestone
+    attributes:
+      label: Milestone
+      placeholder: M1.2
+    validations:
+      required: true
+  - type: input
+    id: requirements
+    attributes:
+      label: Requirements
+      placeholder: FR-063
+    validations:
+      required: true
+  - type: input
+    id: depends_on
+    attributes:
+      label: Depends on
+      placeholder: LL-036
+  - type: textarea
+    id: done_when
+    attributes:
+      label: Done when
+      description: Acceptance criteria from the backlog plus tests and docs.
+    validations:
+      required: true

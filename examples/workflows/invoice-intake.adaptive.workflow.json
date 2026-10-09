@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "0.1",
+  "id": "a8d2b6f0-1c3e-4f7a-b9d5-6e0c2a4f8b17",
+  "name": "Supplier invoice intake (mixed layouts)",
+  "description": "Reference MVP Adaptive Execution workflow. Fictitious example: a decision point selects the extraction approach for each invoice layout; unknown layouts use model-assisted extraction. Every outcome is validated before any write.",
+  "objective": "Log invoices from suppliers with different layouts in Invoices.xlsx, file them by vendor and month, send uncertain or invalid invoices to review, and produce a run report.",
+  "executionMode": "adaptive",
+  "modeRecommendation": {
+    "recommended": "adaptive",
+    "factors": {
+      "actionSequence": "supports_exact_replay",
+      "interfaceStructure": "supports_adaptive",
+      "inputData": "supports_adaptive",
+      "decisionRequirements": "supports_adaptive",
+      "exceptionHandling": "supports_exact_replay",
+      "priorExecutionTests": "supports_adaptive"
+    },
+    "explanation": "Invoices arrive in several layouts and no single rule set passed preview. The model chooses a layout family at one decision point; uncertain choices are sent to you."
+  },
+  "locations": {
+    "inbox": {
+      "kind": "folder",
+      "access": "read",
+      "fileTypes": [".pdf", ".png", ".jpg", ".jpeg", ".tif", ".tiff"]
+    },
+    "processed": { "kind": "folder", "access": "write", "recursive": true },
+    "needs_review": { "kind": "folder", "access": "write" },
+    "finance": { "kind": "folder", "access": "read_write" },
+    "reports": { "kind": "folder", "access": "write" }
+  },
+  "permissions": {
+    "operations": [
+      "files.list",
+      "docs.read_text",
+      "extract.fields",
+      "validate.record",
+      "review.enqueue",
+      "sheet.upsert_rows",
+      "files.move",
+      "report.write"
+    ],
+    "capabilityLevel": "lightweight_ai"
+  },
+  "recordSchema": {
+    "fields": [
+      { "name": "vendor_name", "type": "string", "sensitivity": "internal" },
+      { "name": "invoice_number", "type": "string", "sensitivity": "internal" },
+      { "name": "invoice_date", "type": "date", "sensitivity": "internal" },
+      { "name": "currency", "type": "enum", "enumValues": ["PHP", "USD", "EUR"], "sensitivity": "internal" },
+      { "name": "subtotal", "type": "decimal", "sensitivity": "sensitive" },
+      { "name": "tax", "type": "decimal", "sensitivity": "sensitive" },
+      { "name": "total", "type": "decimal", "sensitivity": "sensitive" }
+    ]
+  },
+  "steps": [
+    {
+      "id": "list_invoices",
+      "op": "files.list",
+      "params": { "location": "inbox", "pattern": "*", "output": "documents" }
+    },
+    {
+      "id": "each_invoice",
+      "op": "control.for_each",
+      "params": { "items": "documents", "as": "item" },
+      "steps": [
+        {
+          "id": "read_text",
+          "op": "docs.read_text",
+          "params": { "input": "item", "method": "auto", "ocrLanguages": ["eng"], "maxPages": 10, "output": "doc" },
+          "onError": { "strategy": "route_to_review" }
+        },
+        {
+          "id": "choose_layout",
+          "op": "control.decide",
+          "name": "Choose extraction approach",
+          "params": {
+            "question": "Which layout family does this invoice use?",
+            "context": ["doc.text"],
+            "options": [
+              {
+                "id": "layout_a",
+                "description": "Single-column layout with 'Invoice No.' and 'Total Due' labels",
+                "steps": [
+                  {
+                    "id": "extract_layout_a",
+                    "op": "extract.fields",
+                    "params": {
+                      "input": "doc",
+                      "method": "rules",
+                      "rules": [
+                        { "field": "vendor_name", "anchor": "Vendor:", "position": "right_of_anchor", "parse": "string" },
+                        { "field": "invoice_number", "pattern": "Invoice\\s*No\\.?\\s*:?\\s*([A-Z0-9-]{4,20})", "parse": "string" },
+                        { "field": "invoice_date", "anchor": "Invoice Date", "position": "right_of_anchor", "parse": "date", "dateFormats": ["%Y-%m-%d"] },
+                        { "field": "currency", "pattern": "\\b(PHP|USD|EUR)\\b", "parse": "enum" },
+                        { "field": "subtotal", "anchor": "Subtotal", "position": "right_of_anchor", "parse": "decimal" },
+                        { "field": "tax", "anchor": "VAT", "position": "right_of_anchor", "parse": "decimal" },
+                        { "field": "total", "anchor": "Total Due", "position": "right_of_anchor", "parse": "decimal" }
+                      ],
+                      "output": "record"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "layout_b",
+                "description": "Two-column layout with 'Bill No.' and 'Amount Payable' labels",
+                "steps": [
+                  {
+                    "id": "extract_layout_b",
+                    "op": "extract.fields",
+                    "params": {
+                      "input": "doc",
+                      "method": "rules",
+                      "rules": [
+                        { "field": "vendor_name", "anchor": "From", "position": "below_anchor", "parse": "string" },
+                        { "field": "invoice_number", "pattern": "Bill\\s*No\\.?\\s*:?\\s*([A-Z0-9-]{4,20})", "parse": "string" },
+                        { "field": "invoice_date", "anchor": "Date", "position": "right_of_anchor", "parse": "date", "dateFormats": ["%d/%m/%Y"] },
+                        { "field": "currency", "pattern": "\\b(PHP|USD|EUR)\\b", "parse": "enum" },
+                        { "field": "subtotal", "anchor": "Net", "position": "right_of_anchor", "parse": "decimal" },
+                        { "field": "tax", "anchor": "Tax", "position": "right_of_anchor", "parse": "decimal" },
+                        { "field": "total", "anchor": "Amount Payable", "position": "right_of_anchor", "parse": "decimal" }
+                      ],
+                      "output": "record"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "other_layout",
+                "description": "Any other layout: extract with the local model using the field schema",
+                "steps": [
+                  {
+                    "id": "extract_with_model",
+                    "op": "extract.fields",
+                    "params": {
+                      "input": "doc",
+                      "method": "local_model",
+                      "model": { "promptTemplate": "invoice_fields@1", "minFieldConfidence": 0.8 },
+                      "output": "record"
+                    },
+                    "onError": { "strategy": "route_to_review" }
+                  }
+                ]
+              }
+            ],
+            "minConfidence": 0.7,
+            "consistencyCheck": true,
+            "fallback": { "kind": "ask_user" }
+          }
+        },
+        {
+          "id": "validate",
+          "op": "validate.record",
+          "params": {
+            "input": "record",
+            "rules": [
+              { "kind": "required", "fields": ["vendor_name", "invoice_number", "invoice_date", "currency", "total"] },
+              { "kind": "sumEquals", "fields": ["subtotal", "tax"], "equalsField": "total", "tolerance": 0.01 },
+              { "kind": "dateRange", "field": "invoice_date", "notAfter": "today" },
+              { "kind": "range", "field": "total", "min": 0 },
+              { "kind": "notInSheet", "field": "invoice_number", "target": { "location": "finance", "file": "Invoices.xlsx", "sheet": "Invoices" }, "column": "Invoice No" }
+            ],
+            "output": "validation"
+          }
+        },
+        {
+          "id": "route_invalid",
+          "op": "control.if",
+          "params": { "condition": { "field": "validation.valid", "op": "equals", "value": false } },
+          "then": [
+            {
+              "id": "send_to_review",
+              "op": "review.enqueue",
+              "params": { "reason": "Invoice failed validation", "moveTo": { "location": "needs_review", "pathTemplate": "{{item.name}}" } }
+            },
+            {
+              "id": "end_invalid_item",
+              "op": "control.stop_item",
+              "params": { "outcome": "failed", "reason": "Sent to review" }
+            }
+          ]
+        },
+        {
+          "id": "log_invoice",
+          "op": "sheet.upsert_rows",
+          "params": {
+            "input": "record",
+            "target": { "location": "finance", "file": "Invoices.xlsx", "sheet": "Invoices" },
+            "mode": "upsert",
+            "keyColumns": ["Invoice No"],
+            "columnMap": {
+              "Vendor": "{{record.vendor_name}}",
+              "Invoice No": "{{record.invoice_number}}",
+              "Invoice Date": "{{record.invoice_date | date:\"%Y-%m-%d\"}}",
+              "Currency": "{{record.currency}}",
+              "Subtotal": "{{record.subtotal}}",
+              "VAT": "{{record.tax}}",
+              "Total": "{{record.total}}",
+              "Source File": "{{item.name}}"
+            }
+          },
+          "postconditions": [
+            {
+              "kind": "sheet.row_present",
+              "target": { "location": "finance", "file": "Invoices.xlsx", "sheet": "Invoices" },
+              "keyColumns": ["Invoice No"],
+              "keyRef": "record.invoice_number"
+            }
+          ],
+          "onError": { "strategy": "retry", "maxAttempts": 3, "afterRetries": "stop" }
+        },
+        {
+          "id": "file_invoice",
+          "op": "files.move",
+          "params": {
+            "source": "item",
+            "destination": {
+              "location": "processed",
+              "pathTemplate": "{{record.vendor_name | slug}}/{{record.invoice_date | date:\"%Y-%m\"}}/{{record.vendor_name | slug}}_{{record.invoice_number | slug}}{{item.extension}}"
+            },
+            "onConflict": "suffix",
+            "output": "filed"
+          },
+          "postconditions": [
+            { "kind": "file.exists", "ref": "filed" },
+            { "kind": "file.absent", "ref": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "write_report",
+      "op": "report.write",
+      "params": {
+        "location": "reports",
+        "fileNameTemplate": "invoice-run-{{run.started_at | date:\"%Y%m%d-%H%M%S\"}}",
+        "formats": ["html", "json", "csv"]
+      },
+      "postconditions": [{ "kind": "report.written" }]
+    }
+  ],
+  "successConditions": [{ "kind": "all_items_terminal" }, { "kind": "report.written" }],
+  "knownLimitations": [
+    "Requires a local model at the Lightweight Local AI level; without one, every layout decision is asked of the user.",
+    "Model-assisted extraction accuracy has not been measured yet (EV-02); every extracted record is validated before any write.",
+    "Invoices.xlsx must be closed while the workflow runs."
+  ],
+  "metadata": {
+    "createdWith": "template",
+    "templateId": "document-intake-to-spreadsheet",
+    "tags": ["example", "invoices", "adaptive", "mvp"]
+  }
+}

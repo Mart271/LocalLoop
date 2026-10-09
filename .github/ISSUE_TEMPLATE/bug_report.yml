@@ -1,0 +1,54 @@
+name: Bug report
+description: Something in LocalLoop (code, docs, schema, or checks) is wrong.
+title: "bug: "
+labels: ["type/bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Security problem?** Do not file it here. Follow SECURITY.md instead.
+        Never paste real documents, personal data, or credentials. Use synthetic examples.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: requirements
+    attributes:
+      label: Related requirement IDs
+      placeholder: FR-063, EXC-08
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: OS and version, LocalLoop version or commit
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or output
+      description: Remove sensitive values first.
+      render: text
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: I removed personal data, real document content, and secrets from this report.
+          required: true

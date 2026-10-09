@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "0.1",
+  "id": "e7a3c9b5-2f1d-4a8e-b6c4-9d0f3e5a7c21",
+  "name": "Must be rejected: decision point with one option",
+  "objective": "Negative fixture. A decision point must declare at least two bounded options and a fallback (FR-047).",
+  "executionMode": "adaptive",
+  "locations": { "inbox": { "kind": "folder", "access": "read" } },
+  "permissions": { "operations": ["files.list"], "capabilityLevel": "lightweight_ai" },
+  "steps": [
+    { "id": "list", "op": "files.list", "params": { "location": "inbox", "pattern": "*", "output": "documents" } },
+    {
+      "id": "choose",
+      "op": "control.decide",
+      "params": {
+        "question": "What should happen?",
+        "context": ["documents"],
+        "options": [ { "id": "only", "description": "The only option", "steps": [ { "id": "stop", "op": "control.stop_item", "params": { "outcome": "completed", "reason": "done" } } ] } ],
+        "minConfidence": 0.5,
+        "fallback": { "kind": "ask_user" }
+      }
+    }
+  ],
+  "successConditions": [{ "kind": "all_items_terminal" }]
+}

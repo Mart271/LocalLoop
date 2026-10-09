@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "0.1",
+  "id": "0b1e7c42-5d3a-4e8f-9a61-c2f4d8e0b735",
+  "name": "Must be rejected: shell operation",
+  "objective": "Negative fixture. A workflow may not contain a shell or script operation (ADR-0002, FR-104).",
+  "executionMode": "exact_replay",
+  "locations": { "inbox": { "kind": "folder", "access": "read" } },
+  "permissions": { "operations": ["files.list"], "capabilityLevel": "basic" },
+  "steps": [
+    { "id": "list", "op": "files.list", "params": { "location": "inbox", "pattern": "*", "output": "documents" } },
+    { "id": "run_command", "op": "shell.exec", "params": { "command": "echo this must never be accepted" } }
+  ],
+  "successConditions": [{ "kind": "all_items_terminal" }]
+}

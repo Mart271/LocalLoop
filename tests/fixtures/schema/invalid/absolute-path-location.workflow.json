@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1",
+  "id": "6d9a2f15-0e4b-4c7d-8b3a-f1e2d4c6a809",
+  "name": "Must be rejected: absolute path in a location",
+  "objective": "Negative fixture. Portable workflows declare symbolic locations only; folders are bound per machine at grant time (ADR-0005).",
+  "executionMode": "exact_replay",
+  "locations": { "inbox": { "kind": "folder", "access": "read", "path": "C:\\Users\\someone\\Documents" } },
+  "permissions": { "operations": ["files.list"], "capabilityLevel": "basic" },
+  "steps": [
+    { "id": "list", "op": "files.list", "params": { "location": "inbox", "pattern": "*", "output": "documents" } }
+  ],
+  "successConditions": [{ "kind": "all_items_terminal" }]
+}

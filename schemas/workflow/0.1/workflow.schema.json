@@ -1,0 +1,790 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:localloop:schema:workflow:0.1",
+  "title": "LocalLoop Workflow Definition",
+  "description": "DRAFT 0.1 design artifact (ADR-0005). Defines the portable workflow format for the MVP operation catalog. Not yet consumed by any implementation; expected to change before the MVP. Unknown fields are rejected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "objective",
+    "executionMode",
+    "locations",
+    "permissions",
+    "steps",
+    "successConditions"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "0.1" },
+    "id": { "$ref": "#/$defs/uuid" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "description": { "type": "string", "maxLength": 2000 },
+    "objective": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "executionMode": { "enum": ["exact_replay", "adaptive"] },
+    "modeRecommendation": { "$ref": "#/$defs/modeRecommendation" },
+    "requirements": { "$ref": "#/$defs/requirements" },
+    "locations": {
+      "description": "Symbolic locations. Real folders are bound per machine at grant time and never stored here.",
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/identifier" },
+      "additionalProperties": { "$ref": "#/$defs/locationSpec" }
+    },
+    "permissions": { "$ref": "#/$defs/permissions" },
+    "inputs": { "type": "array", "items": { "$ref": "#/$defs/inputVariable" } },
+    "recordSchema": { "$ref": "#/$defs/recordSchema" },
+    "steps": { "$ref": "#/$defs/stepList" },
+    "successConditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/postcondition" }
+    },
+    "knownLimitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "metadata": { "$ref": "#/$defs/metadata" }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "identifier": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+    "ref": {
+      "description": "Reference to a run variable, e.g. item, doc.text, record.total.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}(\\.[a-z][a-z0-9_]{0,63}){0,4}$"
+    },
+    "template": {
+      "description": "Text with {{ref | filter}} placeholders. Filters: slug, upper, lower, date, number, truncate, default. Path results are sanitized to single segments.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "fileName": {
+      "description": "A bare file name without path separators.",
+      "type": "string",
+      "pattern": "^[^\\\\/:*?\"<>|]{1,255}$"
+    },
+    "hostname": {
+      "type": "string",
+      "pattern": "^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)(\\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*(:[0-9]{1,5})?$"
+    },
+    "operationName": {
+      "enum": [
+        "files.list",
+        "files.copy",
+        "files.move",
+        "files.rename",
+        "docs.read_text",
+        "extract.fields",
+        "validate.record",
+        "sheet.upsert_rows",
+        "report.write",
+        "review.enqueue"
+      ]
+    },
+    "locationSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "access"],
+      "properties": {
+        "kind": { "enum": ["folder", "file"] },
+        "access": { "enum": ["read", "write", "read_write"] },
+        "recursive": { "type": "boolean", "default": false },
+        "description": { "type": "string", "maxLength": 500 },
+        "fileTypes": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^\\.[a-z0-9]{1,8}$" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operations", "capabilityLevel"],
+      "properties": {
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/operationName" }
+        },
+        "networkHosts": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/hostname" }
+        },
+        "capabilityLevel": { "enum": ["basic", "lightweight_ai", "enhanced_ai"] }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+        },
+        "externalServices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["host", "purpose"],
+            "properties": {
+              "host": { "$ref": "#/$defs/hostname" },
+              "purpose": { "type": "string", "maxLength": 300 }
+            }
+          }
+        }
+      }
+    },
+    "inputVariable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "type": { "enum": ["string", "integer", "decimal", "date", "boolean"] },
+        "description": { "type": "string", "maxLength": 500 },
+        "required": { "type": "boolean", "default": true },
+        "default": { "type": ["string", "number", "boolean"] }
+      }
+    },
+    "recordSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "sensitivity"],
+            "properties": {
+              "name": { "$ref": "#/$defs/identifier" },
+              "type": { "enum": ["string", "integer", "decimal", "date", "enum"] },
+              "enumValues": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "string", "maxLength": 100 }
+              },
+              "required": { "type": "boolean", "default": true },
+              "sensitivity": { "enum": ["public", "internal", "sensitive"] },
+              "description": { "type": "string", "maxLength": 500 }
+            },
+            "if": { "properties": { "type": { "const": "enum" } } },
+            "then": { "required": ["enumValues"] }
+          }
+        }
+      }
+    },
+    "modeRecommendation": {
+      "description": "Informational record of the rule-based recommendation (SRS §13). Not authoritative; recomputed on import.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recommended", "factors"],
+      "properties": {
+        "recommended": { "enum": ["exact_replay", "adaptive"] },
+        "factors": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "actionSequence": { "$ref": "#/$defs/factorValue" },
+            "interfaceStructure": { "$ref": "#/$defs/factorValue" },
+            "inputData": { "$ref": "#/$defs/factorValue" },
+            "decisionRequirements": { "$ref": "#/$defs/factorValue" },
+            "exceptionHandling": { "$ref": "#/$defs/factorValue" },
+            "priorExecutionTests": { "$ref": "#/$defs/factorValue" }
+          }
+        },
+        "explanation": { "type": "string", "maxLength": 1000 }
+      }
+    },
+    "factorValue": { "enum": ["supports_exact_replay", "supports_adaptive", "unknown"] },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "createdWith": { "enum": ["template", "recording", "manual", "import"] },
+        "templateId": { "type": "string", "maxLength": 100 },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "maxLength": 40 }
+        }
+      }
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["all"],
+          "properties": { "all": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["any"],
+          "properties": { "any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["not"],
+          "properties": { "not": { "$ref": "#/$defs/condition" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["field", "op"],
+          "properties": {
+            "field": { "$ref": "#/$defs/ref" },
+            "op": {
+              "enum": [
+                "equals",
+                "notEquals",
+                "greaterThan",
+                "greaterOrEqual",
+                "lessThan",
+                "lessOrEqual",
+                "contains",
+                "matches",
+                "in",
+                "isEmpty",
+                "isNotEmpty"
+              ]
+            },
+            "value": {
+              "type": ["string", "number", "boolean", "array"],
+              "items": { "type": ["string", "number"] }
+            }
+          },
+          "if": { "properties": { "op": { "enum": ["isEmpty", "isNotEmpty"] } } },
+          "then": { "not": { "required": ["value"] } },
+          "else": { "required": ["value"] }
+        }
+      ]
+    },
+    "errorRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy"],
+      "properties": {
+        "strategy": { "enum": ["stop", "skip_item", "route_to_review", "retry"] },
+        "maxAttempts": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "afterRetries": { "enum": ["stop", "skip_item", "route_to_review"] }
+      },
+      "if": { "properties": { "strategy": { "const": "retry" } } },
+      "then": { "required": ["maxAttempts", "afterRetries"] }
+    },
+    "sheetTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "file"],
+      "properties": {
+        "location": { "$ref": "#/$defs/identifier" },
+        "file": { "$ref": "#/$defs/fileName" },
+        "sheet": { "type": "string", "minLength": 1, "maxLength": 31 }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "pathTemplate"],
+      "properties": {
+        "location": { "$ref": "#/$defs/identifier" },
+        "pathTemplate": { "$ref": "#/$defs/template" }
+      }
+    },
+    "postcondition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "ref"],
+          "properties": {
+            "kind": { "enum": ["file.exists", "file.absent", "record.valid"] },
+            "ref": { "$ref": "#/$defs/ref" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "ref", "equalsRef"],
+          "properties": {
+            "kind": { "const": "file.hash_equals" },
+            "ref": { "$ref": "#/$defs/ref" },
+            "equalsRef": { "$ref": "#/$defs/ref" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "target", "keyColumns", "keyRef"],
+          "properties": {
+            "kind": { "const": "sheet.row_present" },
+            "target": { "$ref": "#/$defs/sheetTarget" },
+            "keyColumns": { "type": "array", "minItems": 1, "items": { "type": "string", "maxLength": 100 } },
+            "keyRef": { "$ref": "#/$defs/ref" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": { "enum": ["report.written", "all_items_terminal"] }
+          }
+        }
+      ]
+    },
+    "fieldRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "parse"],
+      "properties": {
+        "field": { "$ref": "#/$defs/identifier" },
+        "anchor": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "position": { "enum": ["right_of_anchor", "below_anchor", "same_line"] },
+        "pattern": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "region": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page", "bbox"],
+          "properties": {
+            "page": { "type": "integer", "minimum": 1 },
+            "bbox": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "number", "minimum": 0 } }
+          }
+        },
+        "parse": { "enum": ["string", "integer", "decimal", "date", "enum"] },
+        "dateFormats": { "type": "array", "items": { "type": "string", "maxLength": 40 } }
+      },
+      "anyOf": [{ "required": ["anchor"] }, { "required": ["pattern"] }, { "required": ["region"] }]
+    },
+    "validationRule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "fields"],
+          "properties": {
+            "kind": { "const": "required" },
+            "fields": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/identifier" } }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "field", "regex"],
+          "properties": {
+            "kind": { "const": "pattern" },
+            "field": { "$ref": "#/$defs/identifier" },
+            "regex": { "type": "string", "minLength": 1, "maxLength": 300 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "field"],
+          "properties": {
+            "kind": { "const": "range" },
+            "field": { "$ref": "#/$defs/identifier" },
+            "min": { "type": "number" },
+            "max": { "type": "number" }
+          },
+          "anyOf": [{ "required": ["min"] }, { "required": ["max"] }]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "field"],
+          "properties": {
+            "kind": { "const": "dateRange" },
+            "field": { "$ref": "#/$defs/identifier" },
+            "notBefore": { "type": "string", "pattern": "^(today|\\d{4}-\\d{2}-\\d{2})$" },
+            "notAfter": { "type": "string", "pattern": "^(today|\\d{4}-\\d{2}-\\d{2})$" }
+          },
+          "anyOf": [{ "required": ["notBefore"] }, { "required": ["notAfter"] }]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "field", "values"],
+          "properties": {
+            "kind": { "const": "allowedValues" },
+            "field": { "$ref": "#/$defs/identifier" },
+            "values": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "fields", "equalsField", "tolerance"],
+          "properties": {
+            "kind": { "const": "sumEquals" },
+            "fields": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/identifier" } },
+            "equalsField": { "$ref": "#/$defs/identifier" },
+            "tolerance": { "type": "number", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "field", "target", "column"],
+          "properties": {
+            "kind": { "const": "notInSheet" },
+            "field": { "$ref": "#/$defs/identifier" },
+            "target": { "$ref": "#/$defs/sheetTarget" },
+            "column": { "type": "string", "minLength": 1, "maxLength": 100 }
+          }
+        }
+      ]
+    },
+    "stepList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/step" }
+    },
+    "stepCommon": {
+      "type": "object",
+      "required": ["id", "op"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "name": { "type": "string", "maxLength": 120 },
+        "approval": { "enum": ["policy", "required"], "default": "policy" },
+        "onError": { "$ref": "#/$defs/errorRule" },
+        "postconditions": { "type": "array", "items": { "$ref": "#/$defs/postcondition" } }
+      }
+    },
+    "step": {
+      "oneOf": [
+        { "$ref": "#/$defs/stepFilesList" },
+        { "$ref": "#/$defs/stepFilesTransfer" },
+        { "$ref": "#/$defs/stepDocsReadText" },
+        { "$ref": "#/$defs/stepExtractFields" },
+        { "$ref": "#/$defs/stepValidateRecord" },
+        { "$ref": "#/$defs/stepSheetUpsert" },
+        { "$ref": "#/$defs/stepReportWrite" },
+        { "$ref": "#/$defs/stepReviewEnqueue" },
+        { "$ref": "#/$defs/stepForEach" },
+        { "$ref": "#/$defs/stepIf" },
+        { "$ref": "#/$defs/stepDecide" },
+        { "$ref": "#/$defs/stepStopItem" },
+        { "$ref": "#/$defs/stepApprove" }
+      ]
+    },
+    "stepFilesList": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "files.list" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["location", "pattern", "output"],
+          "properties": {
+            "location": { "$ref": "#/$defs/identifier" },
+            "pattern": { "type": "string", "minLength": 1, "maxLength": 100 },
+            "recursive": { "type": "boolean", "default": false },
+            "output": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "stepFilesTransfer": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "enum": ["files.copy", "files.move", "files.rename"] },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "destination", "onConflict"],
+          "properties": {
+            "source": { "$ref": "#/$defs/ref" },
+            "destination": { "$ref": "#/$defs/destination" },
+            "onConflict": { "enum": ["fail", "suffix"] },
+            "output": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "stepDocsReadText": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "docs.read_text" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "method", "output"],
+          "properties": {
+            "input": { "$ref": "#/$defs/ref" },
+            "method": { "enum": ["auto", "text_layer", "ocr"] },
+            "ocrLanguages": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "pattern": "^[a-z]{3}$" }
+            },
+            "maxPages": { "type": "integer", "minimum": 1, "maximum": 500 },
+            "output": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "stepExtractFields": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "extract.fields" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "method", "output"],
+          "properties": {
+            "input": { "$ref": "#/$defs/ref" },
+            "method": { "enum": ["rules", "local_model"] },
+            "rules": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/fieldRule" } },
+            "model": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["promptTemplate"],
+              "properties": {
+                "promptTemplate": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}@[0-9]+$" },
+                "minFieldConfidence": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            },
+            "output": { "$ref": "#/$defs/identifier" }
+          },
+          "if": { "properties": { "method": { "const": "rules" } } },
+          "then": { "required": ["rules"], "not": { "required": ["model"] } },
+          "else": { "required": ["model"], "not": { "required": ["rules"] } }
+        }
+      }
+    },
+    "stepValidateRecord": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "validate.record" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "rules"],
+          "properties": {
+            "input": { "$ref": "#/$defs/ref" },
+            "rules": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/validationRule" } },
+            "output": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "stepSheetUpsert": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "sheet.upsert_rows" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "target", "mode", "columnMap"],
+          "properties": {
+            "input": { "$ref": "#/$defs/ref" },
+            "target": { "$ref": "#/$defs/sheetTarget" },
+            "mode": { "enum": ["append_only", "upsert"] },
+            "keyColumns": { "type": "array", "minItems": 1, "items": { "type": "string", "maxLength": 100 } },
+            "columnMap": {
+              "type": "object",
+              "minProperties": 1,
+              "propertyNames": { "type": "string", "minLength": 1, "maxLength": 100 },
+              "additionalProperties": { "$ref": "#/$defs/template" }
+            }
+          },
+          "if": { "properties": { "mode": { "const": "upsert" } } },
+          "then": { "required": ["keyColumns"] }
+        }
+      }
+    },
+    "stepReportWrite": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "report.write" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["location", "fileNameTemplate", "formats"],
+          "properties": {
+            "location": { "$ref": "#/$defs/identifier" },
+            "fileNameTemplate": { "$ref": "#/$defs/template" },
+            "formats": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "enum": ["html", "json", "csv"] }
+            },
+            "includeSensitiveValues": { "type": "boolean", "default": false }
+          }
+        }
+      }
+    },
+    "stepReviewEnqueue": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "review.enqueue" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reason"],
+          "properties": {
+            "reason": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "moveTo": { "$ref": "#/$defs/destination" }
+          }
+        }
+      }
+    },
+    "stepForEach": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params", "steps"],
+      "properties": {
+        "op": { "const": "control.for_each" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["items", "as"],
+          "properties": {
+            "items": { "$ref": "#/$defs/ref" },
+            "as": { "$ref": "#/$defs/identifier" }
+          }
+        },
+        "steps": { "$ref": "#/$defs/stepList" }
+      }
+    },
+    "stepIf": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params", "then"],
+      "properties": {
+        "op": { "const": "control.if" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["condition"],
+          "properties": { "condition": { "$ref": "#/$defs/condition" } }
+        },
+        "then": { "$ref": "#/$defs/stepList" },
+        "else": { "$ref": "#/$defs/stepList" }
+      }
+    },
+    "stepDecide": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "control.decide" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["question", "context", "options", "minConfidence", "fallback"],
+          "properties": {
+            "question": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "context": {
+              "description": "Variables the model may see for this decision. Nothing else is sent.",
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/ref" }
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 12,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "description", "steps"],
+                "properties": {
+                  "id": { "$ref": "#/$defs/identifier" },
+                  "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+                  "requires": { "$ref": "#/$defs/condition" },
+                  "steps": { "$ref": "#/$defs/stepList" }
+                }
+              }
+            },
+            "minConfidence": { "type": "number", "minimum": 0, "maximum": 1 },
+            "consistencyCheck": { "type": "boolean", "default": true },
+            "fallback": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind"],
+                  "properties": { "kind": { "const": "ask_user" } }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind", "optionId"],
+                  "properties": {
+                    "kind": { "const": "option" },
+                    "optionId": { "$ref": "#/$defs/identifier" }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "stepStopItem": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "control.stop_item" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcome", "reason"],
+          "properties": {
+            "outcome": { "enum": ["completed", "failed"] },
+            "reason": { "type": "string", "minLength": 1, "maxLength": 300 }
+          }
+        }
+      }
+    },
+    "stepApprove": {
+      "allOf": [{ "$ref": "#/$defs/stepCommon" }],
+      "unevaluatedProperties": false,
+      "required": ["params"],
+      "properties": {
+        "op": { "const": "human.approve" },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["message"],
+          "properties": { "message": { "type": "string", "minLength": 1, "maxLength": 500 } }
+        }
+      }
+    }
+  }
+}

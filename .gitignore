@@ -1,0 +1,65 @@
+# ---- Rust ----
+/target/
+**/target/
+**/*.rs.bk
+
+# ---- Node / web UI ----
+node_modules/
+dist/
+.pnpm-store/
+*.tsbuildinfo
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# ---- Tauri ----
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
+
+# ---- Python (scripts) ----
+__pycache__/
+*.pyc
+.venv/
+
+# ---- Environment and secrets (never commit) ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ---- Local AI models (large, separately licensed) ----
+*.gguf
+*.safetensors
+*.onnx
+/models/
+
+# ---- Local runtime data ----
+.localloop-dev/
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+/evidence/
+
+# ---- Real documents must never be committed; fixtures are synthetic only ----
+tests/fixtures/real/
+
+# ---- Test and coverage output ----
+coverage/
+test-results/
+playwright-report/
+*.lcov
+
+# ---- OS and editor files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~

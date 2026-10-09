@@ -1,0 +1,3 @@
+# Python dependencies for scripts/validate_schemas.py
+# (scripts/check_docs.py and scripts/validate_mermaid.py use the standard library only)
+jsonschema==4.26.0

@@ -1,0 +1,23 @@
+# Normalize text files to LF in the repository
+* text=auto eol=lf
+
+# Windows scripts keep CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.icns binary
+*.pdf binary
+*.tif binary
+*.tiff binary
+*.xlsx binary
+*.zip binary
+*.gguf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
