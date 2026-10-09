@@ -1,0 +1,37 @@
+{
+    "command":  [
+                    "spikes/encryption/target/release/spike-encryption.exe"
+                ],
+    "elapsed_seconds":  0.391,
+    "environment":  {
+                        "architecture":  "AMD64",
+                        "fixture_manifest_sha256":  "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+                        "fixture_seed":  20261009,
+                        "hardware":  {
+                                         "build":  "19045",
+                                         "cpu":  "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+                                         "manufacturer":  "MSI",
+                                         "model":  "MS-7A70",
+                                         "os":  "Microsoft Windows 10 Pro",
+                                         "ram_bytes":  17104429056
+                                     },
+                        "macos":  "deferred by owner on 2026-10-10",
+                        "model":  "none unless explicitly recorded by the benchmark",
+                        "node":  "v24.11.1",
+                        "packages":  {
+                                         "openpyxl":  "3.1.5",
+                                         "pillow":  "12.3.0",
+                                         "pypdfium2":  "5.14.0",
+                                         "reportlab":  "5.0.1"
+                                     },
+                        "python":  "3.12.10",
+                        "recorded_at_utc":  "2026-10-09T17:39:25.869672+00:00",
+                        "reference_machine":  false,
+                        "rust":  "rustc 1.99.0 (b940084d7 2026-09-28)"
+                    },
+    "exit_code":  0,
+    "stderr":  "",
+    "stdout":  "MEASURE A-sqlcipher keyring_store_ms: 3.34 (ok)\nMEASURE A-sqlcipher keyring_load_ms: 4.22\nMEASURE A-sqlcipher sqlcipher_version: 4.14.0 community\nMEASURE A-sqlcipher insert_10k_rows_ms: 40.5\nMEASURE A-sqlcipher read_all_10k_rows_ms: 6.9 (309890 plaintext bytes)\nMEASURE A-sqlcipher 1000_point_lookups_ms: 8.3\nMEASURE A-sqlcipher encrypt_evidence_ms: 92.1 (20 x 256 KiB)\nMEASURE A-sqlcipher decrypt_evidence_ms: 19.3\nMEASURE A-sqlcipher plaintext_sensitive_hits_before_checkpoint: 0\nMEASURE A-sqlcipher db_size_kib: 1096\nMEASURE A-sqlcipher db_has_plain_sqlite_header: false\nMEASURE A-sqlcipher plaintext_sensitive_hits_with_db_open: 0\nMEASURE A-sqlcipher plaintext_sensitive_hits_after_close: 0\nMEASURE A-sqlcipher plaintext_internal_metadata_hits: 0\nMEASURE A-sqlcipher sqlcipher_version: 4.14.0 community\nMEASURE A-sqlcipher reopen_with_key: ok (10000 rows)\nMEASURE A-sqlcipher open_without_key: refused: file is not a database\nMEASURE A-sqlcipher keyring_delete: ok\nMEASURE A-sqlcipher os: windows x86_64\n",
+    "binary_bytes":  4934656,
+    "binary_sha256":  "f9d8a94b289e2abc515da7c7add814283d8f192b6bf0447c328e905d75be376b"
+}

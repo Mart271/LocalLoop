@@ -1,0 +1,44 @@
+{
+    "command":  [
+                    "cargo",
+                    "run",
+                    "--release",
+                    "--locked",
+                    "--manifest-path",
+                    "spikes/encryption/Cargo.toml",
+                    "--features",
+                    "option-b-app-level"
+                ],
+    "elapsed_seconds":  2.563,
+    "environment":  {
+                        "architecture":  "AMD64",
+                        "fixture_manifest_sha256":  "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+                        "fixture_seed":  20261009,
+                        "hardware":  {
+                                         "build":  "19045",
+                                         "cpu":  "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+                                         "manufacturer":  "MSI",
+                                         "model":  "MS-7A70",
+                                         "os":  "Microsoft Windows 10 Pro",
+                                         "ram_bytes":  17104429056
+                                     },
+                        "macos":  "deferred by owner on 2026-10-10",
+                        "model":  "none unless explicitly recorded by the benchmark",
+                        "node":  "v24.11.1",
+                        "packages":  {
+                                         "openpyxl":  "3.1.5",
+                                         "pillow":  "12.3.0",
+                                         "pypdfium2":  "5.14.0",
+                                         "reportlab":  "5.0.1"
+                                     },
+                        "python":  "3.12.10",
+                        "recorded_at_utc":  "2026-10-09T17:39:28.194400+00:00",
+                        "reference_machine":  false,
+                        "rust":  "rustc 1.99.0 (b940084d7 2026-09-28)"
+                    },
+    "exit_code":  0,
+    "stderr":  "   Compiling spike-encryption v0.0.0 (C:\\Users\\Frank\\Documents\\App Builder PH Hackathon 2026\\LocalLoop\\spikes\\encryption)\n    Finished `release` profile [optimized] target(s) in 1.73s\n     Running `spikes\\encryption\\target\\release\\spike-encryption.exe`\n",
+    "stdout":  "MEASURE B-app-level keyring_store_ms: 4.07 (ok)\nMEASURE B-app-level keyring_load_ms: 5.56\nMEASURE B-app-level insert_10k_rows_ms: 79.0\nMEASURE B-app-level read_all_10k_rows_ms: 48.1 (309890 plaintext bytes)\nMEASURE B-app-level 1000_point_lookups_ms: 9.0\nMEASURE B-app-level tamper_detected: moved_between_rows=true bit_flip=true\nMEASURE B-app-level encrypt_evidence_ms: 106.0 (20 x 256 KiB)\nMEASURE B-app-level decrypt_evidence_ms: 20.9\nMEASURE B-app-level plaintext_sensitive_hits_before_checkpoint: 0\nMEASURE B-app-level db_size_kib: 1924\nMEASURE B-app-level db_has_plain_sqlite_header: true\nMEASURE B-app-level plaintext_sensitive_hits_with_db_open: 0\nMEASURE B-app-level plaintext_sensitive_hits_after_close: 0\nMEASURE B-app-level plaintext_internal_metadata_hits: 10005\nMEASURE B-app-level reopen_with_key: ok (10000 rows)\nMEASURE B-app-level open_without_key: readable (10000 rows; sensitive columns are ciphertext)\nMEASURE B-app-level keyring_delete: ok\nMEASURE B-app-level os: windows x86_64\n",
+    "binary_bytes":  1985536,
+    "binary_sha256":  "5fb43dfd91fb08f850788d5b3b4013c5bb1f6158d7c9e8ae385de2007b772014"
+}

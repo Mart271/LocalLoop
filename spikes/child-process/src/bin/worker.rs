@@ -5,6 +5,8 @@
 //! notices that its parent has gone on every OS. Set LOCALLOOP_SPIKE_NO_WATCHDOG=1 to read stdin
 //! on the main thread instead (negative control).
 
+#![forbid(unsafe_code)]
+
 use std::io::{self, BufReader, BufWriter};
 use std::process::{Command, Stdio};
 use std::sync::mpsc;
@@ -20,7 +22,11 @@ fn handle(request: &str, grandchildren: &mut Vec<std::process::Child>) -> String
         "crash" => std::process::abort(),
         "spawn_grandchild" => {
             // A grandchild whose stdin is a pipe owned by this worker. It must also die.
-            match Command::new(std::env::current_exe().unwrap_or_default())
+            let executable = match std::env::current_exe() {
+                Ok(path) => path,
+                Err(error) => return format!("error {error}"),
+            };
+            match Command::new(executable)
                 .stdin(Stdio::piped())
                 .stdout(Stdio::null())
                 .spawn()
@@ -59,7 +65,11 @@ fn main() {
         drop(tx);
     }
     // Only take the stdin lock here when no watchdog thread owns it.
-    let mut input = if watchdog { None } else { Some(BufReader::new(io::stdin().lock())) };
+    let mut input = if watchdog {
+        None
+    } else {
+        Some(BufReader::new(io::stdin().lock()))
+    };
     loop {
         let request = if let Some(input) = input.as_mut() {
             match read_frame(input) {

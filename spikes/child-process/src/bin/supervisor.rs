@@ -7,6 +7,8 @@
 //! Finding: process-wrap's *std* JobObject never sets JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE; only
 //! the Tokio frontend's `KillOnDrop` does. LocalLoop must use the Tokio frontend.
 
+#![forbid(unsafe_code)]
+
 use std::io::Write;
 use std::process::{ExitCode, Stdio};
 use std::time::{Duration, Instant};
@@ -23,6 +25,9 @@ fn say(line: &str) {
 
 async fn send(stdin: &mut tokio::process::ChildStdin, text: &str) -> std::io::Result<()> {
     let len = u32::try_from(text.len()).map_err(std::io::Error::other)?;
+    if len > spike_child_process::MAX_FRAME {
+        return Err(std::io::Error::other("frame exceeds limit"));
+    }
     stdin.write_all(&len.to_be_bytes()).await?;
     stdin.write_all(text.as_bytes()).await?;
     stdin.flush().await
@@ -31,6 +36,9 @@ async fn send(stdin: &mut tokio::process::ChildStdin, text: &str) -> std::io::Re
 async fn recv(stdout: &mut tokio::process::ChildStdout) -> Option<String> {
     let mut len = [0u8; 4];
     stdout.read_exact(&mut len).await.ok()?;
+    if u32::from_be_bytes(len) > spike_child_process::MAX_FRAME {
+        return None;
+    }
     let mut buf = vec![0u8; u32::from_be_bytes(len) as usize];
     stdout.read_exact(&mut buf).await.ok()?;
     String::from_utf8(buf).ok()
@@ -63,7 +71,10 @@ async fn main() -> ExitCode {
             return ExitCode::from(3);
         }
     };
-    say(&format!("HASH_MS={:.2}", started.elapsed().as_secs_f64() * 1000.0));
+    say(&format!(
+        "HASH_MS={:.2}",
+        started.elapsed().as_secs_f64() * 1000.0
+    ));
     if &actual != expected {
         say("REFUSED=checksum mismatch");
         return ExitCode::from(3);
@@ -71,7 +82,9 @@ async fn main() -> ExitCode {
 
     let spawn_started = Instant::now();
     let mut command = CommandWrap::with_new(worker, |c| {
-        c.stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
+        c.stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null());
     });
     // LOCALLOOP_SPIKE_NO_JOB=1 disables the OS-level containment (negative control).
     if std::env::var_os("LOCALLOOP_SPIKE_NO_JOB").is_none() {
@@ -97,13 +110,30 @@ async fn main() -> ExitCode {
         say("ERROR=worker did not start");
         return ExitCode::from(4);
     };
-    say(&format!("SPAWN_MS={:.2}", spawn_started.elapsed().as_secs_f64() * 1000.0));
+    say(&format!(
+        "SPAWN_MS={:.2}",
+        spawn_started.elapsed().as_secs_f64() * 1000.0
+    ));
     say(&format!("WORKER_PID={}", hello.trim_start_matches("pid ")));
     let health = Instant::now();
     let ok = ask(&mut stdin, &mut stdout, "health", Duration::from_secs(5)).await;
-    say(&format!("HEALTH={} ROUNDTRIP_MS={:.3}", ok.unwrap_or_default(), health.elapsed().as_secs_f64() * 1000.0));
-    if let Some(reply) = ask(&mut stdin, &mut stdout, "spawn_grandchild", Duration::from_secs(5)).await {
-        say(&format!("GRANDCHILD_PID={}", reply.trim_start_matches("grandchild ")));
+    say(&format!(
+        "HEALTH={} ROUNDTRIP_MS={:.3}",
+        ok.unwrap_or_default(),
+        health.elapsed().as_secs_f64() * 1000.0
+    ));
+    if let Some(reply) = ask(
+        &mut stdin,
+        &mut stdout,
+        "spawn_grandchild",
+        Duration::from_secs(5),
+    )
+    .await
+    {
+        say(&format!(
+            "GRANDCHILD_PID={}",
+            reply.trim_start_matches("grandchild ")
+        ));
     }
 
     match scenario.as_str() {
@@ -133,7 +163,9 @@ async fn main() -> ExitCode {
                 "KILLED_AFTER_MS={:.1} KILL_TO_EXIT_MS={:.2} STATUS={}",
                 sent.elapsed().as_secs_f64() * 1000.0,
                 kill_started.elapsed().as_secs_f64() * 1000.0,
-                status.map(|s| s.to_string().replace(' ', "_")).unwrap_or_default()
+                status
+                    .map(|s| s.to_string().replace(' ', "_"))
+                    .unwrap_or_default()
             ));
             ExitCode::SUCCESS
         }
@@ -143,7 +175,9 @@ async fn main() -> ExitCode {
             say(&format!(
                 "CRASH_REPLY={} CRASH_STATUS={}",
                 reply.is_some(),
-                status.map(|s| s.to_string().replace(' ', "_")).unwrap_or_default()
+                status
+                    .map(|s| s.to_string().replace(' ', "_"))
+                    .unwrap_or_default()
             ));
             ExitCode::SUCCESS
         }
