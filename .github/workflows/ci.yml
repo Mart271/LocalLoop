@@ -171,3 +171,22 @@ jobs:
         run: pnpm -r test
       - name: Dependency audit
         run: pnpm audit --audit-level low
+
+  spike-child-process:
+    # Spike LL-011 measurements (not a gate). Results feed docs/development/spikes/LL-011-child-processes.md.
+    name: Spike LL-011 child processes (${{ matrix.os }})
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned toolchain
+        run: rustup show active-toolchain || rustup toolchain install
+      - name: Run lifecycle measurements
+        run: cargo test --release --manifest-path spikes/child-process/Cargo.toml -- --nocapture --test-threads=1

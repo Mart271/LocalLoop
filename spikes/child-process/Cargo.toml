@@ -1,0 +1,17 @@
+[package]
+name = "spike-child-process"
+version = "0.0.0"
+edition = "2024"
+publish = false
+description = "SPIKE (LL-011): child-process lifecycle on Windows and macOS. Throwaway; never shipped."
+
+# Standalone workspace: spikes are excluded from the product workspace.
+[workspace]
+
+[dependencies]
+process-wrap = { version = "10.0.1", features = ["std", "job-object", "kill-on-drop", "process-group", "tokio1"], default-features = false }
+sha2 = "0.10"
+tokio = { version = "1.53.2", features = ["rt", "macros", "io-util", "process", "time", "sync"] }
+
+[dev-dependencies]
+sysinfo = "0.37"
