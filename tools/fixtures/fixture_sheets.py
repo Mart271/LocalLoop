@@ -47,7 +47,7 @@ def _stamp(wb: Workbook) -> None:
 
 
 def normalize_zip(path: Path, extra: dict[str, bytes] | None = None, replace: dict[str, bytes] | None = None) -> None:
-    """Rewrite a zip with fixed timestamps (and optional added or replaced parts)."""
+    """Rewrite a zip with fixed timestamps and stored entries (and optional added or replaced parts)."""
     with zipfile.ZipFile(path) as source:
         parts = [(info.filename, source.read(info.filename)) for info in source.infolist()]
     replace = replace or {}
@@ -59,10 +59,11 @@ def normalize_zip(path: Path, extra: dict[str, bytes] | None = None, replace: di
         for name, data in parts
     ]
     parts += sorted((extra or {}).items())
-    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as target:
+    # Stored (uncompressed) entries: deflate output differs between zlib and zlib-ng.
+    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_STORED) as target:
         for name, data in parts:
             info = zipfile.ZipInfo(name, date_time=ZIP_TIME)
-            info.compress_type = zipfile.ZIP_DEFLATED
+            info.compress_type = zipfile.ZIP_STORED
             info.external_attr = 0o644 << 16
             target.writestr(info, data)
 

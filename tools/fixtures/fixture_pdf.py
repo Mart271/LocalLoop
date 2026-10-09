@@ -19,6 +19,9 @@ from reportlab.pdfgen import canvas
 from fixture_model import CUSTOMER, Invoice, fmt_amount
 
 rl_config.invariant = 1
+# Uncompressed content streams: zlib implementations (classic zlib vs zlib-ng, which Python 3.14
+# on Windows uses) produce different bytes for the same input, which would break reproducibility.
+rl_config.pageCompression = 0
 
 PAGE_W, PAGE_H = letter
 
@@ -184,7 +187,7 @@ def render_invoice(
     encrypt = None
     if extras.user_password is not None:
         encrypt = pdfencrypt.StandardEncryption(extras.user_password, ownerPassword=extras.user_password + "-owner")
-    c = canvas.Canvas(str(path), pagesize=letter, invariant=1, encrypt=encrypt)
+    c = canvas.Canvas(str(path), pagesize=letter, invariant=1, pageCompression=0, encrypt=encrypt)
     c.setAuthor("LocalLoop fixture generator")
     c.setCreator("LocalLoop fixture generator")
     c.setTitle(extras.title if extras.title is not None else f"Invoice {invoice.number}")

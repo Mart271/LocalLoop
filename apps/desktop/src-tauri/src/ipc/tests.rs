@@ -185,7 +185,7 @@ fn mock_runtime_answers_ping_and_refuses_other_commands() {
 
     // The real generated context, so the real capability file and ACL apply.
     let app = crate::builder_with(mock_builder())
-        .build(tauri::generate_context!())
+        .build(crate::context())
         .unwrap();
     let webview = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
         .build()
