@@ -41,6 +41,20 @@ DEFAULT_SEED = 20261009
 GENERATOR_VERSION = 1
 
 
+def stored_png(width: int, height: int) -> bytes:
+    """A white grayscale PNG whose image data uses uncompressed deflate blocks, so the bytes do
+    not depend on which zlib implementation Pillow was built with."""
+    import struct
+    import zlib
+
+    def chunk(kind: bytes, data: bytes) -> bytes:
+        return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data))
+
+    raw = b"".join(b"\x00" + b"\xff" * width for _ in range(height))
+    header = struct.pack(">IIBBBBB", width, height, 8, 0, 0, 0, 0)
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header) + chunk(b"IDAT", zlib.compress(raw, 0)) + chunk(b"IEND", b"")
+
+
 def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
@@ -262,7 +276,7 @@ def gen_f5(out: Path, seed: int) -> None:
     writer.add("garbage-with-pdf-header.pdf", {"expect": "unsupported", "reasons": ["EXC-02"]}).write_bytes(
         b"%PDF-1.7\n" + rng.randbytes(4096))
     png = writer.add("png-named-as.pdf", {"expect": "unsupported_or_image", "reasons": ["extension does not match content"]})
-    Image.new("L", (32, 32), 255).save(png, "PNG")
+    png.write_bytes(stored_png(32, 32))
     big = writer.add("huge-image-12000x12000.png", {"expect": "limit_exceeded", "reasons": ["pixel limit"]})
     Image.new("1", (12000, 12000), 1).save(big, "PNG", optimize=True)
     writer.close()

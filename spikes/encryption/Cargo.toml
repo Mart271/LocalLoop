@@ -10,10 +10,11 @@ description = "SPIKE (LL-010, D-07): encryption at rest, SQLCipher vs applicatio
 [features]
 # Exactly one of these must be enabled.
 option-a-sqlcipher = ["rusqlite/bundled-sqlcipher-vendored-openssl"]
-option-b-app-level = ["rusqlite/bundled", "dep:chacha20poly1305"]
+option-b-app-level = ["rusqlite/bundled"]
 
 [dependencies]
 rusqlite = { version = "0.40", default-features = false }
-chacha20poly1305 = { version = "0.10", optional = true }
+# Evidence files are encrypted the same way in both options.
+chacha20poly1305 = "0.10"
 keyring = { version = "3", features = ["windows-native", "apple-native"] }
 rand = "0.9"

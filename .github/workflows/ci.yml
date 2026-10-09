@@ -213,6 +213,9 @@ jobs:
         run: rustup show active-toolchain || rustup toolchain install
       - name: Build (timed)
         shell: bash
+        env:
+          # The vendored OpenSSL build needs a native Windows Perl; bash would find Git's minimal one.
+          OPENSSL_SRC_PERL: ${{ runner.os == 'Windows' && 'C:\Strawberry\perl\bin\perl.exe' || '' }}
         run: |
           start=$(date +%s)
           cargo build --release --manifest-path spikes/encryption/Cargo.toml --features ${{ matrix.option }}

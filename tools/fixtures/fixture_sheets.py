@@ -65,6 +65,7 @@ def normalize_zip(path: Path, extra: dict[str, bytes] | None = None, replace: di
             info = zipfile.ZipInfo(name, date_time=ZIP_TIME)
             info.compress_type = zipfile.ZIP_STORED
             info.external_attr = 0o644 << 16
+            info.create_system = 3  # record a fixed creator OS (Python uses 0 on Windows, 3 elsewhere)
             target.writestr(info, data)
 
 
