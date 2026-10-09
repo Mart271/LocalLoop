@@ -1,0 +1,185 @@
+{
+  "cases": [
+    {
+      "changed_package_parts": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "docProps/app.xml",
+        "docProps/core.xml",
+        "xl/_rels/workbook.xml.rels",
+        "xl/styles.xml",
+        "xl/theme/theme1.xml",
+        "xl/workbook.xml",
+        "xl/worksheets/sheet1.xml"
+      ],
+      "exit_code": 0,
+      "file": "Invoices.xlsx",
+      "measure": "MEASURE roundtrip_ms=221.72",
+      "operation": "roundtrip",
+      "removed_package_parts": [],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": []
+    },
+    {
+      "changed_package_parts": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "docProps/app.xml",
+        "docProps/core.xml",
+        "xl/_rels/workbook.xml.rels",
+        "xl/styles.xml",
+        "xl/theme/theme1.xml",
+        "xl/workbook.xml",
+        "xl/worksheets/sheet1.xml"
+      ],
+      "edit_verified": true,
+      "exit_code": 0,
+      "file": "Invoices.xlsx",
+      "measure": "MEASURE roundtrip_ms=91.13",
+      "operation": "edit",
+      "removed_package_parts": [],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": [
+        "/sheets/Invoices/column_widths/H"
+      ]
+    },
+    {
+      "changed_package_parts": [
+        "xl/worksheets/sheet1.xml"
+      ],
+      "edit_verified": true,
+      "exit_code": 0,
+      "file": "Invoices.xlsx",
+      "measure": "MEASURE roundtrip_ms=103.48",
+      "operation": "preserving-edit",
+      "removed_package_parts": [],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": []
+    },
+    {
+      "changed_package_parts": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "docProps/app.xml",
+        "docProps/core.xml",
+        "xl/_rels/workbook.xml.rels",
+        "xl/drawings/drawing1.xml",
+        "xl/styles.xml",
+        "xl/tables/table1.xml",
+        "xl/theme/theme1.xml",
+        "xl/workbook.xml",
+        "xl/worksheets/_rels/sheet1.xml.rels",
+        "xl/worksheets/_rels/sheet2.xml.rels",
+        "xl/worksheets/sheet1.xml",
+        "xl/worksheets/sheet2.xml",
+        "xl/worksheets/sheet3.xml"
+      ],
+      "exit_code": 0,
+      "file": "Invoices-formatted.xlsx",
+      "measure": "MEASURE roundtrip_ms=84.77",
+      "operation": "roundtrip",
+      "removed_package_parts": [
+        "xl/charts/chart1.xml",
+        "xl/comments/comment1.xml",
+        "xl/drawings/_rels/drawing1.xml.rels",
+        "xl/drawings/commentsDrawing1.vml"
+      ],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": [
+        "/sheets/Invoices/tables/InvoiceTable",
+        "/sheets/Summary/chart_count",
+        "/sheets/Summary/chart_types"
+      ]
+    },
+    {
+      "changed_package_parts": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "docProps/app.xml",
+        "docProps/core.xml",
+        "xl/_rels/workbook.xml.rels",
+        "xl/drawings/drawing1.xml",
+        "xl/styles.xml",
+        "xl/tables/table1.xml",
+        "xl/theme/theme1.xml",
+        "xl/workbook.xml",
+        "xl/worksheets/_rels/sheet1.xml.rels",
+        "xl/worksheets/_rels/sheet2.xml.rels",
+        "xl/worksheets/sheet1.xml",
+        "xl/worksheets/sheet2.xml",
+        "xl/worksheets/sheet3.xml"
+      ],
+      "edit_verified": true,
+      "exit_code": 0,
+      "file": "Invoices-formatted.xlsx",
+      "measure": "MEASURE roundtrip_ms=127.24",
+      "operation": "edit",
+      "removed_package_parts": [
+        "xl/charts/chart1.xml",
+        "xl/comments/comment1.xml",
+        "xl/drawings/_rels/drawing1.xml.rels",
+        "xl/drawings/commentsDrawing1.vml"
+      ],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": [
+        "/sheets/Invoices/tables/InvoiceTable",
+        "/sheets/Summary/chart_count",
+        "/sheets/Summary/chart_types"
+      ]
+    },
+    {
+      "changed_package_parts": [
+        "xl/worksheets/sheet1.xml"
+      ],
+      "edit_verified": true,
+      "exit_code": 0,
+      "file": "Invoices-formatted.xlsx",
+      "measure": "MEASURE roundtrip_ms=137.41",
+      "operation": "preserving-edit",
+      "removed_package_parts": [],
+      "source_unchanged": true,
+      "unexpected_semantic_changes": []
+    }
+  ],
+  "environment": {
+    "architecture": "AMD64",
+    "fixture_manifest_sha256": "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+    "fixture_seed": 20261009,
+    "hardware": {
+      "build": "19045",
+      "cpu": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+      "manufacturer": "MSI",
+      "model": "MS-7A70",
+      "os": "Microsoft Windows 10 Pro",
+      "ram_bytes": 17104429056
+    },
+    "macos": "deferred by owner on 2026-10-10",
+    "model": "none unless explicitly recorded by the benchmark",
+    "node": "v24.11.1",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pillow": "12.3.0",
+      "pypdfium2": "5.14.0",
+      "reportlab": "5.0.1"
+    },
+    "python": "3.12.10",
+    "recorded_at_utc": "2026-10-09T17:12:59.790848+00:00",
+    "reference_machine": false,
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "library": "umya-spreadsheet 3.1.0 (MIT)",
+  "limitations": [
+    "No Excel rendering or recalculation test",
+    "Chart count/type checked; chart appearance unverified",
+    "Finite fixtures do not establish support for arbitrary XLSX packages"
+  ],
+  "lock": {
+    "exclusive_lock_blocks_write": true,
+    "method": "CreateFileW share mode 0; simulates an exclusive holder, not an Excel UI test",
+    "reopens_after_release": true
+  },
+  "macro_fixture": {
+    "path": "Invoices-macros.xlsm",
+    "present": true
+  }
+}

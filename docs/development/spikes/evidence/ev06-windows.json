@@ -1,0 +1,2405 @@
+{
+  "environment": {
+    "architecture": "AMD64",
+    "fixture_manifest_sha256": "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+    "fixture_seed": 20261009,
+    "hardware": {
+      "build": "19045",
+      "cpu": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+      "manufacturer": "MSI",
+      "model": "MS-7A70",
+      "os": "Microsoft Windows 10 Pro",
+      "ram_bytes": 17104429056
+    },
+    "macos": "deferred by owner on 2026-10-10",
+    "model": "none unless explicitly recorded by the benchmark",
+    "node": "v24.11.1",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pillow": "12.3.0",
+      "pypdfium2": "5.14.0",
+      "reportlab": "5.0.1"
+    },
+    "python": "3.12.10",
+    "recorded_at_utc": "2026-10-09T17:05:36.830479+00:00",
+    "reference_machine": false,
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "method": "7 normalized field-text presence checks/page; case, whitespace and punctuation ignored; no field attribution; fresh process/page; 200 DPI PDF rendering; no deskew or denoise",
+  "models": {
+    "text-detection.onnx": {
+      "bytes": 2499479,
+      "sha256": "a917b23dbd9524b465df7e922641b3ff2981623df4ded5a0234004ef2fee7cfe"
+    },
+    "text-recognition.onnx": {
+      "bytes": 9713177,
+      "sha256": "86c145c2edb96c8caed5b1ebb8f44d706408922211451c309c625157dd6061c5"
+    }
+  },
+  "ocrs_version": "0.13.1",
+  "samples": [
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2776.2,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "66caf0da3e6bd39469c50e4a3694fb8cf71a68d92d626824d686130cebc33238",
+      "mean_word_confidence": 94.87417365432098
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 5117.44,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "66caf0da3e6bd39469c50e4a3694fb8cf71a68d92d626824d686130cebc33238",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2835.89,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "4b8b2a050edace9bc82d851ad9fa8c59ac31c21e60686c9d7c29aa1e64cde4c3",
+      "mean_word_confidence": 95.09779885393259
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 5784.7,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "4b8b2a050edace9bc82d851ad9fa8c59ac31c21e60686c9d7c29aa1e64cde4c3",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2641.26,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "c01a59a5f3d05ee8a53ee16caf26047e2baf3927d96855c93471a5a142e09542",
+      "mean_word_confidence": 94.73826652631578
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4774.36,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "c01a59a5f3d05ee8a53ee16caf26047e2baf3927d96855c93471a5a142e09542",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2658.04,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "1315110d7f7d473e7e49881e480db10354d4b8dfb64d1ffdb6fa86e67b8807d2",
+      "mean_word_confidence": 94.8242654494382
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4577.04,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "1315110d7f7d473e7e49881e480db10354d4b8dfb64d1ffdb6fa86e67b8807d2",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2695.56,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "fffe99677f2ad3cbc5dbfd58e0c92d1920ea2fd4445d211fce2b7d14f8dc86c1",
+      "mean_word_confidence": 94.86641298901098
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4034.36,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "fffe99677f2ad3cbc5dbfd58e0c92d1920ea2fd4445d211fce2b7d14f8dc86c1",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1522.98,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "b33e639f4723033bce23f2ec1da74d36168e0e1ef5b86ba3a7adcf476e5d7a79",
+      "mean_word_confidence": 94.82430739784947
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3349.94,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "b33e639f4723033bce23f2ec1da74d36168e0e1ef5b86ba3a7adcf476e5d7a79",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1850.77,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "8b0f3dbbaafaf0d2d2a60c77f445ea474b620b7fdafc85b011fd3083e6e69dfa",
+      "mean_word_confidence": 94.28247994565217
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3822.45,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "8b0f3dbbaafaf0d2d2a60c77f445ea474b620b7fdafc85b011fd3083e6e69dfa",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1642.87,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "0d378c8a53e8064ea5cbea91f74a8d8b7efe07d32fdd6aa3e102163008f91c60",
+      "mean_word_confidence": 94.72147708235295
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3204.29,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "0d378c8a53e8064ea5cbea91f74a8d8b7efe07d32fdd6aa3e102163008f91c60",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1723.5,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "fe92f4181141058e3b4f83d536c2c88bdebeddd0791cd4acbd1dc45a05b1d220",
+      "mean_word_confidence": 94.52062517894737
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3253.62,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "fe92f4181141058e3b4f83d536c2c88bdebeddd0791cd4acbd1dc45a05b1d220",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1817.31,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "bd3ba989b8d39f97f904a8d4c7a83a10c475468f2b550ee7ded9aa95fdaaf56b",
+      "mean_word_confidence": 94.85310734065934
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3753.09,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "bd3ba989b8d39f97f904a8d4c7a83a10c475468f2b550ee7ded9aa95fdaaf56b",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1387.01,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "099b029ab6d4406d8fc083ea886c19140282690700bdc0eff259559c90d46695",
+      "mean_word_confidence": 95.20312456666666
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3529.25,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0001.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "099b029ab6d4406d8fc083ea886c19140282690700bdc0eff259559c90d46695",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2368.4,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "908e6e6f682318f979452cd4cb5f8e5c838743395ec6cc005d00adc221d84af8",
+      "mean_word_confidence": 94.97969270731707
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 2955.28,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0002.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "908e6e6f682318f979452cd4cb5f8e5c838743395ec6cc005d00adc221d84af8",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1420.25,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "5edd62debe249490fd09aff2d2384b1de9bd516fc2a52c0dff508f4cf065476e",
+      "mean_word_confidence": 94.9509072247191
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 5168.58,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0003.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "5edd62debe249490fd09aff2d2384b1de9bd516fc2a52c0dff508f4cf065476e",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2041.88,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "2026a93a1ecc580b079867b9088e3fd4116e631346671dd6cf62dfee1a82ff98",
+      "mean_word_confidence": 94.8410522328767
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3041.28,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": false,
+        "invoice_number": true,
+        "subtotal": false,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0004.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "2026a93a1ecc580b079867b9088e3fd4116e631346671dd6cf62dfee1a82ff98",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1778.54,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "61f4c5a75ca7d895701de3ecabe57f91f0e4e9e9c9b1f5c6006e2077dceb46da",
+      "mean_word_confidence": 95.04817562637362
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 4309.61,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0005.pdf",
+      "group": "F1-rasterized",
+      "input_sha256": "61f4c5a75ca7d895701de3ecabe57f91f0e4e9e9c9b1f5c6006e2077dceb46da",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1843.08,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "66caf0da3e6bd39469c50e4a3694fb8cf71a68d92d626824d686130cebc33238",
+      "mean_word_confidence": 94.87417365432098
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3609.09,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "66caf0da3e6bd39469c50e4a3694fb8cf71a68d92d626824d686130cebc33238",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2065.8,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "383d49485c55133e5c80a0e6724338d7182d9719b18183a87570aa21c1fa479e",
+      "mean_word_confidence": 95.22180586419753
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3370.8,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "383d49485c55133e5c80a0e6724338d7182d9719b18183a87570aa21c1fa479e",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1628.18,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "68aad5ad65e4209b92a26ce18aeca54a2fb3e9de1cc1aacf84bf1d141cfefda7",
+      "mean_word_confidence": 86.87875892592592
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2811.03,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0001_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "68aad5ad65e4209b92a26ce18aeca54a2fb3e9de1cc1aacf84bf1d141cfefda7",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2002.68,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "93c86e657fe30bfd913c54ceb1274fb634ce18dd0cf275394d6dc3eb7ac634ab",
+      "mean_word_confidence": 95.09314002247191
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3050.94,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": false,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "93c86e657fe30bfd913c54ceb1274fb634ce18dd0cf275394d6dc3eb7ac634ab",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1951.62,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "86babf1f17399f99633b638ac052fc247783063040f0f4ba9a4ec43698bfd7ff",
+      "mean_word_confidence": 95.32884097752809
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3848.01,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "86babf1f17399f99633b638ac052fc247783063040f0f4ba9a4ec43698bfd7ff",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3595.24,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "0e8482cf49472fa4630cccd8511dd7188bab051519ada137ad64b8fcd22d47db",
+      "mean_word_confidence": 85.34047912
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4950.87,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0002_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "0e8482cf49472fa4630cccd8511dd7188bab051519ada137ad64b8fcd22d47db",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1633.86,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "c01a59a5f3d05ee8a53ee16caf26047e2baf3927d96855c93471a5a142e09542",
+      "mean_word_confidence": 94.73826652631578
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3544.1,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "c01a59a5f3d05ee8a53ee16caf26047e2baf3927d96855c93471a5a142e09542",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1531.76,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "1096d9438576e418b8bd65a614d5a83ea964bb0cf8885bc6d475d0ae6888f4a7",
+      "mean_word_confidence": 95.52489086666667
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3229.48,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "1096d9438576e418b8bd65a614d5a83ea964bb0cf8885bc6d475d0ae6888f4a7",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1610.04,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "4c3956ea9dabae2cf98bf94f2d017355b99492bb92d9565a1d65b9373369d294",
+      "mean_word_confidence": 84.11043401298701
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3047.78,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0003_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "4c3956ea9dabae2cf98bf94f2d017355b99492bb92d9565a1d65b9373369d294",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1548.96,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "fbc40466ad30287f60b2f093c08cf2d0e630f610685cfca138fc733838bbb472",
+      "mean_word_confidence": 95.00252878651685
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3046.08,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "fbc40466ad30287f60b2f093c08cf2d0e630f610685cfca138fc733838bbb472",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1563.25,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "b44fa0690cba51fee3767c6f44db58a8626a84de6eb4d47167ede70645880b33",
+      "mean_word_confidence": 94.82154374157304
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3510.88,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "b44fa0690cba51fee3767c6f44db58a8626a84de6eb4d47167ede70645880b33",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1661.38,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "66713cbd3cc9519c67626cd6a67969d8e864b1d47e0e9797bda535801535abfe",
+      "mean_word_confidence": 83.42525301123595
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3039.61,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": false,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0004_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "66713cbd3cc9519c67626cd6a67969d8e864b1d47e0e9797bda535801535abfe",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1417.72,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "fffe99677f2ad3cbc5dbfd58e0c92d1920ea2fd4445d211fce2b7d14f8dc86c1",
+      "mean_word_confidence": 94.86641298901098
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3549.43,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "fffe99677f2ad3cbc5dbfd58e0c92d1920ea2fd4445d211fce2b7d14f8dc86c1",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1345.48,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "63d5bdb12569a3fca352066b63098b3d0ded5ff7f1d167dca22461d0f031d4ba",
+      "mean_word_confidence": 94.26507608791209
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2734.02,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "63d5bdb12569a3fca352066b63098b3d0ded5ff7f1d167dca22461d0f031d4ba",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1061.77,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "0a740b40e24ff4346945154ae947cd2e7b1b2499e7187a4035aa3cff54f14dd8",
+      "mean_word_confidence": 87.89346311956521
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3180.25,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "BOS-2026-0005_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "0a740b40e24ff4346945154ae947cd2e7b1b2499e7187a4035aa3cff54f14dd8",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1460.53,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "a17e0e7033326599a4c6699d1885e3708607574c1c1cc9ff9d06e819f21d58e0",
+      "mean_word_confidence": 94.76076167741935
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3995.68,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "a17e0e7033326599a4c6699d1885e3708607574c1c1cc9ff9d06e819f21d58e0",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1394.18,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "c47ec492ba86e276daf99185832d6a5440a702c691a54a22311a28cdfa56f0d3",
+      "mean_word_confidence": 92.88971604255319
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3684.33,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "c47ec492ba86e276daf99185832d6a5440a702c691a54a22311a28cdfa56f0d3",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1698.95,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "163b3bdbfc3b84c8a7e41517f633a422f91300f435f9374ee8dc4fffb88ee3f9",
+      "mean_word_confidence": 80.45738677142857
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2949.24,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0001_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "163b3bdbfc3b84c8a7e41517f633a422f91300f435f9374ee8dc4fffb88ee3f9",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1453.41,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "8b0f3dbbaafaf0d2d2a60c77f445ea474b620b7fdafc85b011fd3083e6e69dfa",
+      "mean_word_confidence": 94.28247994565217
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3171.14,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "8b0f3dbbaafaf0d2d2a60c77f445ea474b620b7fdafc85b011fd3083e6e69dfa",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1432.08,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "fba03b403273eb44a5bf4447419636239aba55f3ab848893452eff065c666a2d",
+      "mean_word_confidence": 95.62480142391304
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3408.18,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "fba03b403273eb44a5bf4447419636239aba55f3ab848893452eff065c666a2d",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1058.84,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "5dcd134e0018b782dbede86a63e675056c75179b6b1989313d17a34e550dec5d",
+      "mean_word_confidence": 84.86623704545454
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 4129.84,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": false,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0002_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "5dcd134e0018b782dbede86a63e675056c75179b6b1989313d17a34e550dec5d",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1469.4,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "afb1ce5f3abcee471481a0ab54c78f0c8587b82f83339f79fdb23004a8bb8ee1",
+      "mean_word_confidence": 94.91084945882353
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2917.36,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "afb1ce5f3abcee471481a0ab54c78f0c8587b82f83339f79fdb23004a8bb8ee1",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1212.6,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "32aa1e897bd934ac321af7bfe806dc550d1eeb73abba21eac28f153dd59b29b6",
+      "mean_word_confidence": 92.83588028735632
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2514.34,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "32aa1e897bd934ac321af7bfe806dc550d1eeb73abba21eac28f153dd59b29b6",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1080.34,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "63a7a5b103a13be797347cca334013bc8cc546e901fa8e551d0428b397406a84",
+      "mean_word_confidence": 79.31109556976745
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2101.9,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0003_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "63a7a5b103a13be797347cca334013bc8cc546e901fa8e551d0428b397406a84",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1275.8,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "fe92f4181141058e3b4f83d536c2c88bdebeddd0791cd4acbd1dc45a05b1d220",
+      "mean_word_confidence": 94.52062517894737
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2599.95,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "fe92f4181141058e3b4f83d536c2c88bdebeddd0791cd4acbd1dc45a05b1d220",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1164.88,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "558f92666feddbdf22bc6a8ed83f331c5528425152bc5f4c3f8cacd825961275",
+      "mean_word_confidence": 93.80388722580645
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3017.36,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "558f92666feddbdf22bc6a8ed83f331c5528425152bc5f4c3f8cacd825961275",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1326.64,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "9f353bf624ef1ab0d908d34fe34ee1c7a73f92a89f189c8b332c8635c2d6d429",
+      "mean_word_confidence": 85.403289
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3471.52,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": false,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0004_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "9f353bf624ef1ab0d908d34fe34ee1c7a73f92a89f189c8b332c8635c2d6d429",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1785.71,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "bb522d23bc9d1d3b7fc15cdcdffe09bbb1bc7ff796f55b9da44d07efdd45a2c1",
+      "mean_word_confidence": 94.80213292307693
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3912.22,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "bb522d23bc9d1d3b7fc15cdcdffe09bbb1bc7ff796f55b9da44d07efdd45a2c1",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1300.72,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "961e23a0bee27e8c50e694c6ef635bb43a123271579e766f1676e1bf05e7dba5",
+      "mean_word_confidence": 92.30077374468085
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 3214.97,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "961e23a0bee27e8c50e694c6ef635bb43a123271579e766f1676e1bf05e7dba5",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1327.96,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "56f715e90363b35f36dd17fc1cacfee7423a7ddbf7e6bdb45ce5fd38066d445d",
+      "mean_word_confidence": 88.92469393478261
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2997.53,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "MPS-2026-0005_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "56f715e90363b35f36dd17fc1cacfee7423a7ddbf7e6bdb45ce5fd38066d445d",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1375.74,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0001_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "099b029ab6d4406d8fc083ea886c19140282690700bdc0eff259559c90d46695",
+      "mean_word_confidence": 95.20312456666666
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3123.86,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0001_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "099b029ab6d4406d8fc083ea886c19140282690700bdc0eff259559c90d46695",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1458.57,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0001_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "76846b79a95d205ed74fd7820014092b63d2aba5b3d688350420ce842fe750c1",
+      "mean_word_confidence": 95.70949617777778
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 2618.29,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0001_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "76846b79a95d205ed74fd7820014092b63d2aba5b3d688350420ce842fe750c1",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 924.24,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": false,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0001_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "0b4ecd940f5e3d716d47d8525098e0017543848549d34774b32b2e914dec9307",
+      "mean_word_confidence": 84.8456986741573
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1995.07,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0001_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "0b4ecd940f5e3d716d47d8525098e0017543848549d34774b32b2e914dec9307",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1145.09,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "984aeaf02de134e1ff9df67f7703a6094176d8cbb20292e6d8ce9e07b0b9056f",
+      "mean_word_confidence": 95.06501604878049
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 2377.92,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0002_clean.pdf",
+      "group": "F2-clean",
+      "input_sha256": "984aeaf02de134e1ff9df67f7703a6094176d8cbb20292e6d8ce9e07b0b9056f",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1689.02,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "d85c0a49cd27895c103ad900f78bd551d06bbf56aaede737dfdfe5f7513a49f9",
+      "mean_word_confidence": 95.27921290243903
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4549.59,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002_medium.png",
+      "group": "F2-medium",
+      "input_sha256": "d85c0a49cd27895c103ad900f78bd551d06bbf56aaede737dfdfe5f7513a49f9",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2071.25,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "920090710c70a0eea1f6a9216134fce4935ebf44efb573d34fc3fa77e7d1b2b7",
+      "mean_word_confidence": 80.50504789156626
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 7769.98,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": false,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0002_poor.jpg",
+      "group": "F2-poor",
+      "input_sha256": "920090710c70a0eea1f6a9216134fce4935ebf44efb573d34fc3fa77e7d1b2b7",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4459.92,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0003_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "5edd62debe249490fd09aff2d2384b1de9bd516fc2a52c0dff508f4cf065476e",
+      "mean_word_confidence": 94.9509072247191
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 7314.61,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0003_clean.png",
+      "group": "F2-clean",
+      "input_sha256": "5edd62debe249490fd09aff2d2384b1de9bd516fc2a52c0dff508f4cf065476e",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2202.57,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0003_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "874e2faca334446b06d26161a331fc1e06a9c10718d2c05c2ffaddca244f164c",
+      "mean_word_confidence": 95.3553863258427
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 4500.01,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0003_medium.jpg",
+      "group": "F2-medium",
+      "input_sha256": "874e2faca334446b06d26161a331fc1e06a9c10718d2c05c2ffaddca244f164c",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1912.77,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0003_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "27d00db99770b4383e173b85f0a3bc6b8a4a68830f4dad8a428061990caab060",
+      "mean_word_confidence": 83.7968167111111
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 4064.98,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0003_poor.tif",
+      "group": "F2-poor",
+      "input_sha256": "27d00db99770b4383e173b85f0a3bc6b8a4a68830f4dad8a428061990caab060",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1843.43,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "47dfd5789af3f41b3722f68d8a263b5fbf540e2ba0803d1dcefb2eea4036a8a6",
+      "mean_word_confidence": 94.77336457534247
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3003.28,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": false,
+        "invoice_number": false,
+        "subtotal": false,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0004_clean.jpg",
+      "group": "F2-clean",
+      "input_sha256": "47dfd5789af3f41b3722f68d8a263b5fbf540e2ba0803d1dcefb2eea4036a8a6",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1286.09,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "2d94aa21a4aec6b828e2cdd748ef9a2a51b81850ac67bb437a5987d2a1422a6b",
+      "mean_word_confidence": 95.46203844594595
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2620.04,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004_medium.tif",
+      "group": "F2-medium",
+      "input_sha256": "2d94aa21a4aec6b828e2cdd748ef9a2a51b81850ac67bb437a5987d2a1422a6b",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 1619.96,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": false,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "68bc214987134fd1ca22df1b6f0a216b8c0ff7bad87352c8dad4d91c4f631f0c",
+      "mean_word_confidence": 90.12906711594204
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 3106.73,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": false,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0004_poor.pdf",
+      "group": "F2-poor",
+      "input_sha256": "68bc214987134fd1ca22df1b6f0a216b8c0ff7bad87352c8dad4d91c4f631f0c",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1471.87,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "61f4c5a75ca7d895701de3ecabe57f91f0e4e9e9c9b1f5c6006e2077dceb46da",
+      "mean_word_confidence": 95.04817562637362
+    },
+    {
+      "all_fields_present": false,
+      "elapsed_ms": 6509.97,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": false
+      },
+      "file": "TGL-2026-0005_clean.tif",
+      "group": "F2-clean",
+      "input_sha256": "61f4c5a75ca7d895701de3ecabe57f91f0e4e9e9c9b1f5c6006e2077dceb46da",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1854.67,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "64c4805a13175f6a82bd4ea38793a4b935517095b9daceab769ab46326bc8b74",
+      "mean_word_confidence": 95.2613299010989
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2915.91,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005_medium.pdf",
+      "group": "F2-medium",
+      "input_sha256": "64c4805a13175f6a82bd4ea38793a4b935517095b9daceab769ab46326bc8b74",
+      "mean_word_confidence": null
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 1181.79,
+      "engine": "tesseract",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "94691108581f0278dfe0d3dbadf7135a48bf7ee2a82fd21be509092f8abf9ad1",
+      "mean_word_confidence": 86.353739125
+    },
+    {
+      "all_fields_present": true,
+      "elapsed_ms": 2845.52,
+      "engine": "ocrs",
+      "exit_code": 0,
+      "fields": {
+        "currency": true,
+        "invoice_date": true,
+        "invoice_number": true,
+        "subtotal": true,
+        "tax": true,
+        "total": true,
+        "vendor_name": true
+      },
+      "file": "TGL-2026-0005_poor.png",
+      "group": "F2-poor",
+      "input_sha256": "94691108581f0278dfe0d3dbadf7135a48bf7ee2a82fd21be509092f8abf9ad1",
+      "mean_word_confidence": null
+    }
+  ],
+  "summary": [
+    {
+      "all_fields_pages": 15,
+      "engine": "tesseract",
+      "errors": 0,
+      "fields_present": 105,
+      "fields_total": 105,
+      "group": "F1-rasterized",
+      "median_ms": 1850.77,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 15,
+      "engine": "tesseract",
+      "errors": 0,
+      "fields_present": 105,
+      "fields_total": 105,
+      "group": "F2-clean",
+      "median_ms": 1471.87,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 13,
+      "engine": "tesseract",
+      "errors": 0,
+      "fields_present": 103,
+      "fields_total": 105,
+      "group": "F2-medium",
+      "median_ms": 1458.57,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 7,
+      "engine": "tesseract",
+      "errors": 0,
+      "fields_present": 97,
+      "fields_total": 105,
+      "group": "F2-poor",
+      "median_ms": 1610.04,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 10,
+      "engine": "ocrs",
+      "errors": 0,
+      "fields_present": 96,
+      "fields_total": 105,
+      "group": "F1-rasterized",
+      "median_ms": 3822.45,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 9,
+      "engine": "ocrs",
+      "errors": 0,
+      "fields_present": 94,
+      "fields_total": 105,
+      "group": "F2-clean",
+      "median_ms": 3171.14,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 13,
+      "engine": "ocrs",
+      "errors": 0,
+      "fields_present": 103,
+      "fields_total": 105,
+      "group": "F2-medium",
+      "median_ms": 3229.48,
+      "n": 15
+    },
+    {
+      "all_fields_pages": 10,
+      "engine": "ocrs",
+      "errors": 0,
+      "fields_present": 100,
+      "fields_total": 105,
+      "group": "F2-poor",
+      "median_ms": 3047.78,
+      "n": 15
+    }
+  ],
+  "tesseract_version": "tesseract v5.5.0.20241111"
+}
