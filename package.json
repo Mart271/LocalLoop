@@ -11,5 +11,8 @@
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "gen:types": "cargo test -p localloop-desktop --lib export_bindings && prettier --write packages/shared/src/generated"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
   }
 }

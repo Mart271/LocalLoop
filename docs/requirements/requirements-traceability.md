@@ -317,7 +317,7 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 | TC-107 | Mismatch-injection suite: 100% detected | S | NFR-003 |  |
 | TC-108 | Resource baseline and regression on reference machines | S, EV (EV-01) | NFR-008 |  |
 | TC-109 | PR checklist: published figures cite reproducible benchmarks | R | NFR-013 |  |
-| TC-110 | Non-allowlisted IPC command refused | I | NFR-014 |  |
+| TC-110 | Non-allowlisted IPC command refused | I | NFR-014 | [`apps/desktop/src-tauri/src/ipc/tests.rs`](../../apps/desktop/src-tauri/src/ipc/tests.rs) (groundwork: ping-only surface; full suite in LL-052) |
 | TC-111 | Review + injection attempts through every input surface: no execution path | R, I | FR-104, NFR-015 |  |
 | TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 |  |
 | TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 |  |

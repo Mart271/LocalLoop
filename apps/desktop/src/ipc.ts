@@ -9,8 +9,8 @@ interface CommandMap {
 
 // Compile-time check that every generated command has an entry above, and nothing else does.
 type Exact<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
-const commandMapIsComplete: Exact<keyof CommandMap, IpcCommand> = true;
-void commandMapIsComplete;
+type Assert<T extends true> = T;
+export type CommandMapIsComplete = Assert<Exact<keyof CommandMap, IpcCommand>>;
 
 export type IpcResult<T> = { ok: true; value: T } | { ok: false; error: IpcError };
 

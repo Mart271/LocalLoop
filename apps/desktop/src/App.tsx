@@ -1,31 +1,39 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { call } from "./ipc";
 
 type Connection =
-  | { state: "checking" }
-  | { state: "connected"; coreVersion: string }
-  | { state: "failed"; message: string };
+  { state: "checking" } | { state: "connected"; coreVersion: string } | { state: "failed"; message: string };
+
+/** Asks the core for a ping and checks that the answer belongs to this request. */
+async function checkCore(): Promise<Connection> {
+  const nonce = crypto.randomUUID();
+  const result = await call("ping", { nonce });
+  if (result.ok && result.value.nonce === nonce) {
+    return { state: "connected", coreVersion: result.value.coreVersion };
+  }
+  return {
+    state: "failed",
+    message: result.ok ? "The core answered, but not to this request." : result.error.message,
+  };
+}
 
 export function App() {
   const [connection, setConnection] = useState<Connection>({ state: "checking" });
 
-  const check = useCallback(async () => {
-    setConnection({ state: "checking" });
-    const nonce = crypto.randomUUID();
-    const result = await call("ping", { nonce });
-    if (result.ok && result.value.nonce === nonce) {
-      setConnection({ state: "connected", coreVersion: result.value.coreVersion });
-    } else {
-      setConnection({
-        state: "failed",
-        message: result.ok ? "The core answered, but not to this request." : result.error.message,
-      });
-    }
+  useEffect(() => {
+    let active = true;
+    void checkCore().then((next) => {
+      if (active) setConnection(next);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  useEffect(() => {
-    void check();
-  }, [check]);
+  const recheck = () => {
+    setConnection({ state: "checking" });
+    void checkCore().then(setConnection);
+  };
 
   return (
     <main className="page">
@@ -42,7 +50,7 @@ export function App() {
           )}
           {connection.state === "failed" && <span className="status-error">{connection.message}</span>}
         </p>
-        <button type="button" onClick={() => void check()} disabled={connection.state === "checking"}>
+        <button type="button" onClick={recheck} disabled={connection.state === "checking"}>
           Check again
         </button>
       </section>

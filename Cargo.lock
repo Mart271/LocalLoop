@@ -3257,6 +3257,7 @@ dependencies = [
  "semver",
  "serde",
  "serde_json",
+ "tauri-codegen",
  "tauri-utils",
  "tauri-winres",
  "walkdir",

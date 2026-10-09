@@ -20,7 +20,7 @@ path = "src/main.rs"
 workspace = true
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2", features = ["isolation"] }
 
 [dependencies]
 tauri = { version = "2", features = ["isolation"] }

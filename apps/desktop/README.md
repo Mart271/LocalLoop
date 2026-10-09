@@ -1,6 +1,6 @@
 # `apps/desktop`
 
-> **Planned — no code yet.** Scaffolded in backlog item LL-002 (milestone M1.0). Design: [component-design.md §3.10](../../docs/architecture/component-design.md#310-appsdesktop--composition-root-and-ipc) and [§11](../../docs/architecture/component-design.md#11-desktop-ipc-command-surface).
+> **Scaffolded (LL-002).** Tauri 2 host and React UI with a strict CSP, the isolation pattern, and one allowlisted command (`ping`). Run with `pnpm --filter desktop tauri dev`. Design: [component-design.md §3.10](../../docs/architecture/component-design.md#310-appsdesktop--composition-root-and-ipc) and [§11](../../docs/architecture/component-design.md#11-desktop-ipc-command-surface).
 
 **Layer 1: User Interface**, and the **composition root**: the only place where all crates are wired together.
 

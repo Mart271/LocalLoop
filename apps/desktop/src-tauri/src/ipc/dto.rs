@@ -94,6 +94,9 @@ impl IpcError {
     /// Creates an error.
     #[must_use]
     pub fn new(code: IpcErrorCode, message: impl Into<String>) -> Self {
-        Self { code, message: message.into() }
+        Self {
+            code,
+            message: message.into(),
+        }
     }
 }

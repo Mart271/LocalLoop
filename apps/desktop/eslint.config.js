@@ -4,7 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "src-tauri", "isolation"] },
+  { ignores: ["dist", "src-tauri", "isolation", "eslint.config.js"] },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   {
@@ -19,7 +19,10 @@ export default tseslint.config(
       // Untrusted text must never be rendered as HTML (T-17, NFR-014).
       "no-restricted-syntax": [
         "error",
-        { selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']", message: "Never render HTML; show text only." },
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message: "Never render HTML; show text only.",
+        },
       ],
       "no-restricted-properties": [
         "error",

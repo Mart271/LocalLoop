@@ -5,3 +5,6 @@ pub mod commands;
 pub mod dto;
 
 pub use dto::{IpcCommand, IpcError, IpcErrorCode, PingRequest, PingResponse};
+
+#[cfg(test)]
+mod tests;
