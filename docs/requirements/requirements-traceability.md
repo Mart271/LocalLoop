@@ -369,3 +369,4 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 2. A withdrawn requirement stays in the matrix with *Withdrawn* in the Release column.
 3. When a test is implemented, add its path in the *Implemented in* column of §5.
 4. `python3 scripts/check_docs.py` must pass before merging.
+5. When a requirement's implementation or verification status changes, update its line in [REQUIREMENTS_CHECKLIST.md](REQUIREMENTS_CHECKLIST.md) and run `python3 scripts/sync_requirements_checklist.py`.

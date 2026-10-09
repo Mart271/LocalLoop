@@ -1,0 +1,233 @@
+#!/usr/bin/env python3
+"""Generate and check docs/requirements/REQUIREMENTS_CHECKLIST.md from the SRS.
+
+The SRS is the source of truth for IDs, titles, priorities, releases, and categories; the
+traceability matrix supplies phase and milestone. The only hand-maintained data in the checklist
+is each requirement's **status** and **evidence**, which this script preserves when it regenerates.
+
+Rules enforced:
+  - every FR and NFR in the SRS appears exactly once, with the SRS title and attributes;
+  - status is one of: Not Started, In Progress, Implemented, Verified, Blocked;
+  - Implemented and Verified require evidence (a test path, CI job, or report); Blocked requires a
+    reason in the evidence field;
+  - the checkbox is ticked only for Verified.
+
+Usage:
+  python scripts/sync_requirements_checklist.py           # rewrite the checklist from the SRS
+  python scripts/sync_requirements_checklist.py --check   # fail if the checklist is out of sync
+Standard library only.
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+from collections import Counter
+from dataclasses import dataclass
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SRS = REPO_ROOT / "docs" / "requirements" / "SRS.md"
+TRACE = REPO_ROOT / "docs" / "requirements" / "requirements-traceability.md"
+CHECKLIST = REPO_ROOT / "docs" / "requirements" / "REQUIREMENTS_CHECKLIST.md"
+
+STATUSES = ("Not Started", "In Progress", "Implemented", "Verified", "Blocked")
+NEEDS_EVIDENCE = {"Implemented", "Verified", "Blocked"}
+ITEM_RE = re.compile(
+    r"^- \[(?P<box>[ x])\] \*\*(?P<id>N?FR-\d{3})\*\* (?P<rest>.*?) — Status: \*\*(?P<status>[A-Za-z ]+)\*\*"
+    r"(?: — Evidence: (?P<evidence>.*))?$"
+)
+
+
+@dataclass
+class Requirement:
+    id: str
+    title: str
+    kind: str  # "FR" or "NFR"
+    category: str
+    priority: str  # FR: Must/Should/Could; NFR: its category label (NFRs carry no MoSCoW priority)
+    release: str
+    validation: str
+    phase: str = "—"
+    status: str = "Not Started"
+    evidence: str = ""
+
+
+def parse_srs() -> list[Requirement]:
+    requirements: list[Requirement] = []
+    category = ""
+    lines = SRS.read_text(encoding="utf-8").splitlines()
+    for index, line in enumerate(lines):
+        heading = re.match(r"^### ([45])\.\d+ (.+)$", line)
+        if heading:
+            category = heading.group(2).strip()
+            continue
+        match = re.match(r"^#### ((N?FR)-\d{3}) — (.+)$", line)
+        if not match:
+            continue
+        attributes = lines[index + 1].strip().strip("*").split(" · ")
+        requirements.append(
+            Requirement(
+                id=match.group(1),
+                title=match.group(3).strip(),
+                kind=match.group(2),
+                category=category,
+                priority=attributes[0].strip(),
+                release=attributes[1].strip(),
+                validation=attributes[2].strip(),
+            )
+        )
+    return requirements
+
+
+def parse_phases() -> dict[str, str]:
+    phases: dict[str, str] = {}
+    for line in TRACE.read_text(encoding="utf-8").splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) == 8 and re.fullmatch(r"N?FR-\d{3}", cells[1]):
+            phases[cells[1]] = cells[7]
+    return phases
+
+
+def parse_existing() -> dict[str, tuple[str, str]]:
+    if not CHECKLIST.exists():
+        return {}
+    found: dict[str, tuple[str, str]] = {}
+    for line in CHECKLIST.read_text(encoding="utf-8").splitlines():
+        match = ITEM_RE.match(line)
+        if match:
+            found[match.group("id")] = (match.group("status").strip(), (match.group("evidence") or "").strip())
+    return found
+
+
+def item(req: Requirement) -> str:
+    box = "x" if req.status == "Verified" else " "
+    line = (
+        f"- [{box}] **{req.id}** {req.title} — {req.priority} · {req.release} · {req.validation} · {req.phase}"
+        f" — Status: **{req.status}**"
+    )
+    return f"{line} — Evidence: {req.evidence}" if req.evidence else line
+
+
+def phase_key(phase: str) -> str:
+    match = re.match(r"(Phase \d)", phase)
+    return match.group(1) if match else "Unassigned"
+
+
+def milestone_key(phase: str) -> str:
+    match = re.search(r"M\d\.\d", phase)
+    return match.group(0) if match else "—"
+
+
+def render(requirements: list[Requirement]) -> str:
+    by_status = Counter(r.status for r in requirements)
+    total = len(requirements)
+
+    def counts(rows: list[Requirement]) -> str:
+        c = Counter(r.status for r in rows)
+        done = c["Verified"]
+        return " | ".join([str(len(rows)), *(str(c[s]) for s in STATUSES), f"{done}/{len(rows)}"])
+
+    out = [
+        "# LocalLoop — Requirements Progress Checklist",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        "| Source of truth | [SRS](SRS.md) (IDs, titles, priority, release, validation); [Traceability](requirements-traceability.md) (phase and milestone) |",
+        "| Generated by | [`scripts/sync_requirements_checklist.py`](../../scripts/sync_requirements_checklist.py) — status and evidence are kept when regenerating |",
+        "| Rules | [CONTRIBUTING.md](../../CONTRIBUTING.md#requirements-checklist) |",
+        "",
+        "> **How to read this.** Each line is one SRS requirement: `ID Title — priority · release · validation · phase/milestone — Status`. "
+        "For non-functional requirements the first attribute is the SRS category (NFRs have no MoSCoW priority). "
+        "The checkbox is ticked **only** when the requirement is *Verified*. Nothing is marked *Implemented* or *Verified* without evidence: "
+        "a test path, CI job, or report that demonstrates it.",
+        "",
+        "## Status definitions",
+        "",
+        "| Status | Meaning | Evidence required |",
+        "|---|---|---|",
+        "| Not Started | No implementation work yet | No |",
+        "| In Progress | Some implementation exists; the acceptance criteria are not yet met | Optional (link the partial work) |",
+        "| Implemented | Code satisfies the requirement and its tests pass | **Yes**: tests or CI job |",
+        "| Verified | The acceptance criteria / measure in the SRS were demonstrated at the stated level (for example on both reference machines, or by the named evaluation) | **Yes**: test results or report |",
+        "| Blocked | Work cannot proceed | **Yes**: the reason and what unblocks it |",
+        "",
+        "## Progress summary",
+        "",
+        f"**Verified: {by_status['Verified']} of {total}** · Implemented: {by_status['Implemented']} · "
+        f"In Progress: {by_status['In Progress']} · Blocked: {by_status['Blocked']} · Not Started: {by_status['Not Started']}",
+        "",
+        "| Group | Total | " + " | ".join(STATUSES) + " | Verified / total |",
+        "|---|---|" + "---|" * len(STATUSES) + "---|",
+        f"| All requirements | {counts(requirements)} |",
+        f"| Functional (FR) | {counts([r for r in requirements if r.kind == 'FR'])} |",
+        f"| Non-functional (NFR) | {counts([r for r in requirements if r.kind == 'NFR'])} |",
+        f"| MVP requirements (release contains \"MVP\") | {counts([r for r in requirements if 'MVP' in r.release])} |",
+    ]
+    for phase in sorted({phase_key(r.phase) for r in requirements}):
+        out.append(f"| {phase} | {counts([r for r in requirements if phase_key(r.phase) == phase])} |")
+
+    out += ["", "## By development phase and milestone", ""]
+    out += ["Milestone is the first one the traceability matrix lists for the requirement.", ""]
+    out += ["| Phase | Milestone | Total | " + " | ".join(STATUSES) + " | Verified / total |", "|---|---|---|" + "---|" * len(STATUSES) + "---|"]
+    for phase, milestone in sorted({(phase_key(r.phase), milestone_key(r.phase)) for r in requirements}):
+        rows = [r for r in requirements if phase_key(r.phase) == phase and milestone_key(r.phase) == milestone]
+        out.append(f"| {phase} | {milestone} | {counts(rows)} |")
+
+    for kind, title in (("FR", "Functional requirements"), ("NFR", "Non-functional requirements")):
+        out += ["", f"## {title}", ""]
+        rows = [r for r in requirements if r.kind == kind]
+        for category in dict.fromkeys(r.category for r in rows):
+            group = [r for r in rows if r.category == category]
+            verified = sum(r.status == "Verified" for r in group)
+            out += [f"### {category} ({verified}/{len(group)} verified)", ""]
+            out += [item(r) for r in group]
+            out.append("")
+    return "\n".join(out).rstrip() + "\n"
+
+
+def build() -> tuple[list[Requirement], list[str]]:
+    requirements = parse_srs()
+    phases = parse_phases()
+    existing = parse_existing()
+    problems: list[str] = []
+    ids = Counter(r.id for r in requirements)
+    problems += [f"{i} appears {n} times in the SRS" for i, n in ids.items() if n > 1]
+    for req in requirements:
+        req.phase = phases.get(req.id, "—")
+        status, evidence = existing.get(req.id, ("Not Started", ""))
+        req.status, req.evidence = status, evidence
+        if status not in STATUSES:
+            problems.append(f"{req.id}: unknown status '{status}' (allowed: {', '.join(STATUSES)})")
+        if status in NEEDS_EVIDENCE and not evidence:
+            problems.append(f"{req.id}: status '{status}' requires evidence")
+    for stale in sorted(set(existing) - set(ids)):
+        problems.append(f"{stale} is in the checklist but not in the SRS")
+    return requirements, problems
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Generate or check the requirements checklist.")
+    parser.add_argument("--check", action="store_true", help="fail if the checklist is out of sync with the SRS")
+    args = parser.parse_args(argv)
+
+    requirements, problems = build()
+    expected = render(requirements)
+    if args.check:
+        current = CHECKLIST.read_text(encoding="utf-8") if CHECKLIST.exists() else ""
+        if current != expected:
+            problems.append("REQUIREMENTS_CHECKLIST.md is out of sync with the SRS; run scripts/sync_requirements_checklist.py")
+    if problems:
+        print("\n".join(f"FAIL  {p}" for p in problems))
+        return 1
+    if not args.check:
+        CHECKLIST.write_text(expected, encoding="utf-8", newline="\n")
+        print(f"Wrote {CHECKLIST.relative_to(REPO_ROOT)} ({len(requirements)} requirements).")
+    else:
+        print(f"Requirements checklist is in sync ({len(requirements)} requirements).")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

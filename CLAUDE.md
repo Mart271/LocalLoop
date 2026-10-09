@@ -16,6 +16,7 @@ Current milestone and status: [docs/development/PROGRESS.md](docs/development/PR
 | Threats, taint table, approvals | `docs/architecture/security-architecture.md`, `data-flow.md` |
 | Requirements (FR/NFR/EXC) | `docs/requirements/SRS.md` |
 | Test case IDs and where tests live | `docs/requirements/requirements-traceability.md` §5 |
+| Requirement status (Not Started … Verified) | `docs/requirements/REQUIREMENTS_CHECKLIST.md` |
 | Decisions | `docs/adr/` (template in `docs/adr/template.md`) |
 | Spike reports | `docs/development/spikes/` |
 
@@ -43,13 +44,14 @@ If the docs are wrong or contradict each other: propose the fix, update SRS/ADR/
 - Rust: `#![forbid(unsafe_code)]` in every crate (exceptions need an ADR); typed errors (`thiserror`); no `unwrap`/`expect`/`panic!` outside tests (workspace clippy lints); `cargo fmt` and `clippy -D warnings` clean.
 - TypeScript: `strict`, no `any`; IPC types generated from Rust by `ts-rs` into `packages/shared` (never hand-written).
 - No placeholder code that pretends to work: unbuilt features are absent or return a typed `NotSupported` and stay hidden in the UI.
-- Every backlog item: tests run and passing; docs updated; test path added in traceability §5; doc and schema checks pass.
+- Every backlog item: tests run and passing; docs updated; test path added in traceability §5; requirement status and evidence updated in `docs/requirements/REQUIREMENTS_CHECKLIST.md` (never Implemented/Verified without evidence); doc, checklist, and schema checks pass.
 - Lockfiles committed; `cargo deny`, `cargo audit`, `pnpm audit` in CI.
 
 ## Commands (Windows PowerShell; run from repo root)
 
 ```powershell
 python scripts\check_docs.py                 # IDs, traceability, links
+python scripts\sync_requirements_checklist.py   # refresh checklist summaries (--check in CI)
 python scripts\validate_schemas.py           # schema + examples (pip install -r scripts\requirements.txt)
 python scripts\check_crate_deps.py           # forbidden crate dependencies (NFR-030)
 cargo fmt --all --check
