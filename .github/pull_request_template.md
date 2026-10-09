@@ -21,6 +21,7 @@
 
 - [ ] `python3 scripts/check_docs.py` passes
 - [ ] Requirements and the traceability matrix are updated for new or changed behaviour
+- [ ] `docs/requirements/REQUIREMENTS_CHECKLIST.md` status and evidence updated for every requirement whose implementation or verification changed (no Implemented/Verified without evidence)
 - [ ] Tests cover the change (or the PR explains why not)
 - [ ] Proposals, assumptions, and targets are labelled as such; no unmeasured performance claims (NFR-013)
 - [ ] No secrets, real documents, personal data, or model files are included

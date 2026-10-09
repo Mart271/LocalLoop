@@ -1,6 +1,6 @@
 # `verification-engine`
 
-> **Planned — no code yet.** Design: [component-design.md §3.4](../../docs/architecture/component-design.md#34-verification-engine--postconditions-outcomes-recovery).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.4](../../docs/architecture/component-design.md#34-verification-engine--postconditions-outcomes-recovery).
 
 **Layer 6: Verification and Recovery.** Decides whether work actually happened.
 

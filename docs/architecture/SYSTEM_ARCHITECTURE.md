@@ -315,7 +315,7 @@ flowchart BT
     app --> adp
 ```
 
-Forbidden dependencies, to be enforced by a CI check once code exists: `local-ai` → {`policy-engine`, `execution-engine`, `adapters/*`, `storage`}; `adapters/*` → `local-ai`; `observation` → {`execution-engine`, `adapters/*`}; `workflow-engine` → any internal crate. Only the desktop app composes everything. As a result, **the AI module cannot reach an adapter, even by mistake**, because it cannot name the types.
+Forbidden dependencies, enforced in CI by `scripts/check_crate_deps.py` (direct or transitive, any dependency kind): `local-ai` → {`policy-engine`, `execution-engine`, `adapters/*`, `storage`}; `adapters/*` → `local-ai`; `observation` → {`execution-engine`, `adapters/*`}; `workflow-engine` → any internal crate. Only the desktop app composes everything. As a result, **the AI module cannot reach an adapter, even by mistake**, because it cannot name the types.
 
 ---
 

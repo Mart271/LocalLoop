@@ -1,6 +1,6 @@
 # `adapters/documents`
 
-> **Planned — no code yet.** Design: [component-design.md §3.8–3.9](../../../docs/architecture/component-design.md#39-document-worker-binary-in-cratesadaptersdocuments) and the [worker protocol](../../../docs/architecture/component-design.md#101-core--document-worker). Milestone M1.2, backlog LL-030 to LL-032.
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.8–3.9](../../../docs/architecture/component-design.md#39-document-worker-binary-in-cratesadaptersdocuments) and the [worker protocol](../../../docs/architecture/component-design.md#101-core--document-worker). Milestone M1.2, backlog LL-030 to LL-032.
 
 **Layer 5 adapter (MVP)** plus the **document worker**, a separate process that parses untrusted files.
 

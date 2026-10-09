@@ -19,10 +19,18 @@ Thank you for your interest. LocalLoop is in the **design phase**: the repositor
 
 ## Documentation rules
 
-- **Requirements:** new or changed behaviour needs a requirement in the SRS with priority, release, validation status, source, and acceptance criteria, plus a row in the [traceability matrix](docs/requirements/requirements-traceability.md). IDs are never reused.
+- **Requirements:** new or changed behaviour needs a requirement in the SRS with priority, release, validation status, source, and acceptance criteria, plus a row in the [traceability matrix](docs/requirements/requirements-traceability.md) and in the [requirements checklist](docs/requirements/REQUIREMENTS_CHECKLIST.md) (regenerate it with `scripts/sync_requirements_checklist.py`). IDs are never reused.
 - **Decisions:** significant design changes need an ADR ([template](docs/adr/template.md)).
 - **Honest claims:** no performance or accuracy figure without a reproducible benchmark (NFR-013). Label proposals, assumptions, and targets as such.
 - **Diagrams:** Mermaid in Markdown so they render on GitHub.
+
+## Requirements checklist
+
+[`docs/requirements/REQUIREMENTS_CHECKLIST.md`](docs/requirements/REQUIREMENTS_CHECKLIST.md) tracks the status of every FR and NFR in the SRS: *Not Started*, *In Progress*, *Implemented*, *Verified*, or *Blocked*.
+
+- **Update it in the same pull request** whenever a requirement's implementation or verification status changes. Edit only the `Status` and `Evidence` of the requirement's line, then run `python3 scripts/sync_requirements_checklist.py` to refresh the summaries.
+- **Never mark a requirement Implemented or Verified without evidence**: link the tests, CI job, or report that demonstrates it. *Verified* means the SRS acceptance criteria or measure were met at the stated level (for example on both reference machines, or by the named evaluation). *Blocked* needs the reason and what would unblock it.
+- IDs, titles, priorities, releases, and phases come from the SRS and the traceability matrix. Do not edit them in the checklist; change the SRS and regenerate. CI fails if the checklist and the SRS disagree.
 
 ## Engineering rules (from first code)
 
@@ -39,6 +47,7 @@ Thank you for your interest. LocalLoop is in the **design phase**: the repositor
 
 ```bash
 python3 scripts/check_docs.py
+python3 scripts/sync_requirements_checklist.py --check
 python3 -m pip install -r scripts/requirements.txt && python3 scripts/validate_schemas.py
 # optional, needs Node.js:
 npm install --no-save @mermaid-js/mermaid-cli@11.17.0 && python3 scripts/validate_mermaid.py --mmdc node_modules/.bin/mmdc

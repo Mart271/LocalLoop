@@ -1,0 +1,18 @@
+{
+  "name": "localloop",
+  "private": true,
+  "description": "LocalLoop workspace root (UI and generated IPC types). Rust crates live in the Cargo workspace.",
+  "packageManager": "pnpm@12.10.1",
+  "engines": {
+    "node": ">=24 <27"
+  },
+  "scripts": {
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "gen:types": "cargo test -p localloop-desktop --lib export_bindings && prettier --write packages/shared/src/generated"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
+  }
+}

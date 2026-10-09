@@ -1,0 +1,61 @@
+# cargo-deny policy (LL-003, NFR-018). Run: cargo deny check
+
+[graph]
+all-features = false
+# LocalLoop ships for Windows x64 and macOS Apple silicon only (A-01). Linux-only crates
+# (for example the GTK stack under wry) are never built or shipped.
+targets = ["x86_64-pc-windows-msvc", "aarch64-apple-darwin"]
+
+[advisories]
+# Any RUSTSEC advisory (vulnerability, unmaintained, unsound, yanked) fails the check.
+# Exceptions must be listed here with a reason and a review date.
+yanked = "deny"
+ignore = []
+
+[licenses]
+# Owner decision (2026-10-09): permissive licences plus MPL-2.0 (file-level copyleft, used
+# unmodified by Tauri's dependencies). GPL, LGPL, and AGPL are not allowed. The product licence
+# itself is still undecided (D-03).
+allow = [
+    "MIT",
+    "MIT-0",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "BSL-1.0",
+    "CC0-1.0",
+    "MPL-2.0",
+]
+confidence-threshold = 0.9
+
+[licenses.private]
+# Workspace crates are unpublished and carry the project's own (not yet chosen) licence.
+ignore = true
+
+[bans]
+multiple-versions = "allow"
+wildcards = "deny"
+allow-wildcard-paths = true
+# Product code makes no network calls (FR-117, NFR-007). HTTP clients and telemetry or update
+# crates may not enter the dependency graph without an ADR.
+deny = [
+    { name = "reqwest", reason = "no network clients in LocalLoop (FR-117)" },
+    { name = "ureq", reason = "no network clients in LocalLoop (FR-117)" },
+    { name = "isahc", reason = "no network clients in LocalLoop (FR-117)" },
+    { name = "curl", reason = "no network clients in LocalLoop (FR-117)" },
+    { name = "attohttpc", reason = "no network clients in LocalLoop (FR-117)" },
+    { name = "tauri-plugin-updater", reason = "no update checks (FR-117)" },
+    { name = "tauri-plugin-shell", reason = "no shell access (FR-104, NFR-014)" },
+    { name = "tauri-plugin-fs", reason = "no generic file-system access from the UI (NFR-014)" },
+    { name = "tauri-plugin-http", reason = "no network access from the UI (FR-117)" },
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

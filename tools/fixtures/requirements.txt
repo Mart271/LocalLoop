@@ -1,0 +1,6 @@
+# Pinned dev-only dependencies for tools/fixtures/generate.py (LL-012). Byte-identical output
+# depends on these exact versions; update them together with tests/fixtures/manifest.json.
+reportlab==5.0.1      # BSD-3-Clause — text-layer PDFs
+pypdfium2==5.14.0     # Apache-2.0 / BSD-3-Clause (bundles PDFium) — rasterizing F2 scans
+pillow==12.3.0        # MIT-CMU — image formats, noise, skew
+openpyxl==3.1.5       # MIT — F6 workbooks

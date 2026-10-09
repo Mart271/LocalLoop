@@ -1,6 +1,6 @@
 # `storage`
 
-> **Planned — no code yet.** Design: [component-design.md §3.7](../../docs/architecture/component-design.md#37-storage--persistence-journal-audit-chain-evidence-backup) and [§9](../../docs/architecture/component-design.md#9-storage-design).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.7](../../docs/architecture/component-design.md#37-storage--persistence-journal-audit-chain-evidence-backup) and [§9](../../docs/architecture/component-design.md#9-storage-design).
 
 **Layer 7: Local Storage.** Everything LocalLoop keeps stays on the device, in a location the user can see.
 

@@ -22,6 +22,7 @@ All current ADRs are **Proposed**. They become *Accepted* after review by the pr
 | [0003](0003-local-inference-sidecar.md) | Local inference through an on-demand llama.cpp sidecar | Proposed | EV-01 |
 | [0004](0004-browser-automation-bridge.md) | Browser automation through a Playwright bridge process | Proposed | EV-09 |
 | [0005](0005-workflow-definition-format.md) | JSON workflow definition with JSON Schema and symbolic locations | Proposed | — |
+| [0009](0009-ipc-type-generation.md) | Generate IPC TypeScript types from Rust with ts-rs | Proposed | — |
 
 ## Decisions still to record
 

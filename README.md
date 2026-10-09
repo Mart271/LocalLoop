@@ -178,6 +178,7 @@ Phases advance on measured exit criteria, not dates. Full plan: [ROADMAP.md](doc
 | [SRS](docs/requirements/SRS.md) | What LocalLoop must do (120 functional, 36 non-functional requirements) |
 | [Use cases](docs/requirements/use-cases.md) | How users interact with it |
 | [Traceability](docs/requirements/requirements-traceability.md) | Objective → requirement → component → test → phase |
+| [Requirements checklist](docs/requirements/REQUIREMENTS_CHECKLIST.md) | Implementation and verification status of every requirement |
 | [System Architecture](docs/architecture/SYSTEM_ARCHITECTURE.md) | How it is designed |
 | [Component design](docs/architecture/component-design.md) | Modules, operation catalog, state machines, storage |
 | [Data flow](docs/architecture/data-flow.md) | Data movement, taint, retention |

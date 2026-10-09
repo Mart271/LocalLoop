@@ -63,3 +63,6 @@ desktop.ini
 !.vscode/extensions.json
 *.swp
 *~
+
+# ---- Generated synthetic fixtures (tools/fixtures/generate.py) ----
+tests/fixtures/generated/

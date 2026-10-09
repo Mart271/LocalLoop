@@ -1,6 +1,6 @@
 # `execution-engine`
 
-> **Planned — no code yet.** Design: [component-design.md §3.3](../../docs/architecture/component-design.md#33-execution-engine--orchestration-journal-control-decisions) and the run and step state machines in [§4](../../docs/architecture/component-design.md#4-state-machines).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.3](../../docs/architecture/component-design.md#33-execution-engine--orchestration-journal-control-decisions) and the run and step state machines in [§4](../../docs/architecture/component-design.md#4-state-machines).
 
 **Layer 5: Execution Engine.** Runs approved workflow versions, one operation at a time, and asks the policy engine before every dispatch.
 
