@@ -1,0 +1,12 @@
+{
+  "recorded_at_utc": "2026-10-09T17:24:29.150Z",
+  "executable": "target/debug/localloop.exe",
+  "build_profile": "debug",
+  "startup_to_connected_ms": 13246,
+  "status": "connected",
+  "recheck": "connected",
+  "isolation_hidden": true,
+  "page_errors": [],
+  "ui_text": "LocalLoopOffline workflow automation that runs entirely on this computer.System statusLocalLoop coreConnected (version 0.1.0)Check againWhat this build includesThis is the foundation build. It does not read, move, or change any of your files yet. Workflows, runs, approvals, and the review queue arrive in later milestones.",
+  "method": "Actual WebView2 via temporary loopback debugging; development setting only; fresh WebView profile, warm OS caches; readiness timing includes debugger polling overhead and uncontrolled background work; no reference-machine claim"
+}

@@ -18,12 +18,12 @@
 - Present approvals and decision escalations, and never approve on the user's behalf (FR-099, FR-051).
 - Expose only an allowlist of IPC commands with typed, validated inputs (NFR-014).
 
-## Security baseline (planned)
+## Security baseline
 
 - Load only bundled local content, with a strict Content Security Policy (`default-src 'self'`); no remote content in the WebView.
 - Minimal Tauri capabilities; no shell or generic file-system plugin exposed to the UI.
 - No telemetry, crash upload, or update checks by default (A-12).
 
-## Scaffolding note
+## Standalone Windows shell
 
-If the Tauri scaffolder refuses to write into a non-empty folder, move this README out temporarily and merge it back afterwards.
+Run `pnpm --filter desktop tauri build --debug --no-bundle` from the repository root, then `target/debug/localloop.exe`. A plain `cargo build` expects the Vite development server; Tauri's build command embeds local assets using `tauri/custom-protocol`. The strict CSP also requires bundled CSS to hide the isolation iframe. Actual WebView2 ping/recheck and visual verification are recorded in the [Windows baseline report](../../docs/development/spikes/LL-013-windows-baseline.md). macOS is deferred under ADR-0010.

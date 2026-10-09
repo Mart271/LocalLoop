@@ -1,0 +1,58 @@
+{
+    "recorded_at_utc":  "2026-10-09T17:25:24.5186776Z",
+    "hardware":  {
+                     "ram_bytes":  17104429056,
+                     "manufacturer":  "MSI",
+                     "os":  "Microsoft Windows 10 Pro",
+                     "model":  "MS-7A70",
+                     "build":  "19045",
+                     "cpu":  "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz"
+                 },
+    "rust":  "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "node":  "v24.11.1",
+    "pnpm":  "12.10.1",
+    "binary_sha256":  "2abf7b0bb5bb3b6387deaaa5f247a8cc29c7a038750423298c3826f8ca9019d3",
+    "build_profile":  "debug",
+    "ai_model":  "none",
+    "strict_offline":  "1",
+    "reference_machine":  false,
+    "method":  "Time to process window handle (may include the debug console), not first usable UI; aggregate sampled RSS of app plus descendants (shared pages counted per process); one sample per approximately 100 ms plus CIM overhead; unique WebView profile per run; background load uncontrolled. UI readiness is checked separately by windows-smoke.json",
+    "samples":  [
+                    {
+                        "run":  1,
+                        "window_ms":  635.52,
+                        "sampled_tree_peak_working_set_bytes":  415391744,
+                        "process_count":  9,
+                        "window_title":  "LocalLoop"
+                    },
+                    {
+                        "run":  2,
+                        "window_ms":  185.19,
+                        "sampled_tree_peak_working_set_bytes":  417468416,
+                        "process_count":  9,
+                        "window_title":  "LocalLoop"
+                    },
+                    {
+                        "run":  3,
+                        "window_ms":  156.25,
+                        "sampled_tree_peak_working_set_bytes":  420630528,
+                        "process_count":  9,
+                        "window_title":  "LocalLoop"
+                    },
+                    {
+                        "run":  4,
+                        "window_ms":  180.05,
+                        "sampled_tree_peak_working_set_bytes":  423940096,
+                        "process_count":  9,
+                        "window_title":  "LocalLoop"
+                    },
+                    {
+                        "run":  5,
+                        "window_ms":  300.69,
+                        "sampled_tree_peak_working_set_bytes":  516214784,
+                        "process_count":  10,
+                        "window_title":  "LocalLoop"
+                    }
+                ],
+    "macos":  "deferred by owner on 2026-10-10"
+}

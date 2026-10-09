@@ -1,5 +1,7 @@
 //! Declares the application's IPC commands so that each needs an explicit permission in a
 //! capability file. A command missing from this list cannot be granted (NFR-014).
+#![forbid(unsafe_code)]
+
 fn main() {
     let mut attributes =
         tauri_build::Attributes::new().app_manifest(tauri_build::AppManifest::new().commands(&["ping"]));

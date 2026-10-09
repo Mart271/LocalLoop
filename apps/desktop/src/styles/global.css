@@ -1,5 +1,11 @@
 @import "./tokens.css";
 
+/* The strict style CSP blocks inline attributes on Tauri's isolation iframe. Keep its
+   message channel active while hiding it through the bundled stylesheet. */
+iframe#__tauri_isolation__ {
+  display: none;
+}
+
 *,
 *::before,
 *::after {
