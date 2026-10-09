@@ -204,139 +204,139 @@ This matrix links **Product Objective → Requirement → Architecture Component
 
 ## 5. Test Case Catalogue
 
-Test cases are grouped under `tests/` by level once code exists (see [tests/README.md](../../tests/README.md)).
+Test cases are grouped under `tests/` by level once code exists (see [tests/README.md](../../tests/README.md)). The *Implemented in* column lists the test code; an empty cell means the test is not implemented yet.
 
-| Test case | Description | Level | Verifies |
-|---|---|---|---|
-| TC-001 | Create workflow requires name and objective; appears as Draft | U, E2E | FR-001 |
-| TC-002 | Every stored version exports to JSON that validates against its schema version | U | FR-002 |
-| TC-003 | Saving creates a new version; earlier content hash unchanged; runs reference exact hash | U, I | FR-003 |
-| TC-004 | Library lists required columns; search by name and description | E2E | FR-004 |
-| TC-005 | Duplicate is a new Draft with no grants | I | FR-005 |
-| TC-006 | Archived workflow cannot start; history retained; restore works | I | FR-006 |
-| TC-007 | Export contains no secrets, absolute paths, grants, or evidence | I | FR-007 |
-| TC-008 | Import validates schema; invalid file rejected with first failing field; valid import is Draft without grants | U, I | FR-008 |
-| TC-009 | Version history shows origin; revert creates a Draft equal to the selected version | I | FR-009 |
-| TC-010 | Inspection view shows 100% of steps, parameters, permissions, and external services | E2E | FR-010, NFR-024 |
-| TC-011 | Only Approved versions run; material changes and mode changes create Drafts | U, I | FR-011, FR-040 |
-| TC-012 | Editor blocks schema-invalid definitions with inline errors | U, E2E | FR-012 |
-| TC-013 | MVP template creates a working workflow with no model installed | E2E | FR-013 |
-| TC-014 | System-detected limitations shown in inspection view | I | FR-014 |
-| TC-015 | No event captured before consent confirmation | I | FR-015 |
-| TC-016 | Recording indicator visible throughout; paused events not captured | E2E | FR-016 |
-| TC-017 | Events outside selected folders/apps are not captured | I | FR-017, NFR-022 |
-| TC-018 | Typed password characters never appear in stored recordings | I | FR-018 |
-| TC-019 | Redacted events absent from analysis input and storage | I | FR-019 |
-| TC-020 | File move/rename in scope captured in order with metadata | I | FR-020 |
-| TC-021 | Field annotation stores name, type, sample value, page, and position | I | FR-021 |
-| TC-022 | Spreadsheet mapping and key columns stored in draft | I | FR-022 |
-| TC-023 | Ambiguous elements are asked about or flagged, never silently assumed | EV (EV-02) | FR-023 |
-| TC-024 | Recording deletion removes rows and files; retention cleanup applies | I | FR-027 |
-| TC-025 | AI workflow construction and variable detection on the EV-02 task set | EV (EV-02) | FR-028, FR-029, NFR-035 |
-| TC-026 | AI-originated draft elements carry an inferred marker and rationale | I | FR-030 |
-| TC-027 | Compiler rejects unknown operations (e.g. shell) and is deterministic | U | FR-031, FR-104 |
-| TC-028 | With no model, demonstration produces an editable literal draft | I | FR-032 |
-| TC-029 | Validation fails without workflow success conditions | U | FR-033 |
-| TC-030 | Preview produces change list and leaves files and spreadsheets byte-identical | I, E2E | FR-034 |
-| TC-031 | Mode recommendation rules and explanations over factor fixtures | U | FR-035, FR-036, FR-039 |
-| TC-032 | Override allowed; incompatible mode blocks validation with explanation | U, I | FR-037, FR-038 |
-| TC-033 | Recommendation, factors, and selected mode stored in history | I | FR-041 |
-| TC-034 | Exact Replay operations match plan; plan hash stable across previews | U, I | FR-042, NFR-005 |
-| TC-035 | Variables, for_each, and if branches behave correctly at boundaries | U | FR-043 |
-| TC-036 | Model-free runs complete without starting the inference runtime | I, S | FR-044, FR-111, NFR-009 |
-| TC-037 | Error rules stop, skip, route to review, or retry as declared | I | FR-045 |
-| TC-038 | Schema-invalid model output is rejected and never passed downstream | U, I | FR-046, FR-110 |
-| TC-039 | Decision outputs outside declared options are rejected | U | FR-047 |
-| TC-040 | Prompt-injection corpus: zero operations outside the approved workflow | I, S | FR-048, FR-106, NFR-020 |
-| TC-041 | Inconsistent, low-confidence, or precondition-failing decisions escalate | U, I | FR-049 |
-| TC-042 | Adaptive budgets stop runs with budget_exhausted | I | FR-050 |
-| TC-043 | Without a model, decision points are presented to the user and recorded as user-made | I | FR-051 |
-| TC-044 | Input folder with mixed files creates items for supported types only | I | FR-054 |
-| TC-045 | Text-layer extraction matches fixture text | I | FR-055 |
-| TC-046 | OCR runs offline; low confidence flagged | I | FR-056 |
-| TC-047 | Rule-based extraction equals expected values on fixtures | U, I | FR-057 |
-| TC-048 | Model-assisted extraction accuracy reported per field | EV (EV-02) | FR-058 |
-| TC-049 | Every extracted value has complete provenance | I | FR-059 |
-| TC-050 | Each validation rule type has passing and failing fixtures | U | FR-060 |
-| TC-051 | Invalid items routed to review without spreadsheet change; correction and resubmission work | I, E2E | FR-061 |
-| TC-052 | Upsert produces expected rows in XLSX and CSV | I | FR-062 |
-| TC-053 | Lock detection, structure check, atomic write under kill, formula neutralization | I | FR-063 |
-| TC-054 | Collision policy suffix/fail; existing files never overwritten | I | FR-064 |
-| TC-055 | Traversal, link, junction, reserved-name, and prefix cases stay in scope (per OS) | U, I | FR-065, FR-105 |
-| TC-056 | Report outcomes equal run record; sensitive fields masked | I | FR-066 |
-| TC-057 | Re-running on same inputs adds no rows | I, E2E | FR-067 |
-| TC-058 | Browser steps never use the everyday profile | I | FR-068 |
-| TC-059 | Basic navigate/click/fill/download against local fixture site | I | FR-069 |
-| TC-060 | Semantic locators survive CSS class changes | I | FR-070 |
-| TC-061 | Dropdowns, tables, dynamic content, uploads on fixture site | I | FR-071 |
-| TC-062 | Page table extraction equals expected records | I | FR-072 |
-| TC-063 | Submission without confirmation is never completed | I | FR-073 |
-| TC-064 | Navigation to non-allowlisted host denied | I | FR-074 |
-| TC-065 | No credential value found in any stored data after credentialed run | S | FR-075, NFR-016 |
-| TC-066 | Challenge page pauses the run | I | FR-076 |
-| TC-067 | MVP catalog contains no input-simulation operation | R | FR-077 |
-| TC-068 | UIA adapter operates test application controls | I | FR-078 |
-| TC-069 | AX adapter reports missing permission and performs no action | I | FR-079 |
-| TC-070 | Unregistered application labelled untested | I | FR-080 |
-| TC-071 | No OCR/VLM call when structural inspection finds the target | I | FR-081 |
-| TC-072 | Missing expected effect blocks dependent actions | I | FR-082 |
-| TC-073 | Ambiguous consequential target prompts the user | I | FR-083 |
-| TC-074 | VLM features disabled below Enhanced level | I | FR-084 |
-| TC-075 | Adapter falsely reporting success is detected by re-observation | I | FR-085, NFR-003 |
-| TC-076 | Outcome classification table tests; no unverified completed | U | FR-086, FR-087 |
-| TC-077 | Injected failures produce complete diagnostic records | I | FR-088 |
-| TC-078 | Retries only for idempotent/transient; consequential never auto-retried | U, I | FR-089 |
-| TC-079 | Rollback restores files and spreadsheet, verified by hash | I | FR-090 |
-| TC-080 | Kill at each step boundary; resume without duplicates | S | FR-091, NFR-004 |
-| TC-081 | Recovery-originated changes create Draft versions | I | FR-092 |
-| TC-082 | Every run reachable in history with complete step records | E2E | FR-093 |
-| TC-083 | Modified audit entry detected at first broken link | U | FR-094 |
-| TC-084 | Seeded secrets and sensitive values absent or masked in logs and reports | S | FR-095, NFR-016 |
-| TC-085 | Progress events at every step boundary | I | FR-096 |
-| TC-086 | No step starts while paused | I | FR-097 |
-| TC-087 | No dispatch after stop acknowledgement; stop works during inference; latency distribution | S | FR-098, NFR-011, NFR-012 |
-| TC-088 | Approval bound to op hash; tampered parameters invalidate; unapproved never runs | U, I | FR-099 |
-| TC-089 | Run indicator visible including when minimized | E2E | FR-100 |
-| TC-090 | Second run request does not start concurrent execution | I | FR-101 |
-| TC-091 | Manifest derived from steps; undeclared access fails compilation | U | FR-102 |
-| TC-092 | Manifest change requires new grant; identical manifest reuses grant | I | FR-103 |
-| TC-093 | Revoking during a run stops it with permission_revoked | I | FR-107 |
-| TC-094 | Model with mismatched hash refused; adding a model needs no network | I | FR-108 |
-| TC-095 | Capability level gating with and without models | I | FR-109 |
-| TC-096 | Model memory released after idle timeout | S | FR-112, NFR-010 |
-| TC-097 | Model load refused when available memory is insufficient | I | FR-113 |
-| TC-098 | Offline acceptance suite on network-disabled VM | S | FR-114, NFR-006 |
-| TC-099 | First launch on never-online machine; no sign-in or licence check | S | FR-115 |
-| TC-100 | External-service label names the host | E2E | FR-116 |
-| TC-101 | Network capture: no unexpected outbound connections | S | FR-117, NFR-007, NFR-021 |
-| TC-102 | Offline installation on clean VM, then MVP workflow runs | S | FR-118, NFR-036 |
-| TC-103 | Backup and restore reproduce library and version hashes; grants not restored | I | FR-119 |
-| TC-104 | Retention cleanup and deletion remove rows and files; deletion logged without content | I | FR-120, NFR-023 |
-| TC-105 | Reference suite repeated ≥100 times per machine; report success rate | S | NFR-001 |
-| TC-106 | Fault-injection suite: zero undetected loss or corruption | S | NFR-002 |
-| TC-107 | Mismatch-injection suite: 100% detected | S | NFR-003 |
-| TC-108 | Resource baseline and regression on reference machines | S, EV (EV-01) | NFR-008 |
-| TC-109 | PR checklist: published figures cite reproducible benchmarks | R | NFR-013 |
-| TC-110 | Non-allowlisted IPC command refused | I | NFR-014 |
-| TC-111 | Review + injection attempts through every input surface: no execution path | R, I | FR-104, NFR-015 |
-| TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 |
-| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 |
-| TC-114 | Installer and update signatures verify | R | NFR-019 |
-| TC-115 | Usability study: participants explain selected mode correctly | UX (EV-07) | NFR-025 |
-| TC-116 | Automated and manual WCAG 2.2 AA checks | R, UX | NFR-026 |
-| TC-117 | Every EXC message states what happened, impact, next step | R | NFR-027 |
-| TC-118 | MVP acceptance suite on both reference machines | S | NFR-028 |
-| TC-119 | Schema migration fixtures; unsupported versions rejected | U | NFR-029 |
-| TC-120 | Forbidden crate dependencies fail CI | I | NFR-030 |
-| TC-121 | Operation-to-test coverage report | R | NFR-031 |
-| TC-122 | Structured logs with correlation IDs; no secrets | I | NFR-032 |
-| TC-123 | Documentation checks (IDs, links, Mermaid, schema examples) in CI | I | NFR-033 |
-| TC-124 | Productivity study versus manual processing | EV (EV-08) | NFR-034 |
-| TC-125 | Recorded browser form task replays using semantic descriptors | I | FR-024 |
-| TC-126 | Keystrokes in unselected applications not captured | I | FR-025 |
-| TC-127 | Screenshots contain only selected application windows | I | FR-026 |
-| TC-128 | Adaptive browser loop: non-allowlisted navigation denied; budgets enforced | I | FR-052 |
-| TC-129 | Recovery proposals outside declared options rejected | U, I | FR-053 |
+| Test case | Description | Level | Verifies | Implemented in |
+|---|---|---|---|---|
+| TC-001 | Create workflow requires name and objective; appears as Draft | U, E2E | FR-001 |  |
+| TC-002 | Every stored version exports to JSON that validates against its schema version | U | FR-002 |  |
+| TC-003 | Saving creates a new version; earlier content hash unchanged; runs reference exact hash | U, I | FR-003 |  |
+| TC-004 | Library lists required columns; search by name and description | E2E | FR-004 |  |
+| TC-005 | Duplicate is a new Draft with no grants | I | FR-005 |  |
+| TC-006 | Archived workflow cannot start; history retained; restore works | I | FR-006 |  |
+| TC-007 | Export contains no secrets, absolute paths, grants, or evidence | I | FR-007 |  |
+| TC-008 | Import validates schema; invalid file rejected with first failing field; valid import is Draft without grants | U, I | FR-008 |  |
+| TC-009 | Version history shows origin; revert creates a Draft equal to the selected version | I | FR-009 |  |
+| TC-010 | Inspection view shows 100% of steps, parameters, permissions, and external services | E2E | FR-010, NFR-024 |  |
+| TC-011 | Only Approved versions run; material changes and mode changes create Drafts | U, I | FR-011, FR-040 |  |
+| TC-012 | Editor blocks schema-invalid definitions with inline errors | U, E2E | FR-012 |  |
+| TC-013 | MVP template creates a working workflow with no model installed | E2E | FR-013 |  |
+| TC-014 | System-detected limitations shown in inspection view | I | FR-014 |  |
+| TC-015 | No event captured before consent confirmation | I | FR-015 |  |
+| TC-016 | Recording indicator visible throughout; paused events not captured | E2E | FR-016 |  |
+| TC-017 | Events outside selected folders/apps are not captured | I | FR-017, NFR-022 |  |
+| TC-018 | Typed password characters never appear in stored recordings | I | FR-018 |  |
+| TC-019 | Redacted events absent from analysis input and storage | I | FR-019 |  |
+| TC-020 | File move/rename in scope captured in order with metadata | I | FR-020 |  |
+| TC-021 | Field annotation stores name, type, sample value, page, and position | I | FR-021 |  |
+| TC-022 | Spreadsheet mapping and key columns stored in draft | I | FR-022 |  |
+| TC-023 | Ambiguous elements are asked about or flagged, never silently assumed | EV (EV-02) | FR-023 |  |
+| TC-024 | Recording deletion removes rows and files; retention cleanup applies | I | FR-027 |  |
+| TC-025 | AI workflow construction and variable detection on the EV-02 task set | EV (EV-02) | FR-028, FR-029, NFR-035 |  |
+| TC-026 | AI-originated draft elements carry an inferred marker and rationale | I | FR-030 |  |
+| TC-027 | Compiler rejects unknown operations (e.g. shell) and is deterministic | U | FR-031, FR-104 |  |
+| TC-028 | With no model, demonstration produces an editable literal draft | I | FR-032 |  |
+| TC-029 | Validation fails without workflow success conditions | U | FR-033 |  |
+| TC-030 | Preview produces change list and leaves files and spreadsheets byte-identical | I, E2E | FR-034 |  |
+| TC-031 | Mode recommendation rules and explanations over factor fixtures | U | FR-035, FR-036, FR-039 |  |
+| TC-032 | Override allowed; incompatible mode blocks validation with explanation | U, I | FR-037, FR-038 |  |
+| TC-033 | Recommendation, factors, and selected mode stored in history | I | FR-041 |  |
+| TC-034 | Exact Replay operations match plan; plan hash stable across previews | U, I | FR-042, NFR-005 |  |
+| TC-035 | Variables, for_each, and if branches behave correctly at boundaries | U | FR-043 |  |
+| TC-036 | Model-free runs complete without starting the inference runtime | I, S | FR-044, FR-111, NFR-009 |  |
+| TC-037 | Error rules stop, skip, route to review, or retry as declared | I | FR-045 |  |
+| TC-038 | Schema-invalid model output is rejected and never passed downstream | U, I | FR-046, FR-110 |  |
+| TC-039 | Decision outputs outside declared options are rejected | U | FR-047 |  |
+| TC-040 | Prompt-injection corpus: zero operations outside the approved workflow | I, S | FR-048, FR-106, NFR-020 |  |
+| TC-041 | Inconsistent, low-confidence, or precondition-failing decisions escalate | U, I | FR-049 |  |
+| TC-042 | Adaptive budgets stop runs with budget_exhausted | I | FR-050 |  |
+| TC-043 | Without a model, decision points are presented to the user and recorded as user-made | I | FR-051 |  |
+| TC-044 | Input folder with mixed files creates items for supported types only | I | FR-054 |  |
+| TC-045 | Text-layer extraction matches fixture text | I | FR-055 |  |
+| TC-046 | OCR runs offline; low confidence flagged | I | FR-056 |  |
+| TC-047 | Rule-based extraction equals expected values on fixtures | U, I | FR-057 |  |
+| TC-048 | Model-assisted extraction accuracy reported per field | EV (EV-02) | FR-058 |  |
+| TC-049 | Every extracted value has complete provenance | I | FR-059 |  |
+| TC-050 | Each validation rule type has passing and failing fixtures | U | FR-060 |  |
+| TC-051 | Invalid items routed to review without spreadsheet change; correction and resubmission work | I, E2E | FR-061 |  |
+| TC-052 | Upsert produces expected rows in XLSX and CSV | I | FR-062 |  |
+| TC-053 | Lock detection, structure check, atomic write under kill, formula neutralization | I | FR-063 |  |
+| TC-054 | Collision policy suffix/fail; existing files never overwritten | I | FR-064 |  |
+| TC-055 | Traversal, link, junction, reserved-name, and prefix cases stay in scope (per OS) | U, I | FR-065, FR-105 |  |
+| TC-056 | Report outcomes equal run record; sensitive fields masked | I | FR-066 |  |
+| TC-057 | Re-running on same inputs adds no rows | I, E2E | FR-067 |  |
+| TC-058 | Browser steps never use the everyday profile | I | FR-068 |  |
+| TC-059 | Basic navigate/click/fill/download against local fixture site | I | FR-069 |  |
+| TC-060 | Semantic locators survive CSS class changes | I | FR-070 |  |
+| TC-061 | Dropdowns, tables, dynamic content, uploads on fixture site | I | FR-071 |  |
+| TC-062 | Page table extraction equals expected records | I | FR-072 |  |
+| TC-063 | Submission without confirmation is never completed | I | FR-073 |  |
+| TC-064 | Navigation to non-allowlisted host denied | I | FR-074 |  |
+| TC-065 | No credential value found in any stored data after credentialed run | S | FR-075, NFR-016 |  |
+| TC-066 | Challenge page pauses the run | I | FR-076 |  |
+| TC-067 | MVP catalog contains no input-simulation operation | R | FR-077 |  |
+| TC-068 | UIA adapter operates test application controls | I | FR-078 |  |
+| TC-069 | AX adapter reports missing permission and performs no action | I | FR-079 |  |
+| TC-070 | Unregistered application labelled untested | I | FR-080 |  |
+| TC-071 | No OCR/VLM call when structural inspection finds the target | I | FR-081 |  |
+| TC-072 | Missing expected effect blocks dependent actions | I | FR-082 |  |
+| TC-073 | Ambiguous consequential target prompts the user | I | FR-083 |  |
+| TC-074 | VLM features disabled below Enhanced level | I | FR-084 |  |
+| TC-075 | Adapter falsely reporting success is detected by re-observation | I | FR-085, NFR-003 |  |
+| TC-076 | Outcome classification table tests; no unverified completed | U | FR-086, FR-087 |  |
+| TC-077 | Injected failures produce complete diagnostic records | I | FR-088 |  |
+| TC-078 | Retries only for idempotent/transient; consequential never auto-retried | U, I | FR-089 |  |
+| TC-079 | Rollback restores files and spreadsheet, verified by hash | I | FR-090 |  |
+| TC-080 | Kill at each step boundary; resume without duplicates | S | FR-091, NFR-004 |  |
+| TC-081 | Recovery-originated changes create Draft versions | I | FR-092 |  |
+| TC-082 | Every run reachable in history with complete step records | E2E | FR-093 |  |
+| TC-083 | Modified audit entry detected at first broken link | U | FR-094 |  |
+| TC-084 | Seeded secrets and sensitive values absent or masked in logs and reports | S | FR-095, NFR-016 |  |
+| TC-085 | Progress events at every step boundary | I | FR-096 |  |
+| TC-086 | No step starts while paused | I | FR-097 |  |
+| TC-087 | No dispatch after stop acknowledgement; stop works during inference; latency distribution | S | FR-098, NFR-011, NFR-012 |  |
+| TC-088 | Approval bound to op hash; tampered parameters invalidate; unapproved never runs | U, I | FR-099 |  |
+| TC-089 | Run indicator visible including when minimized | E2E | FR-100 |  |
+| TC-090 | Second run request does not start concurrent execution | I | FR-101 |  |
+| TC-091 | Manifest derived from steps; undeclared access fails compilation | U | FR-102 |  |
+| TC-092 | Manifest change requires new grant; identical manifest reuses grant | I | FR-103 |  |
+| TC-093 | Revoking during a run stops it with permission_revoked | I | FR-107 |  |
+| TC-094 | Model with mismatched hash refused; adding a model needs no network | I | FR-108 |  |
+| TC-095 | Capability level gating with and without models | I | FR-109 |  |
+| TC-096 | Model memory released after idle timeout | S | FR-112, NFR-010 |  |
+| TC-097 | Model load refused when available memory is insufficient | I | FR-113 |  |
+| TC-098 | Offline acceptance suite on network-disabled VM | S | FR-114, NFR-006 |  |
+| TC-099 | First launch on never-online machine; no sign-in or licence check | S | FR-115 |  |
+| TC-100 | External-service label names the host | E2E | FR-116 |  |
+| TC-101 | Network capture: no unexpected outbound connections | S | FR-117, NFR-007, NFR-021 |  |
+| TC-102 | Offline installation on clean VM, then MVP workflow runs | S | FR-118, NFR-036 |  |
+| TC-103 | Backup and restore reproduce library and version hashes; grants not restored | I | FR-119 |  |
+| TC-104 | Retention cleanup and deletion remove rows and files; deletion logged without content | I | FR-120, NFR-023 |  |
+| TC-105 | Reference suite repeated ≥100 times per machine; report success rate | S | NFR-001 |  |
+| TC-106 | Fault-injection suite: zero undetected loss or corruption | S | NFR-002 |  |
+| TC-107 | Mismatch-injection suite: 100% detected | S | NFR-003 |  |
+| TC-108 | Resource baseline and regression on reference machines | S, EV (EV-01) | NFR-008 |  |
+| TC-109 | PR checklist: published figures cite reproducible benchmarks | R | NFR-013 |  |
+| TC-110 | Non-allowlisted IPC command refused | I | NFR-014 |  |
+| TC-111 | Review + injection attempts through every input surface: no execution path | R, I | FR-104, NFR-015 |  |
+| TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 |  |
+| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 |  |
+| TC-114 | Installer and update signatures verify | R | NFR-019 |  |
+| TC-115 | Usability study: participants explain selected mode correctly | UX (EV-07) | NFR-025 |  |
+| TC-116 | Automated and manual WCAG 2.2 AA checks | R, UX | NFR-026 |  |
+| TC-117 | Every EXC message states what happened, impact, next step | R | NFR-027 |  |
+| TC-118 | MVP acceptance suite on both reference machines | S | NFR-028 |  |
+| TC-119 | Schema migration fixtures; unsupported versions rejected | U | NFR-029 |  |
+| TC-120 | Forbidden crate dependencies fail CI | I | NFR-030 | [`scripts/tests/test_check_crate_deps.py`](../../scripts/tests/test_check_crate_deps.py), [`scripts/check_crate_deps.py`](../../scripts/check_crate_deps.py) |
+| TC-121 | Operation-to-test coverage report | R | NFR-031 |  |
+| TC-122 | Structured logs with correlation IDs; no secrets | I | NFR-032 |  |
+| TC-123 | Documentation checks (IDs, links, Mermaid, schema examples) in CI | I | NFR-033 | [`scripts/check_docs.py`](../../scripts/check_docs.py), [`scripts/validate_schemas.py`](../../scripts/validate_schemas.py), [`scripts/validate_mermaid.py`](../../scripts/validate_mermaid.py) |
+| TC-124 | Productivity study versus manual processing | EV (EV-08) | NFR-034 |  |
+| TC-125 | Recorded browser form task replays using semantic descriptors | I | FR-024 |  |
+| TC-126 | Keystrokes in unselected applications not captured | I | FR-025 |  |
+| TC-127 | Screenshots contain only selected application windows | I | FR-026 |  |
+| TC-128 | Adaptive browser loop: non-allowlisted navigation denied; budgets enforced | I | FR-052 |  |
+| TC-129 | Recovery proposals outside declared options rejected | U, I | FR-053 |  |
 
 ## 6. Coverage Summary
 
@@ -367,5 +367,5 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 
 1. A new requirement must be added to this matrix in the same pull request.
 2. A withdrawn requirement stays in the matrix with *Withdrawn* in the Release column.
-3. When a test is implemented, add its path next to the test case ID in §5.
+3. When a test is implemented, add its path in the *Implemented in* column of §5.
 4. `python3 scripts/check_docs.py` must pass before merging.

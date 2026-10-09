@@ -19,7 +19,7 @@ The desktop app in [`apps/desktop`](../apps/desktop/README.md) is the only place
 
 Allowed dependencies point toward `workflow-engine`, which defines the domain types and ports and depends on no internal crate ([SYSTEM_ARCHITECTURE §6.1](../docs/architecture/SYSTEM_ARCHITECTURE.md#61-module-dependency-rules-nfr-030)).
 
-**Forbidden**, to be enforced by a CI check (LL-004):
+**Forbidden**, directly or transitively, and enforced by [`scripts/check_crate_deps.py`](../scripts/check_crate_deps.py) in CI (LL-004):
 
 - `local-ai` → `policy-engine`, `execution-engine`, `adapters/*`, `storage`
 - `adapters/*` → `local-ai`
