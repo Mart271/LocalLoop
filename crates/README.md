@@ -1,6 +1,6 @@
 # Rust Crates
 
-> **Planned — no code yet.** Each folder holds only a README describing the crate's responsibility. The Cargo workspace is created in backlog item LL-001 (milestone M1.0); see [SETUP.md §3](../docs/development/SETUP.md#3-commands-to-begin-development-m10).
+> **Skeleton only.** The Cargo workspace (root `Cargo.toml`) and an empty crate per folder were created in LL-001 (milestone M1.0). Browser and desktop adapters remain README-only until Phase 2 and Phase 3.
 
 | Crate | Layer | Responsibility |
 |---|---|---|

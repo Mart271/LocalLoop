@@ -1,6 +1,6 @@
 # `adapters/spreadsheet`
 
-> **Planned — no code yet.** Design: [component-design.md §3.8](../../../docs/architecture/component-design.md#38-adapters). Milestone M1.2, backlog LL-036 and LL-037.
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.8](../../../docs/architecture/component-design.md#38-adapters). Milestone M1.2, backlog LL-036 and LL-037.
 
 **Layer 5 adapter (MVP).** Updates local spreadsheets as files, not by driving a spreadsheet application (FR-077).
 

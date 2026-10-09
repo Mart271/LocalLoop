@@ -1,0 +1,14 @@
+[package]
+name = "adapter-documents"
+description = "LocalLoop documents adapter: client of the isolated document worker."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]

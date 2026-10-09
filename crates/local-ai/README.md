@@ -1,6 +1,6 @@
 # `local-ai`
 
-> **Planned — no code yet.** Design: [component-design.md §3.5](../../docs/architecture/component-design.md#35-local-ai--model-registry-runtime-prompts-structured-outputs), [ADR-0003](../../docs/adr/0003-local-inference-sidecar.md).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.5](../../docs/architecture/component-design.md#35-local-ai--model-registry-runtime-prompts-structured-outputs), [ADR-0003](../../docs/adr/0003-local-inference-sidecar.md).
 
 **Layer 3: Local AI Intelligence.** Implements the AI ports defined by `workflow-engine`. Everything it returns is an **untrusted proposal or untrusted data**.
 

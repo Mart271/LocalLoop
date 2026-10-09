@@ -1,6 +1,6 @@
 # `observation`
 
-> **Planned — no code yet.** Design: [component-design.md §3.6](../../docs/architecture/component-design.md#36-observation--recording-sessions).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.6](../../docs/architecture/component-design.md#36-observation--recording-sessions).
 
 **Layer 2: Workflow Observation.** Records demonstrations, but only what the user allowed and only while they can see that it is recording.
 

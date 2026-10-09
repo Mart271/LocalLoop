@@ -1,6 +1,6 @@
 # `policy-engine`
 
-> **Planned — no code yet.** Design: [component-design.md §3.2](../../docs/architecture/component-design.md#32-policy-engine--permissions-scopes-taint-approvals) and [§5](../../docs/architecture/component-design.md#5-policy-evaluation).
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.2](../../docs/architecture/component-design.md#32-policy-engine--permissions-scopes-taint-approvals) and [§5](../../docs/architecture/component-design.md#5-policy-evaluation).
 
 **Layer 4: Policy Engine.** The only component that can authorize an operation. AI reasoning is never treated as permission (C-01).
 

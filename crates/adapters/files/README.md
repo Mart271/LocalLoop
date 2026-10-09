@@ -1,6 +1,6 @@
 # `adapters/files`
 
-> **Planned — no code yet.** Design: [component-design.md §3.8](../../../docs/architecture/component-design.md#38-adapters). Milestone M1.2, backlog LL-029.
+> **Skeleton only (LL-001):** the crate builds but has no public API yet. Design: [component-design.md §3.8](../../../docs/architecture/component-design.md#38-adapters). Milestone M1.2, backlog LL-029.
 
 **Layer 5 adapter (MVP).** Performs file operations inside granted locations and observes file state for verification.
 

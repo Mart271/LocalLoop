@@ -1,0 +1,42 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/workflow-engine",
+    "crates/policy-engine",
+    "crates/execution-engine",
+    "crates/verification-engine",
+    "crates/local-ai",
+    "crates/observation",
+    "crates/storage",
+    "crates/adapters/files",
+    "crates/adapters/documents",
+    "crates/adapters/spreadsheet",
+]
+# Spike code is throwaway and never part of the shipped workspace.
+exclude = ["spikes"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+# No licence chosen yet (D-03); all rights reserved until LICENSE is added.
+license = "LicenseRef-LocalLoop-Proprietary"
+repository = "https://github.com/Mart271/LocalLoop"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unused_must_use = "deny"
+
+[workspace.lints.clippy]
+# No panics on paths reachable from untrusted input. Tests are exempted in clippy.toml.
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
