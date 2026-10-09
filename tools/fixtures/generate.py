@@ -301,6 +301,16 @@ def generate(out: Path, seed: int) -> None:
                                      "note": "Synthetic data only. Regenerate instead of editing."})
 
 
+# F2 images come from rasterizing PDFs with PDFium; anti-aliasing differs slightly between
+# platforms, so their bytes are pinned per run rather than across operating systems. Their
+# truth.json is not rasterized and is still compared exactly.
+PLATFORM_DEPENDENT = ("F2-scanned/",)
+
+
+def is_platform_dependent(name: str) -> bool:
+    return name.startswith(PLATFORM_DEPENDENT) and not name.endswith("truth.json")
+
+
 def digest_tree(root: Path) -> dict[str, str]:
     return {
         path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -325,15 +335,24 @@ def main(argv: list[str] | None = None) -> int:
     if args.check:
         expected = json.loads(MANIFEST.read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as tmp:
-            generate(Path(tmp) / "out", expected["seed"])
-            actual = manifest_for(Path(tmp) / "out", expected["seed"])
-        differences = sorted(
-            name for name in set(expected["files"]) | set(actual["files"])
-            if expected["files"].get(name) != actual["files"].get(name)
-        )
+            first, second = Path(tmp) / "a", Path(tmp) / "b"
+            generate(first, expected["seed"])
+            generate(second, expected["seed"])
+            actual, again = digest_tree(first), digest_tree(second)
+        differences: list[str] = []
+        for name in sorted(set(expected["files"]) | set(actual)):
+            if name not in actual or name not in expected["files"]:
+                differences.append(f"{name} (present in only one of manifest/output)")
+            elif is_platform_dependent(name):
+                # Rasterized pixels differ by platform; require run-to-run reproducibility instead.
+                if actual[name] != again[name]:
+                    differences.append(f"{name} (not reproducible on this platform)")
+            elif actual[name] != expected["files"][name]:
+                differences.append(name)
         for name in differences:
             print(f"DIFF  {name}")
-        print(f"{len(actual['files'])} files generated; {len(differences)} differ from the manifest.")
+        platform_files = sum(is_platform_dependent(n) for n in actual)
+        print(f"{len(actual)} files generated ({platform_files} rasterized, checked run-to-run); {len(differences)} problem(s).")
         return 1 if differences else 0
 
     generate(args.out, args.seed)
