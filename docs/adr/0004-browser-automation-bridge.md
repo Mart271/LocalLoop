@@ -19,6 +19,8 @@ The proposal names Playwright and the Chrome DevTools Protocol for browser autom
 4. The bridge writes downloads only to its staging folder; files reach user folders through policy-checked `files.move`.
 5. The core talks to the bridge only through a `BrowserAdapter` interface, so the implementation can be replaced (for example by direct CDP from Rust) without touching policy or execution.
 
+**D-02 scope decision (owner, 2026-10-09):** browser automation and EV-09 are deferred to Phase 2. The implementation proposal above remains Proposed; browser packaging is not an M1.0 gate.
+
 ## Consequences
 
 - Positive: mature locators (role, label, text) matching FR-070; auto-waiting; a large community; CDP available when needed.

@@ -22,7 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-EXCLUDED_DIRS = frozenset({".git", "node_modules", "target", "dist", ".venv"})
+EXCLUDED_DIRS = frozenset({".git", "node_modules", "target", "dist", ".venv", ".localloop-dev"})
 RENDER_TIMEOUT_SECONDS = 120
 
 

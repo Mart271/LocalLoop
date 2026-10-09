@@ -2,96 +2,89 @@
 
 | Field | Value |
 |---|---|
-| Version | 0.1 |
-| Date | 2026-10-09 |
+| Version | 0.2 |
+| Date | 2026-10-10 |
 
-> **Current state:** this repository contains documentation, a draft workflow schema, example workflows, and documentation checks. **There is no application code yet.** Nothing can be built or run as an app. The first code milestone is M1.0 in the [Roadmap](ROADMAP.md).
+The Windows foundation shell and Cargo workspace exist. See [PROGRESS.md](PROGRESS.md) for measured evidence and remaining work. macOS validation is deferred by the owner ([ADR-0010](../adr/0010-windows-first-validation.md)).
 
----
+## 1. Prerequisites
 
-## 1. What you can run today
+- Rust 1.99.0, rustfmt and Clippy, pinned in `rust-toolchain.toml`.
+- Node LTS in the supported `>=24 <27` range; CI uses `.nvmrc`. The measured Windows session used Node 24.11.1.
+- pnpm 12.10.1, pinned in `package.json`. Install with `npm install --global pnpm@12.10.1`. Older pnpm/corepack shims may need reinstalling after the native pnpm executable migration.
+- Python 3.12 or later. Use a repository virtual environment for pinned fixture/schema dependencies.
+- Microsoft C++ build tools with a Windows SDK; WebView2 runtime.
+- `cargo-deny` and `cargo-audit` for advisories/licence checks.
 
-### Prerequisites
+Development-time downloads are allowed. Product code must remain offline: no telemetry, update checks, remote fonts/scripts, or automatic model downloads.
 
-- Git
-- Python 3.10 or later
-- Node.js (current LTS) and npm, only for the Mermaid diagram check
+## 2. Install and validate (PowerShell, repository root)
 
-### Documentation and schema checks
+```powershell
+rustup toolchain install 1.99.0 --profile minimal --component rustfmt --component clippy
+npm install --global pnpm@12.10.1
+pnpm install --frozen-lockfile
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r scripts/requirements.txt -r tools/fixtures/requirements.txt
+cargo install cargo-deny --locked
+cargo install cargo-audit --locked
 
-```bash
-# Requirement IDs, cross-references, traceability coverage, relative links and anchors
-python3 scripts/check_docs.py
-
-# Validate example workflows against the draft JSON Schema
-python3 -m pip install -r scripts/requirements.txt
-python3 scripts/validate_schemas.py
-
-# Render every Mermaid diagram to catch syntax errors (downloads Chromium via Puppeteer)
-npm install --no-save @mermaid-js/mermaid-cli@11.17.0
-python3 scripts/validate_mermaid.py --mmdc node_modules/.bin/mmdc
+.venv/Scripts/python.exe scripts/check_docs.py
+.venv/Scripts/python.exe scripts/sync_requirements_checklist.py --check
+.venv/Scripts/python.exe scripts/validate_schemas.py
+.venv/Scripts/python.exe -m unittest discover -s scripts/tests -v
+.venv/Scripts/python.exe scripts/check_crate_deps.py
+.venv/Scripts/python.exe tools/fixtures/generate.py --check
+pnpm --filter desktop build
+cargo fmt --all --check
+cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo test --workspace --locked
+cargo deny --locked check
+cargo audit --deny warnings
+pnpm -r lint
+pnpm -r typecheck
+pnpm -r test
+pnpm audit --audit-level low
+pnpm gen:types
+git diff --exit-code -- packages/shared/src/generated
 ```
 
-On Linux CI runners, Chromium may need `--puppeteer-config scripts/puppeteer-config.json` (disables the Chromium sandbox for rendering trusted, repository-owned diagrams only).
+Install the Rust toolchain before running parallel Cargo commands: competing rustup installers can race on component downloads. Run each check as a separate command, or stop a script on the first nonzero exit code.
 
-The same checks run in GitHub Actions (`.github/workflows/ci.yml`) once the repository is pushed.
+## 3. Run the desktop shell
 
-## 2. Toolchain for application development (from M1.0)
-
-These are the **proposed** prerequisites, pending the ADRs in [docs/adr](../adr/README.md). Pin exact versions in `rust-toolchain.toml` and `package.json` when the code is created.
-
-| Tool | Purpose | Notes |
-|---|---|---|
-| Rust (stable, via `rustup`) | Core crates, Tauri host, document worker | Add `rustfmt`, `clippy` |
-| Node.js (current LTS) + pnpm | React UI, TypeScript types, Mermaid checks; browser bridge in Phase 2 | |
-| Tauri 2 prerequisites | Desktop shell | Windows: Microsoft C++ Build Tools and WebView2; macOS: Xcode Command Line Tools |
-| `cargo-deny`, `cargo-audit` | Dependency advisories, licences, bans | CI from M1.0 |
-| SQLite tooling (optional) | Inspecting local databases during development | |
-
-Platform notes:
-
-- **Windows:** develop on x64; test with a standard (non-admin) user account; keep Excel installed on one test machine to reproduce file-lock behaviour (EXC-08).
-- **macOS:** expect permission prompts (Files and Folders; later Accessibility and Screen Recording). Reset with `tccutil` during testing.
-
-## 3. Commands to begin development (M1.0)
-
-Run these when starting milestone M1.0 ([BACKLOG](BACKLOG.md) LL-001, LL-002). They are listed here for planning and have **not** been run in this repository.
-
-```bash
-# 1. Rust workspace and crates (LL-001)
-#    `cargo init` works inside the existing folders (each currently holds only a README.md)
-cargo init --lib --vcs none crates/workflow-engine
-cargo init --lib --vcs none crates/policy-engine
-cargo init --lib --vcs none crates/execution-engine
-cargo init --lib --vcs none crates/verification-engine
-cargo init --lib --vcs none crates/local-ai
-cargo init --lib --vcs none crates/observation
-cargo init --lib --vcs none crates/storage
-cargo init --lib --vcs none --name adapter-files crates/adapters/files
-cargo init --lib --vcs none --name adapter-documents crates/adapters/documents
-cargo init --lib --vcs none --name adapter-spreadsheet crates/adapters/spreadsheet
-# then create a root Cargo.toml with [workspace] members and shared lints
-
-# 2. Desktop app (LL-002) — interactive; choose TypeScript + React + pnpm
-cd apps
-npm create tauri-app@latest desktop
+```powershell
+$env:LOCALLOOP_STRICT_OFFLINE = "1"
+pnpm --filter desktop tauri dev
 ```
 
-## 4. Repository conventions
+For a standalone binary with embedded assets:
 
-- **Branches:** `main` is protected once the repo is published; work on `feat/…`, `fix/…`, `docs/…`, `spike/…` branches.
-- **Commits:** Conventional Commits (`feat(policy-engine): …`, `docs(srs): …`).
-- **Requirement references:** PR descriptions and commit bodies cite requirement IDs (`FR-063`) and backlog IDs (`LL-037`).
-- **Decisions:** significant design changes need an ADR ([template](../adr/template.md)).
-- **No real documents:** use synthetic fixtures only (A-19). Never commit real invoices, customer data, credentials, or model files (`*.gguf` is git-ignored).
-
-## 5. Git and GitHub
-
-The repository is initialized locally. **No remote has been created and nothing has been pushed.** When the project owner approves publishing:
-
-```bash
-gh repo create <owner>/LocalLoop --private --source . --remote origin
-git push -u origin main
+```powershell
+pnpm --filter desktop tauri build --debug --no-bundle
+& ./target/debug/localloop.exe
 ```
 
-Before making the repository public: choose a licence ([LICENSE_SELECTION.md](../../LICENSE_SELECTION.md)), enable private vulnerability reporting, and protect `main`.
+A plain `cargo build` produces a development host that expects Vite at the configured dev URL. It is not a standalone offline shell. Tauri's build command enables `tauri/custom-protocol`; CI also checks that embedded-assets build directly. The M1.0 shell supports only ping and clearly labels later features as unavailable.
+
+Windows benchmark commands and reproduction notes: [spike reports](spikes/README.md). Installer creation is M1.6 work.
+
+## 4. Mermaid diagrams
+
+Use an isolated development-tool prefix so the diagram checker does not change the UI lockfile:
+
+```powershell
+npm install --prefix .localloop-dev/tooling @mermaid-js/mermaid-cli@11.17.0
+$mermaid = (Resolve-Path .localloop-dev/tooling/node_modules/.bin/mmdc.cmd).Path
+.venv/Scripts/python.exe scripts/validate_mermaid.py --mmdc $mermaid
+```
+
+Linux CI uses `scripts/puppeteer-config.json` for trusted repository diagrams. The tooling prefix and downloaded browsers/models are ignored and never shipped.
+
+## 5. Repository conventions
+
+One branch per milestone; small Conventional Commits citing backlog and requirement IDs. Update docs and requirement evidence with code. Use synthetic fixtures only (A-19); never commit credentials, real documents, model binaries, build output or dependencies.
+
+The `origin` remote exists and foundation PR #4 is merged into `main`. Pushing `feat/m1.0-foundation` for CI was approved on 2026-10-09. PRs, issues and other pushes need the owner's explicit OK. Stop for review at each milestone boundary.
+
+macOS toolchain, platform behavior, packaging and on-device checks remain deferred. Passing Windows checks does not establish macOS support or 8 GB reference-machine usability.

@@ -566,13 +566,13 @@ The system shall detect documents already processed successfully by the same wor
 ### 4.8 Browser automation
 
 #### FR-068 — Managed browser session
-**Should · MVP (conditional, D-02) · Unvalidated (EV-09) · P§12 ("Basic supported browser interaction"), P§4.4**
+**Should · P2 · Unvalidated (EV-09) · P§12 ("Basic supported browser interaction"), P§4.4**
 The system shall run browser steps in a managed browser profile launched by LocalLoop, never in the user's everyday profile, and shall show which browser and profile are in use.
 - AC1: Browser steps never read cookies or history from the user's everyday profile.
 
 #### FR-069 — Basic browser operations
-**Should · MVP (conditional, D-02) · Unvalidated (EV-09) · P§12, P§4.4**
-The MVP browser scope, if included, is limited to: open URL, navigate, click, fill non-secret text fields, and download a file into a granted location. Authentication, if needed, is done manually by the user in the managed profile; LocalLoop does not type passwords in the MVP.
+**Should · P2 · Unvalidated (EV-09) · P§12, P§4.4**
+The initial browser scope is limited to: open URL, navigate, click, fill non-secret text fields, and download a file into a granted location. Authentication, if needed, is done manually by the user in the managed profile; credential-reference support is specified separately in FR-075. Browser operations are deferred from the MVP by owner decision D-02 (2026-10-09).
 - AC1: A configured workflow downloads a document from a local test web server into the input location.
 
 #### FR-070 — Semantic element targeting
@@ -596,7 +596,7 @@ The system shall detect page transitions and verify submissions by explicit post
 - AC1: A submission whose confirmation text does not appear yields outcome *unverified* or *failed*, never *completed*.
 
 #### FR-074 — Host allowlist
-**Must · MVP if FR-069 is included, otherwise P2 · Committed · Derived from P§9 ("User-selected … access scopes")**
+**Must · P2 · Committed · Derived from P§9 ("User-selected … access scopes")**
 Each browser workflow shall declare the hosts it may access. Navigation, requests initiated by workflow steps, uploads, and downloads involving other hosts shall be blocked.
 - AC1: A step navigating to a non-allowlisted host is denied with EXC-19.
 
@@ -606,7 +606,7 @@ Credentials used by browser steps shall be stored in the OS credential store and
 - AC1: A scan of all stored data after a credentialed test run finds no credential value.
 
 #### FR-076 — Respect authentication and website restrictions
-**Must · P2 (and MVP if FR-069 is included) · Committed · P§4.4 ("must respect authentication boundaries, user permissions, and applicable website restrictions")**
+**Must · P2 · Committed · P§4.4 ("must respect authentication boundaries, user permissions, and applicable website restrictions")**
 The system shall not attempt to solve CAPTCHAs, evade bot detection, or bypass authentication. On encountering them it shall pause for the user (EXC-26).
 - AC1: A fixture page presenting a challenge pauses the run and notifies the user.
 
@@ -1082,11 +1082,12 @@ UI requirements across screens: plain language (P§15.8), keyboard accessibility
 |---|---|---|---|---|---|
 | Desktop shell ↔ core | Rust core inside the desktop process | Bidirectional | Tauri command/event IPC with typed DTOs | MVP | Proposed |
 | Core ↔ inference runtime | llama.cpp-compatible server process | Core → runtime | HTTP on loopback with per-session token, or stdio | MVP | Proposed (EV-01) |
-| Core ↔ browser bridge | Node.js process hosting Playwright | Bidirectional | JSON-RPC 2.0 over stdio | P2 (MVP if D-02) | Proposed (EV-09) |
+| Core ↔ browser bridge | Node.js process hosting Playwright | Bidirectional | JSON-RPC 2.0 over stdio | P2 | Proposed (EV-09) |
 | Browser bridge ↔ browser | Chromium-based browser | Bidirectional | Playwright / CDP | P2 | Proposed |
-| Core ↔ OCR engine | OCR library | In-process | Library API | MVP | Pending EV-06 |
-| Core ↔ PDF library | PDF text/render library | In-process | Library API | MVP | Proposed |
-| Core ↔ spreadsheet files | XLSX/CSV libraries | In-process | Library API | MVP | Pending EV-04 |
+| Core ↔ document worker | Separate bounded parsing/OCR process | Bidirectional | Framed stdio with bytes in, structured text out | MVP | Proposed (component-design §10.1) |
+| Document worker ↔ OCR engine | Local OCR library | Inside worker only | Library API | MVP | EV-06 measured on Windows; ADR-0006 proposed |
+| Document worker ↔ PDF library | PDF text/render library | Inside worker only | Library API | MVP | Proposed |
+| Core ↔ spreadsheet files | Constrained XLSX package editor / CSV | In-process | Authorized file handles; independent re-read | MVP | EV-04 measured on Windows; ADR-0007 proposed |
 | Core ↔ OS credential store | Credential Manager / Keychain | Bidirectional | OS API | MVP | Proposed |
 | Core ↔ file system | OS file APIs, file-change notifications | Bidirectional | OS API | MVP | Committed |
 | Core ↔ Windows UI Automation | Target applications | Bidirectional | UIA COM API | P3 | Proposed |
@@ -1214,7 +1215,7 @@ Documents processed by LocalLoop may contain personal data of third parties. Use
 |---|---|---|---|
 | Location access | Folder binding + read/write + recursion | Grant dialog (FR-103) | MVP |
 | Operation types | Per catalog operation | Derived from steps; granted with manifest | MVP |
-| Network hosts | Host (scheme + host + port) | Grant dialog | MVP (if D-02), P2 |
+| Network hosts | Host (scheme + host + port) | Grant dialog | P2 |
 | Credentials | Named OS credential reference + allowed host | Grant dialog | P2 |
 | Applications | Application ID and version range | Grant dialog + OS permission | P3 |
 | Screen capture | Per application window | Grant dialog + OS permission | P2–P3 |
@@ -1264,7 +1265,7 @@ FR-015 to FR-018, FR-065, FR-074 to FR-076, FR-083, FR-098, FR-099, FR-102 to FR
 | Model-assisted extraction, decision points | Yes, if a model is installed | Otherwise review queue or manual decisions |
 | Spreadsheet update, file organization, reports | Yes | |
 | Browser steps on remote hosts | No | External-service-dependent |
-| Browser steps on local or offline-capable web apps | Yes | P2 (MVP if D-02) |
+| Browser steps on local or offline-capable web apps | Yes | P2 |
 | Backup and restore | Yes | |
 
 ### 10.3 Governing requirements
@@ -1563,11 +1564,11 @@ FR-085 to FR-095, NFR-001 to NFR-004.
 
 | ID | Assumption | Rationale |
 |---|---|---|
-| A-01 | MVP OS targets: Windows 10 22H2 / Windows 11 (x64); macOS 13+ (Apple silicon) | Proposal names platforms but not versions. Windows 10 reached end of support in October 2025, so keeping it depends on whether target users still run it (D-08) |
+| A-01 | OS targets: Windows 10 22H2 / Windows 11 (x64); macOS 13+ (Apple silicon). Windows is the active milestone gate; macOS implementation/validation is deferred by the owner (2026-10-10, ADR-0010). Cross-platform MVP acceptance remains pending | Proposal names platforms but not versions. Windows 10 reached end of support in October 2025, so keeping it depends on whether target users still run it (D-08) |
 | A-02 | MVP UI language is English | Not specified |
 | A-03 | MVP "recording" is a guided demonstration: file-operation capture in selected folders plus in-app document annotation and spreadsheet mapping. OS-wide input recording is deferred | The MVP scenario is document- and file-centric; P§4.5 prefers APIs over simulated input |
 | A-04 | MVP document types: PDF (text and scanned), PNG, JPEG, TIFF | Covers "receive documents" with OCR (P§12) |
-| A-05 | Spreadsheets are modified as files (XLSX without macros, CSV); workbooks with macros, pivot tables, or external links may not round-trip and are rejected or written via a separate output sheet/file, pending EV-04 | P§4.5 API-first; library round-trip limits |
+| A-05 | Spreadsheets are modified as files: a constrained simple XLSX subset and CSV. Reject unsupported parts/relationships, macros, pivots, external links and advanced workbook features before modifying originals; offer a separate output file. EV-04 measured fidelity losses; package-preserving approach proposed in ADR-0007 | P§4.5 API-first; measured round-trip limits |
 | A-06 | One OS user per installation; no accounts or roles | Desktop product; P§6 no online accounts |
 | A-07 | One active run at a time in the MVP | Avoids conflicting automations; simplifies recovery |
 | A-08 | Workflow definition format is JSON with a JSON Schema (draft 0.1) | P§4.8 portable, documented format |
@@ -1579,7 +1580,7 @@ FR-085 to FR-095, NFR-001 to NFR-004.
 | A-14 | Windows reference machine: x64, 8 GB RAM, integrated graphics, SSD | P§7 says "representative Windows laptop" |
 | A-15 | Team size and calendar are unknown; the roadmap is sequenced by exit criteria, not dates | Not specified |
 | A-16 | MVP Adaptive Execution is limited to bounded decision points in the document workflow | Reconciles P§12 (mode selection in MVP) with P§11 (adaptive browser in Phase 2) |
-| A-17 | MVP browser interaction is conditional (Should) and the first candidate to defer | P§12 lists it; P§11 places browser automation in Phase 2 |
+| A-17 | Browser interaction is deferred to Phase 2 by owner decision D-02 (2026-10-09); EV-09 is not an M1.0 gate | P§12 lists it; P§11 places browser automation in Phase 2 |
 | A-18 | The MVP catalog has no permanent-delete operation | Least privilege; P§9 irreversible deletion needs human control |
 | A-19 | Development uses synthetic documents; real documents only with the owners' consent | Privacy of third-party data |
 
@@ -1615,12 +1616,12 @@ FR-085 to FR-095, NFR-001 to NFR-004.
 | ID | Decision | Recommendation | Needed by |
 |---|---|---|---|
 | D-01 | Reconcile MVP list (P§12) with Phase 1 roadmap (P§11) | MVP = Phase 1 + constrained Phase 2 slice (see §20.4) | Before Phase 1 planning |
-| D-02 | Include basic browser interaction in the MVP? | Include only if EV-09 shows the browser bridge can be packaged offline within Phase 1; otherwise defer to P2 | End of Phase 1 milestone M1.1 |
+| D-02 | Include basic browser interaction in the MVP? | Resolved: defer browser automation and EV-09 to Phase 2 (owner, 2026-10-09; ADR-0004 scope note) | Resolved for MVP scope |
 | D-03 | Software licence | Choose before first public release; see LICENSE_SELECTION.md | Before publishing |
-| D-04 | OCR engine | Decide from EV-06 | Phase 1 |
+| D-04 | OCR engine | Windows EV-06 report supports proposed ADR-0006; owner review pending | Phase 1 |
 | D-05 | Model shortlist for Lightweight Local AI | Decide from EV-01 | Phase 1 |
 | D-06 | Workflow format: JSON only, or JSON + YAML authoring | JSON only for MVP (ADR-0005) | Phase 1 |
-| D-07 | Encryption at rest: SQLCipher vs. application-level field/file encryption | Decide in an ADR during Phase 1 | Phase 1 |
+| D-07 | Encryption at rest: SQLCipher vs. application-level field/file encryption | Windows spike supports proposed ADR-0008; owner review pending; macOS deferred by ADR-0010 | Phase 1 |
 | D-08 | Exact OS version support | Confirm A-01 | Phase 1 |
 
 ### 18.5 Planned evaluations and spikes
@@ -1635,7 +1636,7 @@ FR-085 to FR-095, NFR-001 to NFR-004.
 | EV-06 | OCR engine comparison (accuracy on fixtures, size, licence, platform support) | D-04, FR-056 | 1 |
 | EV-07 | Usability of mode recommendations and approvals | NFR-025 | 1–2 |
 | EV-08 | Productivity study against manual processing and existing tools | NFR-034, P§10 differentiation | 2 |
-| EV-09 | Browser bridge packaging (embedded Node runtime, browser channel, offline install) | A-11, D-02, FR-068, FR-069 | 1–2 |
+| EV-09 | Browser bridge packaging (embedded Node runtime, browser channel, offline install) | A-11, D-02, FR-068, FR-069 | 2 |
 
 ---
 
@@ -1678,13 +1679,13 @@ Evaluation conditions (P§13): representative users, real task samples (with con
 
 ### 20.2 In the MVP
 
-Windows and macOS desktop app; local workflow storage and versioning; guided demonstration recording; deterministic execution (Exact Replay); local AI-assisted workflow creation (Unvalidated, EV-02); execution mode recommendation with constrained Adaptive Execution at decision points (Unvalidated, EV-03); basic browser interaction (conditional, D-02); local OCR; output preview and validation; execution logs, reports, and error reporting; permissions, approvals, and emergency stop.
+Windows desktop app (macOS target deferred under ADR-0010); local workflow storage and versioning; guided demonstration recording; deterministic execution (Exact Replay); local AI-assisted workflow creation (Unvalidated, EV-02); execution mode recommendation with constrained Adaptive Execution at decision points (Unvalidated, EV-03); local OCR; output preview and validation; execution logs, reports, and error reporting; permissions, approvals, and emergency stop. Basic browser interaction is deferred to Phase 2 by D-02.
 
 ### 20.3 Deferred
 
 | Capability | Phase | Requirements |
 |---|---|---|
-| Browser recording and full browser automation | P2 | FR-024, FR-070 to FR-073, FR-075 |
+| Browser recording and browser automation | P2 | FR-024, FR-068 to FR-076 |
 | Adaptive browser execution and AI recovery proposals | P2 | FR-052, FR-053 |
 | Authorized-window screenshots | P2 | FR-026 |
 | Native desktop automation (UIA/AX) and application registry | P3 | FR-025, FR-078 to FR-080 |
@@ -1697,7 +1698,7 @@ Windows and macOS desktop app; local workflow storage and versioning; guided dem
 P§12 lists in the MVP several capabilities that P§11 places in Phase 2 (local AI-assisted workflow construction, execution mode selection, basic browser interaction). This SRS resolves the tension as follows, pending confirmation:
 
 - The **MVP release** = Phase 1 deliverables **plus** a constrained slice of Phase 2: AI-assisted creation for the document workflow, mode recommendation, and Adaptive Execution limited to decision points.
-- **Basic browser interaction** stays in the MVP only if D-02 is confirmed; otherwise it moves wholly to Phase 2.
+- **Basic browser interaction** moves wholly to Phase 2, following owner decision D-02 (2026-10-09).
 - Phase 2 then delivers what remains: browser recording, semantic targeting, adaptive browser execution, and recovery proposals.
 
 ### 20.5 Out of scope (all phases)

@@ -1,0 +1,41 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/tests",
+    "-v"
+  ],
+  "elapsed_seconds": 0.515,
+  "environment": {
+    "architecture": "AMD64",
+    "fixture_manifest_sha256": "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+    "fixture_seed": 20261009,
+    "hardware": {
+      "build": "19045",
+      "cpu": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+      "manufacturer": "MSI",
+      "model": "MS-7A70",
+      "os": "Microsoft Windows 10 Pro",
+      "ram_bytes": 17104429056
+    },
+    "macos": "deferred by owner on 2026-10-10",
+    "model": "none unless explicitly recorded by the benchmark",
+    "node": "v24.11.1",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pillow": "12.3.0",
+      "pypdfium2": "5.14.0",
+      "reportlab": "5.0.1"
+    },
+    "python": "3.12.10",
+    "recorded_at_utc": "2026-10-09T17:47:25.975678+00:00",
+    "reference_machine": false,
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "exit_code": 0,
+  "stderr": "test_adapter_detected_by_location (test_check_crate_deps.CrateDependencyRules.test_adapter_detected_by_location) ... ok\ntest_architecture_graph_is_allowed (test_check_crate_deps.CrateDependencyRules.test_architecture_graph_is_allowed) ... ok\ntest_dev_dependency_is_forbidden (test_check_crate_deps.CrateDependencyRules.test_dev_dependency_is_forbidden) ... ok\ntest_local_ai_forbidden_targets (test_check_crate_deps.CrateDependencyRules.test_local_ai_forbidden_targets) ... ok\ntest_local_ai_to_adapter_is_forbidden (test_check_crate_deps.CrateDependencyRules.test_local_ai_to_adapter_is_forbidden) ... ok\ntest_main_fails_on_violation (test_check_crate_deps.CrateDependencyRules.test_main_fails_on_violation) ... ok\ntest_missing_required_crate_reported (test_check_crate_deps.CrateDependencyRules.test_missing_required_crate_reported) ... ok\ntest_observation_rules (test_check_crate_deps.CrateDependencyRules.test_observation_rules) ... ok\ntest_transitive_dependency_is_forbidden (test_check_crate_deps.CrateDependencyRules.test_transitive_dependency_is_forbidden) ... ok\ntest_workflow_engine_depends_on_nothing_internal (test_check_crate_deps.CrateDependencyRules.test_workflow_engine_depends_on_nothing_internal) ... ok\ntest_source_and_spike_docs_are_checked_but_vendor_docs_are_ignored (test_document_discovery.DocumentDiscovery.test_source_and_spike_docs_are_checked_but_vendor_docs_are_ignored) ... ok\ntest_committed_checklist_is_in_sync (test_sync_requirements_checklist.ChecklistAgainstRealSrs.test_committed_checklist_is_in_sync) ... ok\ntest_every_srs_requirement_appears_once (test_sync_requirements_checklist.ChecklistAgainstRealSrs.test_every_srs_requirement_appears_once) ... ok\ntest_blocked_requires_reason (test_sync_requirements_checklist.StatusRules.test_blocked_requires_reason) ... ok\ntest_implemented_without_evidence_is_rejected (test_sync_requirements_checklist.StatusRules.test_implemented_without_evidence_is_rejected) ... ok\ntest_only_verified_is_ticked (test_sync_requirements_checklist.StatusRules.test_only_verified_is_ticked) ... ok\ntest_requirement_removed_from_srs_is_reported (test_sync_requirements_checklist.StatusRules.test_requirement_removed_from_srs_is_reported) ... ok\ntest_status_and_evidence_survive_regeneration (test_sync_requirements_checklist.StatusRules.test_status_and_evidence_survive_regeneration) ... ok\ntest_unknown_status_is_rejected (test_sync_requirements_checklist.StatusRules.test_unknown_status_is_rejected) ... ok\ntest_verified_without_evidence_is_rejected (test_sync_requirements_checklist.StatusRules.test_verified_without_evidence_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.162s\n\nOK\n",
+  "stdout": "FAIL  local-ai -> adapter-files: local-ai must not depend on policy-engine, execution-engine, adapters, or storage\nFAIL  local-ai -> adapter-files -> execution-engine: local-ai must not depend on policy-engine, execution-engine, adapters, or storage\nFAIL  local-ai -> adapter-files -> policy-engine: local-ai must not depend on policy-engine, execution-engine, adapters, or storage\n\n3 crate dependency problem(s) found (NFR-030).\nCrate dependency rules hold: 12 workspace crates, 26 internal edges.\nRequirements checklist is in sync (156 requirements).\n"
+}

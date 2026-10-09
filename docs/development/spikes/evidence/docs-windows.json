@@ -1,0 +1,36 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "scripts/check_docs.py"
+  ],
+  "elapsed_seconds": 7.26,
+  "environment": {
+    "architecture": "AMD64",
+    "fixture_manifest_sha256": "5adf9df36d466253a5f60b7bb56b38ee7720b8135998a965ec70ff64d4d67631",
+    "fixture_seed": 20261009,
+    "hardware": {
+      "build": "19045",
+      "cpu": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+      "manufacturer": "MSI",
+      "model": "MS-7A70",
+      "os": "Microsoft Windows 10 Pro",
+      "ram_bytes": 17104429056
+    },
+    "macos": "deferred by owner on 2026-10-10",
+    "model": "none unless explicitly recorded by the benchmark",
+    "node": "v24.11.1",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pillow": "12.3.0",
+      "pypdfium2": "5.14.0",
+      "reportlab": "5.0.1"
+    },
+    "python": "3.12.10",
+    "recorded_at_utc": "2026-10-09T17:50:50.780062+00:00",
+    "reference_machine": false,
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "exit_code": 0,
+  "stderr": "",
+  "stdout": "Documentation checks passed. Identifiers defined \u2014 A: 19, ADR: 10, AI: 9, AIC: 10, AR: 8, C: 10, D: 8, EV: 9, EXC: 30, FR: 120, LL: 127, MVP-AC: 7, NFR: 36, OBJ: 13, T: 24, TC: 129, UC: 21, USR: 4.\n"
+}

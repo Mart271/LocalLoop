@@ -107,15 +107,15 @@ This matrix links **Product Objective → Requirement → Architecture Component
 | OBJ-06 | FR-065 | Path sanitization of derived values | MVP | Committed | workflow-engine, policy-engine | TC-055 | Phase 1 · M1.1 |
 | OBJ-05 | FR-066 | Execution report | MVP | Committed | execution-engine, adapters/files | TC-056 | Phase 1 · M1.3 |
 | OBJ-07 | FR-067 | Duplicate and re-run protection | MVP | Committed | execution-engine, storage | TC-057 | Phase 1 · M1.3 |
-| OBJ-11 | FR-068 | Managed browser session | MVP (cond.) | Unvalidated (EV-09) | adapters/browser, browser-bridge | TC-058 | Phase 2 · M2.1 (Phase 1 if D-02 includes browser) |
-| OBJ-11 | FR-069 | Basic browser operations | MVP (cond.) | Unvalidated (EV-09) | adapters/browser, browser-bridge | TC-059 | Phase 2 · M2.1 (Phase 1 if D-02 includes browser) |
+| OBJ-11 | FR-068 | Managed browser session | P2 | Unvalidated (EV-09) | adapters/browser, browser-bridge | TC-058 | Phase 2 · M2.1 |
+| OBJ-11 | FR-069 | Basic browser operations | P2 | Unvalidated (EV-09) | adapters/browser, browser-bridge | TC-059 | Phase 2 · M2.1 |
 | OBJ-11 | FR-070 | Semantic element targeting | P2 | Committed | browser-bridge | TC-060 | Phase 2 · M2.2 |
 | OBJ-11 | FR-071 | Advanced page interactions | P2 | Committed | browser-bridge | TC-061 | Phase 2 · M2.2 |
 | OBJ-11 | FR-072 | Page data extraction | P2 | Committed | browser-bridge, adapters/browser | TC-062 | Phase 2 · M2.2 |
 | OBJ-07 | FR-073 | Transition detection and submission validation | P2 | Committed | adapters/browser, verification-engine | TC-063 | Phase 2 · M2.2 |
-| OBJ-06 | FR-074 | Host allowlist | MVP (cond.) / P2 | Committed | policy-engine, browser-bridge | TC-064 | Phase 2 · M2.1 (Phase 1 if D-02 includes browser) |
+| OBJ-06 | FR-074 | Host allowlist | P2 | Committed | policy-engine, browser-bridge | TC-064 | Phase 2 · M2.1 |
 | OBJ-10 | FR-075 | Credential references | P2 | Committed | adapters/browser, platform | TC-065 | Phase 2 · M2.2 |
-| OBJ-06 | FR-076 | Respect authentication and website restrictions | MVP (cond.) / P2 | Committed | browser-bridge, execution-engine | TC-066 | Phase 2 · M2.1 (Phase 1 if D-02 includes browser) |
+| OBJ-06 | FR-076 | Respect authentication and website restrictions | P2 | Committed | browser-bridge, execution-engine | TC-066 | Phase 2 · M2.1 |
 | OBJ-03 | FR-077 | API-first execution | MVP | Committed | workflow-engine | TC-067 | Phase 1 · M1.1 |
 | OBJ-11 | FR-078 | Windows UI Automation adapter | P3 | Unvalidated (EV-05) | adapters/desktop | TC-068 | Phase 3 · M3.1 |
 | OBJ-11 | FR-079 | macOS Accessibility adapter | P3 | Unvalidated (EV-05) | adapters/desktop | TC-069 | Phase 3 · M3.1 |
@@ -253,14 +253,14 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 | TC-043 | Without a model, decision points are presented to the user and recorded as user-made | I | FR-051 |  |
 | TC-044 | Input folder with mixed files creates items for supported types only | I | FR-054 |  |
 | TC-045 | Text-layer extraction matches fixture text | I | FR-055 |  |
-| TC-046 | OCR runs offline; low confidence flagged | I | FR-056 |  |
+| TC-046 | OCR runs offline; low confidence flagged | I | FR-056 | [`spikes/ocr/compare.py`](../../spikes/ocr/compare.py), [`spikes/tests/test_ocr_scoring.py`](../../spikes/tests/test_ocr_scoring.py), [EV-06 report](../development/spikes/EV-06-ocr.md) (Windows study only; product worker/no-network/confidence routing suite pending M1.2) |
 | TC-047 | Rule-based extraction equals expected values on fixtures | U, I | FR-057 |  |
 | TC-048 | Model-assisted extraction accuracy reported per field | EV (EV-02) | FR-058 |  |
 | TC-049 | Every extracted value has complete provenance | I | FR-059 |  |
 | TC-050 | Each validation rule type has passing and failing fixtures | U | FR-060 |  |
 | TC-051 | Invalid items routed to review without spreadsheet change; correction and resubmission work | I, E2E | FR-061 |  |
-| TC-052 | Upsert produces expected rows in XLSX and CSV | I | FR-062 |  |
-| TC-053 | Lock detection, structure check, atomic write under kill, formula neutralization | I | FR-063 |  |
+| TC-052 | Upsert produces expected rows in XLSX and CSV | I | FR-062 | [`spikes/xlsx/compare.py`](../../spikes/xlsx/compare.py), [EV-04 report](../development/spikes/EV-04-xlsx.md) (one-cell fidelity groundwork; actual upsert suite pending M1.2) |
+| TC-053 | Lock detection, structure check, atomic write under kill, formula neutralization | I | FR-063 | [`spikes/xlsx/compare.py`](../../spikes/xlsx/compare.py) (Windows exclusive-lock and independent re-read groundwork; structure refusal, kill/atomic-write and formula suites pending M1.2) |
 | TC-054 | Collision policy suffix/fail; existing files never overwritten | I | FR-064 |  |
 | TC-055 | Traversal, link, junction, reserved-name, and prefix cases stay in scope (per OS) | U, I | FR-065, FR-105 |  |
 | TC-056 | Report outcomes equal run record; sensitive fields masked | I | FR-066 |  |
@@ -315,12 +315,12 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 | TC-105 | Reference suite repeated ≥100 times per machine; report success rate | S | NFR-001 |  |
 | TC-106 | Fault-injection suite: zero undetected loss or corruption | S | NFR-002 |  |
 | TC-107 | Mismatch-injection suite: 100% detected | S | NFR-003 |  |
-| TC-108 | Resource baseline and regression on reference machines | S, EV (EV-01) | NFR-008 |  |
-| TC-109 | PR checklist: published figures cite reproducible benchmarks | R | NFR-013 |  |
+| TC-108 | Resource baseline and regression on reference machines | S, EV (EV-01) | NFR-008 | [`spikes/baseline/measure.ps1`](../../spikes/baseline/measure.ps1), [`spikes/baseline/smoke.mjs`](../../spikes/baseline/smoke.mjs), [Windows foundation report](../development/spikes/LL-013-windows-baseline.md) (16 GB development machine only; reference acceptance pending) |
+| TC-109 | PR checklist: published figures cite reproducible benchmarks | R | NFR-013 | [`.github/pull_request_template.md`](../../.github/pull_request_template.md), [`spikes/common.py`](../../spikes/common.py), [reports and raw evidence](../development/spikes/README.md) |
 | TC-110 | Non-allowlisted IPC command refused | I | NFR-014 | [`apps/desktop/src-tauri/src/ipc/tests.rs`](../../apps/desktop/src-tauri/src/ipc/tests.rs) (groundwork: ping-only surface; full suite in LL-052) |
 | TC-111 | Review + injection attempts through every input surface: no execution path | R, I | FR-104, NFR-015 |  |
-| TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 |  |
-| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) (`cargo deny`, `cargo audit`, `pnpm audit`), [`deny.toml`](../../deny.toml); tampered-sidecar test pending (LL-011) |
+| TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 | [`spikes/encryption/src/main.rs`](../../spikes/encryption/src/main.rs), [D-07 report](../development/spikes/D-07-encryption.md) (DB/WAL/evidence study only; product storage suite pending M1.1) |
+| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) (`cargo deny`, `cargo audit`, `pnpm audit`), [`deny.toml`](../../deny.toml), [`spikes/child-process/tests/lifecycle.rs`](../../spikes/child-process/tests/lifecycle.rs) (tampered synthetic worker refused; product worker/model hash checks pending) |
 | TC-114 | Installer and update signatures verify | R | NFR-019 |  |
 | TC-115 | Usability study: participants explain selected mode correctly | UX (EV-07) | NFR-025 |  |
 | TC-116 | Automated and manual WCAG 2.2 AA checks | R, UX | NFR-026 |  |
@@ -330,7 +330,7 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 | TC-120 | Forbidden crate dependencies fail CI | I | NFR-030 | [`scripts/tests/test_check_crate_deps.py`](../../scripts/tests/test_check_crate_deps.py), [`scripts/check_crate_deps.py`](../../scripts/check_crate_deps.py) |
 | TC-121 | Operation-to-test coverage report | R | NFR-031 |  |
 | TC-122 | Structured logs with correlation IDs; no secrets | I | NFR-032 |  |
-| TC-123 | Documentation checks (IDs, links, Mermaid, schema examples) in CI | I | NFR-033 | [`scripts/check_docs.py`](../../scripts/check_docs.py), [`scripts/validate_schemas.py`](../../scripts/validate_schemas.py), [`scripts/validate_mermaid.py`](../../scripts/validate_mermaid.py) |
+| TC-123 | Documentation checks (IDs, links, Mermaid, schema examples) in CI | I | NFR-033 | [`scripts/check_docs.py`](../../scripts/check_docs.py), [`scripts/validate_schemas.py`](../../scripts/validate_schemas.py), [`scripts/validate_mermaid.py`](../../scripts/validate_mermaid.py), [`scripts/tests/test_document_discovery.py`](../../scripts/tests/test_document_discovery.py) (source/spike docs included; ignored downloaded tool docs excluded) |
 | TC-124 | Productivity study versus manual processing | EV (EV-08) | NFR-034 |  |
 | TC-125 | Recorded browser form task replays using semantic descriptors | I | FR-024 |  |
 | TC-126 | Keystrokes in unselected applications not captured | I | FR-025 |  |

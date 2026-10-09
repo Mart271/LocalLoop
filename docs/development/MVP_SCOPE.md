@@ -6,7 +6,9 @@
 | Date | 2026-10-09 |
 | Related | [SRS §20](../requirements/SRS.md#20-mvp-boundaries-and-deferred-features) · [Roadmap](ROADMAP.md) · [Backlog](BACKLOG.md) |
 
-> **Status:** Proposed scope. Items marked *decision* need the project owner's confirmation (D-01, D-02).
+> **Status:** Proposed scope. D-02 browser deferral is confirmed; remaining technical choices await owner review.
+
+**Implementation priority (2026-10-10):** Windows first; macOS implementation and validation are deferred under [ADR-0010](../adr/0010-windows-first-validation.md). Browser automation is deferred to Phase 2 (owner decision D-02, 2026-10-09). Longer-term platform targets and reference-machine release acceptance remain pending.
 
 ---
 
@@ -88,7 +90,7 @@ flowchart LR
 | document worker | Isolated parsing and OCR | Yes (OCR is a traditional model, not an LLM) |
 | local-ai + inference sidecar | AI-assisted creation, variable-layout extraction, decision points | No; optional at runtime |
 
-**Not needed for the MVP:** browser bridge (unless D-02), desktop adapter, screen capture, VLM, multi-run concurrency, any cloud service.
+**Not needed for the MVP:** browser bridge (D-02 defers it to Phase 2), desktop adapter, screen capture, VLM, multi-run concurrency, any cloud service.
 
 ## 4. Local AI in the MVP
 
@@ -133,9 +135,9 @@ This order means the MVP still delivers value if the AI evaluations show weaker 
 - Local model registry and lifecycle (FR-108 to FR-113).
 - Offline operation, no accounts, network transparency, offline installer (basic), backup, retention (FR-114 to FR-120).
 
-### 6.2 Conditional (decision D-02)
+### 6.2 Browser deferral (decision D-02)
 
-- Basic browser interaction in a managed profile: open, navigate, click, fill non-secret fields, download (FR-068, FR-069, with FR-074 and FR-076). **Recommendation:** include only if the EV-09 packaging spike succeeds by the end of M1.0; otherwise move to Phase 2 without delaying the MVP.
+- Basic browser interaction and EV-09 are deferred to Phase 2 by the owner (2026-10-09). FR-068, FR-069, FR-074 and FR-076 stay in that phase; browser packaging does not block M1.0.
 
 ### 6.3 Not in the MVP
 
@@ -152,12 +154,12 @@ These limitations are stated honestly in the release notes and UI:
 5. **One run at a time** (A-07). No scheduling or folder watching in the MVP; runs start on demand.
 6. **Single user**, no roles or accounts (A-06).
 7. **English UI** (A-02).
-8. **No remote websites** unless D-02 includes basic browser support, and even then no automated sign-in.
+8. **No remote websites** in the MVP; browser support is Phase 2 (D-02).
 9. **Security:** the document worker is process-isolated but not OS-sandboxed; local malware running as the user is out of scope.
 
 ## 8. Reconciling the Proposal (D-01)
 
-The proposal's MVP list (P§12) includes AI-assisted creation, mode selection, and basic browser interaction, which its roadmap (P§11) places in Phase 2. The SRS resolves this as: **MVP = Phase 1 + a constrained Phase 2 slice** (AI-assisted creation for the document workflow, mode recommendation, Adaptive Execution limited to decision points), with browser interaction conditional on D-02. See [SRS §20.4](../requirements/SRS.md#204-reconciling-the-proposals-mvp-list-and-roadmap-d-01).
+The proposal's MVP list (P§12) includes AI-assisted creation, mode selection, and basic browser interaction, which its roadmap (P§11) places in Phase 2. The SRS resolves this as: **MVP = Phase 1 + a constrained Phase 2 slice** (AI-assisted creation for the document workflow, mode recommendation, Adaptive Execution limited to decision points), with browser interaction deferred to Phase 2 by D-02. See [SRS §20.4](../requirements/SRS.md#204-reconciling-the-proposals-mvp-list-and-roadmap-d-01).
 
 ## 9. Reference Dataset (Synthetic)
 

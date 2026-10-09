@@ -1,6 +1,6 @@
 # `sidecars/browser-bridge`
 
-> **Planned for Phase 2** (a basic subset moves into the MVP only if decision D-02 is confirmed). No code yet. Design: [ADR-0004](../../docs/adr/0004-browser-automation-bridge.md), [protocol](../../docs/architecture/component-design.md#103-core--browser-bridge-p2-mvp-if-d-02).
+> **Planned for Phase 2**, following owner decision D-02 (2026-10-09). EV-09 is deferred to that phase. No code yet. Design: [ADR-0004](../../docs/adr/0004-browser-automation-bridge.md), [protocol](../../docs/architecture/component-design.md#103-core--browser-bridge-p2-d-02-deferral-confirmed).
 
 A small Node.js process that hosts **Playwright** and controls a **managed Chromium-based browser profile** reserved for LocalLoop. It exists because Playwright has no official Rust binding (A-11).
 

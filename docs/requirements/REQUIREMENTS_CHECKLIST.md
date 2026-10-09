@@ -20,15 +20,15 @@
 
 ## Progress summary
 
-**Verified: 0 of 156** · Implemented: 2 · In Progress: 3 · Blocked: 0 · Not Started: 151
+**Verified: 3 of 156** · Implemented: 0 · In Progress: 3 · Blocked: 0 · Not Started: 150
 
 | Group | Total | Not Started | In Progress | Implemented | Verified | Blocked | Verified / total |
 |---|---|---|---|---|---|---|---|
-| All requirements | 156 | 151 | 3 | 2 | 0 | 0 | 0/156 |
+| All requirements | 156 | 150 | 3 | 0 | 3 | 0 | 3/156 |
 | Functional (FR) | 120 | 120 | 0 | 0 | 0 | 0 | 0/120 |
-| Non-functional (NFR) | 36 | 31 | 3 | 2 | 0 | 0 | 0/36 |
-| MVP requirements (release contains "MVP") | 135 | 132 | 2 | 1 | 0 | 0 | 0/135 |
-| Phase 1 | 133 | 128 | 3 | 2 | 0 | 0 | 0/133 |
+| Non-functional (NFR) | 36 | 30 | 3 | 0 | 3 | 0 | 3/36 |
+| MVP requirements (release contains "MVP") | 131 | 127 | 3 | 0 | 1 | 0 | 1/131 |
+| Phase 1 | 133 | 127 | 3 | 0 | 3 | 0 | 3/133 |
 | Phase 2 | 14 | 14 | 0 | 0 | 0 | 0 | 0/14 |
 | Phase 3 | 8 | 8 | 0 | 0 | 0 | 0 | 0/8 |
 | Phase 4 | 1 | 1 | 0 | 0 | 0 | 0 | 0/1 |
@@ -39,7 +39,7 @@ Milestone is the first one the traceability matrix lists for the requirement.
 
 | Phase | Milestone | Total | Not Started | In Progress | Implemented | Verified | Blocked | Verified / total |
 |---|---|---|---|---|---|---|---|---|
-| Phase 1 | M1.0 | 5 | 1 | 2 | 2 | 0 | 0 | 0/5 |
+| Phase 1 | M1.0 | 5 | 0 | 2 | 0 | 3 | 0 | 3/5 |
 | Phase 1 | M1.1 | 17 | 17 | 0 | 0 | 0 | 0 | 0/17 |
 | Phase 1 | M1.2 | 13 | 13 | 0 | 0 | 0 | 0 | 0/13 |
 | Phase 1 | M1.3 | 48 | 47 | 1 | 0 | 0 | 0 | 0/48 |
@@ -133,14 +133,14 @@ Milestone is the first one the traceability matrix lists for the requirement.
 
 - [ ] **FR-054** Receive documents from an input location — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **FR-055** Text-layer extraction — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
-- [ ] **FR-056** Local OCR — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
+- [ ] **FR-056** Local OCR — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started** — Evidence: [EV-06 study](../development/spikes/EV-06-ocr.md) and scoring tests passed; product worker integration and TC-046 acceptance remain unimplemented
 - [ ] **FR-057** Rule-based field extraction — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **FR-058** Model-assisted field extraction — Should · MVP · Unvalidated (EV-02) · Phase 1 · M1.5 — Status: **Not Started**
 - [ ] **FR-059** Field provenance — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **FR-060** Data validation rules — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **FR-061** Review queue routing — Must · MVP · Committed · Phase 1 · M1.3 — Status: **Not Started**
-- [ ] **FR-062** Spreadsheet update — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
-- [ ] **FR-063** Spreadsheet write safety — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
+- [ ] **FR-062** Spreadsheet update — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started** — Evidence: [EV-04 fidelity study](../development/spikes/EV-04-xlsx.md) completed; product row upsert remains unimplemented
+- [ ] **FR-063** Spreadsheet write safety — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started** — Evidence: [EV-04 lock/fidelity study](../development/spikes/EV-04-xlsx.md) completed; product atomic-write, backup and formula-neutralization suite remains unimplemented
 - [ ] **FR-064** File organization — Must · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **FR-065** Path sanitization of derived values — Must · MVP · Committed · Phase 1 · M1.1 — Status: **Not Started**
 - [ ] **FR-066** Execution report — Must · MVP · Committed · Phase 1 · M1.3 — Status: **Not Started**
@@ -148,15 +148,15 @@ Milestone is the first one the traceability matrix lists for the requirement.
 
 ### Browser automation (0/9 verified)
 
-- [ ] **FR-068** Managed browser session — Should · MVP (conditional, D-02) · Unvalidated (EV-09) · Phase 2 · M2.1 (Phase 1 if D-02 includes browser) — Status: **Not Started**
-- [ ] **FR-069** Basic browser operations — Should · MVP (conditional, D-02) · Unvalidated (EV-09) · Phase 2 · M2.1 (Phase 1 if D-02 includes browser) — Status: **Not Started**
+- [ ] **FR-068** Managed browser session — Should · P2 · Unvalidated (EV-09) · Phase 2 · M2.1 — Status: **Not Started**
+- [ ] **FR-069** Basic browser operations — Should · P2 · Unvalidated (EV-09) · Phase 2 · M2.1 — Status: **Not Started**
 - [ ] **FR-070** Semantic element targeting — Must · P2 · Committed · Phase 2 · M2.2 — Status: **Not Started**
 - [ ] **FR-071** Advanced page interactions — Must · P2 · Committed · Phase 2 · M2.2 — Status: **Not Started**
 - [ ] **FR-072** Page data extraction — Must · P2 · Committed · Phase 2 · M2.2 — Status: **Not Started**
 - [ ] **FR-073** Transition detection and submission validation — Must · P2 · Committed · Phase 2 · M2.2 — Status: **Not Started**
-- [ ] **FR-074** Host allowlist — Must · MVP if FR-069 is included, otherwise P2 · Committed · Phase 2 · M2.1 (Phase 1 if D-02 includes browser) — Status: **Not Started**
+- [ ] **FR-074** Host allowlist — Must · P2 · Committed · Phase 2 · M2.1 — Status: **Not Started**
 - [ ] **FR-075** Credential references — Must · P2 · Committed · Phase 2 · M2.2 — Status: **Not Started**
-- [ ] **FR-076** Respect authentication and website restrictions — Must · P2 (and MVP if FR-069 is included) · Committed · Phase 2 · M2.1 (Phase 1 if D-02 includes browser) — Status: **Not Started**
+- [ ] **FR-076** Respect authentication and website restrictions — Must · P2 · Committed · Phase 2 · M2.1 — Status: **Not Started**
 
 ### Desktop automation and screen understanding (0/8 verified)
 
@@ -239,21 +239,21 @@ Milestone is the first one the traceability matrix lists for the requirement.
 - [ ] **NFR-006** Offline core features — Offline · MVP · Target · Phase 1 · M1.6 — Status: **Not Started**
 - [ ] **NFR-007** No unexpected outbound traffic — Offline / Privacy · MVP · Committed · Phase 1 · M1.6 — Status: **Not Started**
 
-### Performance and resources (0/6 verified)
+### Performance and resources (1/6 verified)
 
-- [ ] **NFR-008** Usable on 8 GB reference machines — Resources · MVP · Target · Phase 1 · M1.0, M1.6 — Status: **Not Started**
+- [ ] **NFR-008** Usable on 8 GB reference machines — Resources · MVP · Target · Phase 1 · M1.0, M1.6 — Status: **In Progress** — Evidence: [Windows foundation shell baseline](../development/spikes/LL-013-windows-baseline.md); 16 GB development machine only, 8 GB reference-machine acceptance pending
 - [ ] **NFR-009** No inference during deterministic operation — Resources · MVP · Committed · Phase 1 · M1.3 — Status: **Not Started**
 - [ ] **NFR-010** Idle model unload — Resources · MVP · Committed · Phase 1 · M1.5 — Status: **Not Started**
 - [ ] **NFR-011** Responsive controls — Usability / Safety · MVP · Committed · Phase 1 · M1.3 — Status: **Not Started**
 - [ ] **NFR-012** Emergency stop latency — Safety · MVP · Target (proposed, to validate) · Phase 1 · M1.3 — Status: **Not Started**
-- [ ] **NFR-013** Evidence-based performance statements — Process · All releases · Committed · Phase 1 · M1.0 — Status: **In Progress** — Evidence: PR template checklist item; fixture generator and spikes record hardware and versions
+- [x] **NFR-013** Evidence-based performance statements — Process · All releases · Committed · Phase 1 · M1.0 — Status: **Verified** — Evidence: [Windows spike reports](../development/spikes/README.md) cite observed hardware, OS, versions, date, fixture seed, model and method with raw evidence; [`spikes/common.py`](../../spikes/common.py) records metadata (TC-109, 2026-10-10)
 
 ### Security (0/7 verified)
 
 - [ ] **NFR-014** Least privilege for the UI process — Security · MVP · Committed · Phase 1 · M1.3 — Status: **In Progress** — Evidence: Ping-only capability, strict CSP, isolation hook, and refusal test in [`apps/desktop/src-tauri/src/ipc/tests.rs`](../../apps/desktop/src-tauri/src/ipc/tests.rs) (LL-002); full command surface pending LL-052
 - [ ] **NFR-015** No arbitrary code execution path — Security · MVP · Committed · Phase 1 · M1.6 — Status: **Not Started**
 - [ ] **NFR-016** Secret handling — Security · MVP · Committed · Phase 1 · M1.3 — Status: **Not Started**
-- [ ] **NFR-017** Protection of sensitive data at rest — Security / Privacy · MVP · Committed (method pending D-07) · Phase 1 · M1.1 — Status: **Not Started**
+- [ ] **NFR-017** Protection of sensitive data at rest — Security / Privacy · MVP · Committed (method pending D-07) · Phase 1 · M1.1 — Status: **Not Started** — Evidence: [D-07 spike](../development/spikes/D-07-encryption.md); product storage encryption remains unimplemented
 - [ ] **NFR-018** Supply-chain integrity — Security · MVP · Committed · Phase 1 · M1.0 — Status: **In Progress** — Evidence: Lockfiles committed; `cargo deny`, `cargo audit`, `pnpm audit` in CI (LL-003); sidecar SHA-256 check only in spike LL-011 so far
 - [ ] **NFR-019** Signed releases — Security · P4 · Committed · Phase 4 · M4.3 — Status: **Not Started**
 - [ ] **NFR-020** Prompt-injection resilience — Security · MVP · Target · Phase 1 · M1.5 — Status: **Not Started**
@@ -276,12 +276,12 @@ Milestone is the first one the traceability matrix lists for the requirement.
 - [ ] **NFR-028** Platform support — Portability · MVP · Committed · Phase 1 · M1.6 — Status: **Not Started**
 - [ ] **NFR-029** Workflow format compatibility — Compatibility · MVP · Committed · Phase 1 · M1.1 — Status: **Not Started**
 
-### Maintainability and testability (0/4 verified)
+### Maintainability and testability (2/4 verified)
 
-- [ ] **NFR-030** Enforced layer boundaries — Maintainability / Security · MVP · Committed · Phase 1 · M1.0 — Status: **Implemented** — Evidence: [`scripts/check_crate_deps.py`](../../scripts/check_crate_deps.py) with unit tests [`scripts/tests/test_check_crate_deps.py`](../../scripts/tests/test_check_crate_deps.py) (TC-120); runs in the CI `rust` job (LL-004)
+- [x] **NFR-030** Enforced layer boundaries — Maintainability / Security · MVP · Committed · Phase 1 · M1.0 — Status: **Verified** — Evidence: [`scripts/check_crate_deps.py`](../../scripts/check_crate_deps.py) with unit tests [`scripts/tests/test_check_crate_deps.py`](../../scripts/tests/test_check_crate_deps.py) (TC-120); runs in the CI `rust` job (LL-004); script and forbidden-edge tests passed locally on Windows (2026-10-10)
 - [ ] **NFR-031** Testability of operations — Testability · MVP · Committed · Phase 1 · M1.2 — Status: **Not Started**
 - [ ] **NFR-032** Local diagnostic logging — Maintainability · MVP · Committed · Phase 1 · M1.1 — Status: **Not Started**
-- [ ] **NFR-033** Living documentation — Maintainability · All releases · Committed · Phase 1 · M1.0 — Status: **Implemented** — Evidence: Doc, schema, and diagram checks in [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) (TC-123); ADRs in `docs/adr/`
+- [x] **NFR-033** Living documentation — Maintainability · All releases · Committed · Phase 1 · M1.0 — Status: **Verified** — Evidence: Doc/schema/checklist checks and all 29 Mermaid blocks passed locally on Windows (2026-10-10, TC-123); gates in [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), [current milestone evidence](../development/PROGRESS.md), and ADRs in `docs/adr/`
 
 ### Effectiveness (0/3 verified)
 

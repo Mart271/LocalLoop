@@ -1,12 +1,12 @@
 # CI for LocalLoop (LL-003). Documentation, schema, fixture, and diagram checks run on Ubuntu;
-# Rust and TypeScript build, lint, test, and audit run on Windows and macOS (A-01, NFR-028).
+# Windows is the active platform gate; macOS is deferred by the owner (ADR-0010).
 # Actions are pinned to commit SHAs (security-architecture §13); Dependabot proposes updates.
 
 name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/m1.0-foundation]
   pull_request:
 
 permissions:
@@ -60,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
@@ -101,7 +101,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
@@ -131,6 +131,8 @@ jobs:
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - name: Tests
         run: cargo test --workspace --locked
+      - name: Standalone Windows shell embeds its frontend
+        run: cargo build -p localloop-desktop --locked --features tauri/custom-protocol
       - name: Generated TypeScript types are up to date (LL-005)
         shell: bash
         run: |
@@ -149,7 +151,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
@@ -175,13 +177,12 @@ jobs:
         run: pnpm audit --audit-level low
 
   spike-child-process:
-    # Spike LL-011 measurements (not a gate). Results feed docs/development/spikes/LL-011-child-processes.md.
+    # Completed Windows spike: lifecycle failures now block CI (LL-011).
     name: Spike LL-011 child processes (${{ matrix.os }})
-    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
@@ -191,20 +192,43 @@ jobs:
       - name: Install the pinned toolchain
         run: rustup show active-toolchain || rustup toolchain install
       - name: Run lifecycle measurements
-        run: cargo test --release --manifest-path spikes/child-process/Cargo.toml -- --nocapture --test-threads=1
+        run: cargo test --release --locked --manifest-path spikes/child-process/Cargo.toml -- --nocapture --test-threads=1
+
+  spike-xlsx:
+    name: XLSX fidelity regression (Windows)
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Install pinned toolchain and fixture dependencies
+        run: |
+          rustup show active-toolchain
+          python -m pip install -r tools/fixtures/requirements.txt
+      - name: Generate synthetic fixtures
+        run: python tools/fixtures/generate.py
+      - name: OCR scoring helper tests
+        run: python -m unittest discover -s spikes/tests -v
+      - name: Build the probe (outside the product workspace)
+        run: cargo build --release --locked --manifest-path spikes/xlsx/Cargo.toml
+      - name: Independently re-read and verify package-preserving edits and Windows locks
+        run: python spikes/xlsx/compare.py --binary spikes/xlsx/target/release/spike-xlsx.exe --output test-results/ev04-windows.json
 
   spike-encryption:
-    # Spike LL-010 / D-07 measurements (not a gate): SQLCipher (A) vs application-level AEAD (B).
+    # LL-010 / D-07: SQLCipher (A) vs application-level AEAD (B), Windows only.
     # GitHub's Windows images include Strawberry Perl, which the vendored OpenSSL build needs.
     name: Spike LL-010 encryption ${{ matrix.option }} (${{ matrix.os }})
-    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest]
         option: [option-a-sqlcipher, option-b-app-level]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -218,8 +242,8 @@ jobs:
           OPENSSL_SRC_PERL: ${{ runner.os == 'Windows' && 'C:\Strawberry\perl\bin\perl.exe' || '' }}
         run: |
           start=$(date +%s)
-          cargo build --release --manifest-path spikes/encryption/Cargo.toml --features ${{ matrix.option }}
+          cargo build --release --locked --manifest-path spikes/encryption/Cargo.toml --features ${{ matrix.option }}
           echo "MEASURE build_seconds: $(( $(date +%s) - start ))"
           ls -l spikes/encryption/target/release/ | grep -i spike-encryption
       - name: Run measurements
-        run: cargo run --release --manifest-path spikes/encryption/Cargo.toml --features ${{ matrix.option }}
+        run: cargo run --release --locked --manifest-path spikes/encryption/Cargo.toml --features ${{ matrix.option }}

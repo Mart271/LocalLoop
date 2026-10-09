@@ -120,7 +120,7 @@ flowchart TB
 | LocalLoop Core | All domain logic: workflows, policy, execution, verification, storage, AI orchestration | Rust, Tauri 2 host, Tokio | MVP | Proposed |
 | Document worker | Parse untrusted files (PDF, images), OCR; returns text with positions | Rust binary; PDF and OCR libraries (EV-06) | MVP | Recommended (ADR-0001) |
 | Inference sidecar | Run local models with constrained decoding | llama.cpp `llama-server` | MVP | Proposed (EV-01, ADR-0003) |
-| Browser bridge | Drive the managed browser; capture semantic snapshots | Node.js runtime + Playwright | P2 (MVP if D-02) | Recommended (EV-09, ADR-0004) |
+| Browser bridge | Drive the managed browser; capture semantic snapshots | Node.js runtime + Playwright | P2 (D-02 deferral confirmed) | Recommended (EV-09, ADR-0004) |
 | Managed browser | Execute browser steps in an isolated profile | Installed Edge/Chrome channel or bundled Chromium | P2 | Recommended |
 | SQLite database | Durable state, journal, audit chain | SQLite in WAL mode | MVP | Proposed (P§5 Layer 7) |
 | App data folder | Evidence, logs, backups, model files | File system | MVP | Proposed |

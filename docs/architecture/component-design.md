@@ -67,8 +67,8 @@ Any step can additionally be marked `approval: "required"` by the author; the an
 
 | Operation | Effect | Phase |
 |---|---|---|
-| `browser.open`, `browser.navigate` | external_read | MVP if D-02, else P2 |
-| `browser.download` | external_read (file lands in LocalLoop staging; moved by `files.move`) | MVP if D-02, else P2 |
+| `browser.open`, `browser.navigate` | external_read | P2 (D-02 deferral confirmed) |
+| `browser.download` | external_read (file lands in LocalLoop staging; moved by `files.move`) | P2 (D-02 deferral confirmed) |
 | `browser.click`, `browser.fill`, `browser.select` | interact (consequential if marked) | P2 |
 | `browser.upload`, `browser.submit` | external_send | P2 |
 | `browser.extract` | read | P2 |
@@ -255,9 +255,13 @@ impl RecorderSession {
 | `adapters/browser` (P2) | `OperationAdapter`, `StateObserver` | Client of the browser bridge (§10.3); downloads land in LocalLoop staging only |
 | `adapters/desktop` (P3) | `OperationAdapter`, `StateObserver` | UIA / AX via platform layer; input injection limited to granted app windows |
 
+EV-04 demonstrated chart loss with unrestricted whole-workbook rewriting. [ADR-0007](../adr/0007-xlsx-fidelity-policy.md) proposes a constrained ZIP/XML editor that preserves untouched parts, rejects unsupported packages before writes, and independently re-reads the output. The one-cell spike is not an implemented upsert adapter.
+
 ### 3.9 Document worker (binary in `crates/adapters/documents`)
 
 A separate process that parses untrusted files: PDF text extraction, page rendering, image decoding, OCR. It receives bytes over stdin and returns structured text. Limits: maximum input size, page count, and per-request time; the core kills and restarts the worker on timeout or crash (EXC-23). It does not open files or network connections by design; OS-level sandboxing is a Phase 4 hardening item (AR-05).
+
+[ADR-0006](../adr/0006-windows-ocr.md) proposes local Tesseract for Windows following EV-06. Bundle explicit local assets; never ship the auto-downloading OCR benchmark CLI. [LL-011 evidence](../development/spikes/LL-011-child-processes.md) supports Tokio job-object containment plus a dedicated stdin-EOF watchdog. Both request and response framing must enforce limits; partial frames are protocol failures.
 
 ### 3.10 `apps/desktop` — composition root and IPC
 
@@ -408,6 +412,8 @@ Operators: `equals`, `notEquals`, `greaterThan`, `greaterOrEqual`, `lessThan`, `
 
 SQLite, WAL mode, foreign keys on. All timestamps UTC ISO 8601. IDs are UUIDv7 (time-ordered) unless noted.
 
+The Windows D-07 study supports SQLCipher for the whole database and authenticated encryption for sensitive evidence ([proposed ADR-0008](../adr/0008-encryption-at-rest.md)). The production implementation is LL-027, pending owner ADR review: use separate database/evidence keys from the OS credential store, fail closed on key/decryption errors, bind evidence to immutable identifiers, and test encrypted WAL, migrations, backup and recovery. The spike is not product storage; macOS is deferred under ADR-0010.
+
 | Table | Key columns | Purpose | Requirements |
 |---|---|---|---|
 | `workflows` | `id`, `name`, `description`, `created_at`, `archived_at` | Workflow identity | FR-001, FR-006 |
@@ -459,7 +465,7 @@ Methods: `parse`, `render_page` (PNG for the annotation UI), `health`. The worke
 
 The supervisor starts the runtime's HTTP server bound to `127.0.0.1` on a random free port with a generated API key, and sends completion requests carrying a JSON schema so the runtime constrains generation to valid JSON (exact endpoint and parameter names pinned to the runtime version chosen in EV-01). Sampling: temperature 0 or fixed seed (AIC-06). Timeouts per task; one retry for invalid output where configured (EXC-17).
 
-### 10.3 Core ↔ browser bridge (P2; MVP if D-02)
+### 10.3 Core ↔ browser bridge (P2; D-02 deferral confirmed)
 
 JSON-RPC 2.0 over stdio.
 

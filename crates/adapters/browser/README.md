@@ -1,6 +1,6 @@
 # `adapters/browser`
 
-> **Planned for Phase 2** (a basic subset moves into the MVP only if decision D-02 is confirmed after spike EV-09). No code yet. Design: [ADR-0004](../../../docs/adr/0004-browser-automation-bridge.md), [component-design.md §10.3](../../../docs/architecture/component-design.md#103-core--browser-bridge-p2-mvp-if-d-02).
+> **Planned for Phase 2**, following owner decision D-02 (2026-10-09). EV-09 is deferred to that phase. No code yet. Design: [ADR-0004](../../../docs/adr/0004-browser-automation-bridge.md), [component-design.md §10.3](../../../docs/architecture/component-design.md#103-core--browser-bridge-p2-d-02-deferral-confirmed).
 
 **Layer 5 adapter.** The Rust-side client of the [browser bridge](../../../sidecars/browser-bridge/README.md), which hosts Playwright.
 

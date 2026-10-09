@@ -6,7 +6,9 @@
 | Date | 2026-10-09 |
 | Related | [Roadmap](ROADMAP.md) · [Traceability](../requirements/requirements-traceability.md) |
 
-Each row is sized to be one GitHub issue (roughly 0.5–5 days of focused work). Issues have not been created on GitHub; the repository has no remote yet.
+Each row is sized to be one GitHub issue (roughly 0.5–5 days of focused work). The repository has an `origin` remote; this backlog does not imply that an issue exists for every row. Current evidence and status are in [PROGRESS.md](PROGRESS.md).
+
+**Active gate (2026-10-10):** Windows first; macOS validation is deferred under [ADR-0010](../adr/0010-windows-first-validation.md). EV-01 / LL-006 moves to M1.5, and EV-09 / LL-009 to Phase 2. Where a row originally requires both platforms or reference machines, Windows milestone completion records the remaining checks as deferred; it does not verify the original cross-platform release targets.
 
 **Sizes:** S ≈ ≤1 day · M ≈ 2–3 days · L ≈ 4–5 days (split further if it grows).
 **Labels:** `type/feature`, `type/spike`, `type/test`, `type/chore`, `type/docs`, `type/security`; `area/<module>`; `phase/1`…`phase/4`; priority comes from the linked requirements.

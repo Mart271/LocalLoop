@@ -4,7 +4,7 @@
 
 > *Intelligence when necessary. Determinism whenever possible. User control always.*
 
-> **Project status: pre-implementation.** This repository contains the product proposal, requirements, architecture, roadmap, a draft workflow schema, and documentation checks. **No application code exists yet.** Every capability below is planned, and performance figures are targets to be measured, not claims.
+> **Project status: M1.0 Windows foundation.** The Rust workspace, ping-only Tauri + React shell, generated IPC types, CI checks and synthetic fixtures exist. Document automation remains planned. Windows is the active validation target; macOS is deferred. Measured results and limitations: [PROGRESS.md](docs/development/PROGRESS.md).
 
 ---
 
@@ -140,17 +140,17 @@ LocalLoop/
 |---|---|
 | Proposal | Complete (v1.0) |
 | Requirements (SRS, use cases, traceability) | Draft 0.1 for review |
-| Architecture, security architecture, ADRs | Draft 0.1, all ADRs *Proposed* |
+| Architecture, security architecture, ADRs | Draft 0.1; technical ADRs proposed, Windows-first validation decision accepted |
 | Workflow schema | Draft 0.1; validated against examples in CI |
-| Application code | **Not started** (first milestone: M1.0) |
-| Tests | Planned test cases only; documentation and schema checks run today |
+| Application code | Foundation shell and crate skeletons; core automation starts in M1.1 |
+| Tests | Windows Rust/IPC, UI, repository checks, fixture reproducibility and spike evidence; full product suites remain planned |
 | Licence | **Not chosen** — see [LICENSE_SELECTION.md](LICENSE_SELECTION.md) |
 
 Decisions awaiting confirmation are listed in [SRS §18.4](docs/requirements/SRS.md#184-decisions-requiring-confirmation).
 
 ## Getting started
 
-Today you can run the documentation checks:
+For Windows installation, app launch and validation commands, read [SETUP.md](docs/development/SETUP.md). The documentation checks are:
 
 ```bash
 python3 scripts/check_docs.py                     # IDs, traceability, links

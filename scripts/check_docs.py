@@ -27,7 +27,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-EXCLUDED_DIRS = frozenset({".git", "node_modules", "target", "dist", ".venv"})
+EXCLUDED_DIRS = frozenset({".git", "node_modules", "target", "dist", ".venv", ".localloop-dev"})
 PROPOSAL = REPO_ROOT / "docs" / "proposal" / "LocalLoop-Proposal.md"
 SRS = REPO_ROOT / "docs" / "requirements" / "SRS.md"
 USE_CASES = REPO_ROOT / "docs" / "requirements" / "use-cases.md"

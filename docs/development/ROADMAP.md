@@ -10,6 +10,8 @@
 
 The SRS explains *what* LocalLoop must do; the architecture explains *how*; this roadmap explains **in what order it is built and validated**.
 
+**Active validation scope (2026-10-10):** Windows is the milestone gate; macOS is deferred by the owner ([ADR-0010](../adr/0010-windows-first-validation.md)). The original cross-platform MVP release criteria below remain unverified. EV-01 is deferred to M1.5, EV-09 to Phase 2, and unavailable 8 GB reference-machine acceptance remains a release follow-up rather than a claimed result.
+
 ---
 
 ## 1. Overview
@@ -45,7 +47,7 @@ flowchart LR
     end
 
     m10 --> m11 --> m12 --> m13 --> m14 --> m15 --> m16
-    m10 -.->|"EV-09, decision D-02"| m21
+    m10 -.->|"D-02: browser deferred"| m21
     m16 --> m21 --> m22 --> m23 --> m24
     m24 --> m31 --> m32 --> m33 --> m34
     m16 --> m41
@@ -74,7 +76,7 @@ flowchart LR
 
 | Milestone | Deliverables | Key requirements |
 |---|---|---|
-| **M1.0 Foundation and spikes** | Cargo workspace and crate skeletons; Tauri + React shell; CI for Rust/TS (format, lint, test, audit, forbidden-dependency check); spikes EV-01 (inference), EV-04 (XLSX), EV-06 (OCR), EV-09 (browser packaging → D-02), encryption at rest (D-07); synthetic fixture generator (F1–F6); resource baseline on reference machines | NFR-008, NFR-013, NFR-018, NFR-030, NFR-033 |
+| **M1.0 Foundation and spikes** | Cargo workspace and crate skeletons; Windows Tauri + React shell; CI for Rust/TS (format, lint, test, audit, forbidden-dependency check); Windows spikes EV-04 (XLSX), EV-06 (OCR), encryption at rest (D-07), child lifecycle; synthetic fixture generator (F1–F6); development-machine shell baseline with reference-machine acceptance pending. EV-01 moves to M1.5; EV-09 to Phase 2; macOS deferred | NFR-008, NFR-013, NFR-018, NFR-030, NFR-033 |
 | **M1.1 Core domain** | Workflow model + JSON Schema 0.1 finalized; compiler; planner and plan hash; conditions and templates; path sanitizer; policy engine with `AuthorizedOperation`; canonicalization; taint types; storage with migrations, journal, audit chain, encryption at rest | FR-002, FR-003, FR-011, FR-031, FR-033, FR-065, FR-077, FR-094, FR-095, FR-102, FR-104 to FR-106, NFR-005, NFR-017, NFR-029, NFR-032 |
 | **M1.2 Adapters and verification** | Files adapter; document worker (PDF text, render, OCR); spreadsheet adapter with write safety; extraction rules; validation rules; provenance; verification engine with MVP postconditions and outcome classifier | FR-054 to FR-057, FR-059, FR-060, FR-062 to FR-064, FR-085 to FR-087, NFR-031 |
 | **M1.3 Model-free end-to-end** | Execution engine (Exact Replay, retries, rollback, crash recovery, pause/stop, approvals, single run); mode recommender (rules); UI: library, template, editor, inspector, grant, preview, run monitor, review queue, history, reports; tray and global stop; external-service labels | FR-001, FR-004 to FR-010, FR-012 to FR-014, FR-034 to FR-045, FR-061, FR-066, FR-067, FR-088 to FR-093, FR-096 to FR-101, FR-103, FR-107, FR-116, NFR-004, NFR-009, NFR-011, NFR-012, NFR-014, NFR-024 |
@@ -85,7 +87,7 @@ flowchart LR
 ### Dependencies
 
 - Reference machines available (8 GB Apple silicon; 8 GB Windows x64) (A-14).
-- Spike results before dependent work: EV-06 before the document worker's OCR; EV-04 before the spreadsheet adapter; EV-01 before M1.5; D-07 before storage encryption; EV-09 decides D-02.
+- Spike results before dependent work: EV-06 before the document worker's OCR; EV-04 before the spreadsheet adapter; EV-01 at the start of M1.5; D-07 before storage encryption; EV-09 before the Phase 2 browser bridge (D-02 deferral confirmed).
 - Synthetic fixture sets F1–F6 before M1.2 tests.
 
 ### Risks
@@ -96,7 +98,7 @@ flowchart LR
 | Small models underperform (AR-01) | AI features weak | Model-free slice ships first; AI features labelled experimental if EV-02/EV-03 miss targets |
 | Packaging sidecars on two OSes takes longer than expected | Schedule | Packaging spike in M1.0; per-OS CI builds early |
 | OCR accuracy on low-quality scans | Many review items | Review queue as the designed path; EV-06 picks engine with fixtures |
-| Scope creep from browser support (D-02) | MVP delay | Browser only if EV-09 succeeds in M1.0; otherwise Phase 2 |
+| Scope creep from browser support (D-02) | MVP delay | Browser and EV-09 deferred to Phase 2 |
 | Solo or small team capacity (A-15) | Slower progress | Milestones are independently demonstrable; M1.3 is already useful |
 
 ### Exit criteria (MVP release gate)
@@ -117,7 +119,7 @@ flowchart LR
 
 | Milestone | Deliverables | Key requirements |
 |---|---|---|
-| **M2.1 Browser bridge** (may move into Phase 1 via D-02) | Node + Playwright bridge packaged offline; managed profile; basic operations; host allowlist in core and bridge; challenge detection | FR-068, FR-069, FR-074, FR-076 |
+| **M2.1 Browser bridge** | Node + Playwright bridge packaged offline; managed profile; basic operations; host allowlist in core and bridge; challenge detection | FR-068, FR-069, FR-074, FR-076 |
 | **M2.2 Browser recording and interactions** | Recorder in managed profile with semantic descriptors; semantic targeting; dropdowns, tables, dynamic content, uploads; page extraction; submission verification; credential references; authorized-window screenshots | FR-024, FR-026, FR-070 to FR-073, FR-075 |
 | **M2.3 Adaptive browser execution** | Observe → propose → check → act → verify loop with fixed vocabulary; snapshot-bound URLs; optional non-GET request gating (evaluated); recovery proposals from declared options | FR-052, FR-053 |
 | **M2.4 Validation studies** | EV-08 productivity study (≥ 30% target) on real task samples with consent; EV-07 usability follow-up; competitive comparison against existing tools (P§10); decision on Phase 3 scope | NFR-034, NFR-025 |
@@ -177,7 +179,7 @@ flowchart LR
 | Gate | Evidence required |
 |---|---|
 | Start Phase 1 | D-01 confirmed; reference machines available; this documentation reviewed |
-| M1.0 → M1.1 | Spike reports EV-01, EV-04, EV-06, EV-09; ADRs for OCR (D-04), encryption (D-07), and browser in MVP (D-02) |
+| M1.0 → M1.1 (active Windows gate) | Windows checks and reports EV-04, EV-06, LL-010, LL-011, LL-013; proposed ADRs for OCR (D-04), XLSX (A-05), and encryption (D-07); owner milestone review. EV-01 deferred to M1.5, EV-09/browser to Phase 2; macOS and 8 GB reference-machine acceptance explicitly pending (ADR-0010) |
 | MVP release | Phase 1 exit criteria |
 | Start Phase 3 | Phase 2 exit criteria, including EV-08 findings |
 | 1.0 release | Phase 4 exit criteria |

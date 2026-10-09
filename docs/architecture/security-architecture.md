@@ -150,7 +150,7 @@ See [component-design.md §6](component-design.md#6-approval-design). Security p
 | A | SQLCipher for the whole database + authenticated encryption of evidence files; keys in the OS credential store | Covers every column, including ones added later | Build complexity (crypto library per platform); small performance cost |
 | B | Application-level authenticated encryption of *sensitive* columns and evidence files only | Simpler build; selective | Easy to miss a field; metadata stays plaintext |
 
-**Recommendation:** Option A, decided in an ADR during Phase 1 after a build spike on both platforms. Either option protects against copied files and offline disk access. Neither protects against malware running in the user's session, which can request the same keys; the documentation must say so.
+**Recommendation:** Option A, supported by the [Windows D-07 spike](../development/spikes/D-07-encryption.md) and [proposed ADR-0008](../adr/0008-encryption-at-rest.md), pending owner review. Windows is the active gate; macOS build/Keychain checks are deferred under ADR-0010. Product encryption is still LL-027 work. Either option protects the encrypted values against copied files and offline disk access; Option B leaves metadata plaintext. Neither protects against malware running in the user's session, which can request the same keys; the documentation must say so.
 
 ## 11. Recording Consent and Privacy Controls
 
