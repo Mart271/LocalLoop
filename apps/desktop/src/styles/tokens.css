@@ -1,0 +1,40 @@
+/* Design tokens. Use these variables; no ad-hoc font sizes (UI guidelines). Fonts are bundled
+   locally (@fontsource, SIL Open Font License) and never fetched at runtime (FR-117). */
+:root {
+  --font-heading: "DM Sans Variable", system-ui, sans-serif;
+  --font-body: "Inter Variable", system-ui, sans-serif;
+
+  /* Fixed type scale: size / line height. */
+  --type-display-xl-size: 36px;
+  --type-display-xl-line: 40px;
+  --type-h2-size: 24px;
+  --type-h2-line: 32px;
+  --type-h3-size: 18px;
+  --type-h3-line: 28px;
+  --type-h4-size: 16px; /* also Body Large */
+  --type-h4-line: 24px;
+  --type-paragraph-size: 14px;
+  --type-paragraph-line: 20px;
+  --type-label-size: 12px; /* uppercase labels */
+  --type-label-line: 16px;
+  --type-label-tracking: 0.05em;
+
+  /* Colours chosen for WCAG 2.2 AA contrast on their paired backgrounds (NFR-026). */
+  --color-bg: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-text: #1b1f24;
+  --color-text-muted: #4a5563;
+  --color-border: #c9d1db;
+  --color-accent: #1f5fbf;
+  --color-ok: #1d6b38;
+  --color-error: #a4161a;
+  --color-focus: #1f5fbf;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --radius: 6px;
+}

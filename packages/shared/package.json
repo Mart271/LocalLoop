@@ -1,0 +1,16 @@
+{
+  "name": "@localloop/shared",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "TypeScript types generated from the Rust IPC definitions by ts-rs. Do not edit generated files.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}
