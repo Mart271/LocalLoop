@@ -320,7 +320,7 @@ Test cases are grouped under `tests/` by level once code exists (see [tests/READ
 | TC-110 | Non-allowlisted IPC command refused | I | NFR-014 | [`apps/desktop/src-tauri/src/ipc/tests.rs`](../../apps/desktop/src-tauri/src/ipc/tests.rs) (groundwork: ping-only surface; full suite in LL-052) |
 | TC-111 | Review + injection attempts through every input surface: no execution path | R, I | FR-104, NFR-015 |  |
 | TC-112 | No plaintext sensitive values in database pages or evidence files | I | NFR-017 |  |
-| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 |  |
+| TC-113 | CI runs dependency audit and licence checks; tampered sidecar refused | I, R | NFR-018 | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) (`cargo deny`, `cargo audit`, `pnpm audit`), [`deny.toml`](../../deny.toml); tampered-sidecar test pending (LL-011) |
 | TC-114 | Installer and update signatures verify | R | NFR-019 |  |
 | TC-115 | Usability study: participants explain selected mode correctly | UX (EV-07) | NFR-025 |  |
 | TC-116 | Automated and manual WCAG 2.2 AA checks | R, UX | NFR-026 |  |

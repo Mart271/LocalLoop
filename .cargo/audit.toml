@@ -1,0 +1,12 @@
+# cargo-audit configuration (LL-003, NFR-018).
+#
+# cargo-audit reads Cargo.lock, which also lists Linux-only dependencies of wry/tao (the GTK stack).
+# LocalLoop ships for Windows and macOS only (A-01), and `cargo deny check`, which is target-aware
+# (deny.toml [graph] targets), passes with no exceptions. The advisories below are in crates that
+# `cargo tree -e all --target <windows|macos> -i <crate>` shows are never built for those targets
+# (verified 2026-10-09). Review these entries whenever Tauri is upgraded.
+[advisories]
+ignore = [
+    "RUSTSEC-2024-0429", # glib: unsound VariantStrIter. Linux-only (gtk/webkit2gtk under wry).
+    "RUSTSEC-2024-0370", # proc-macro-error: unmaintained. Linux-only (glib/gtk macros).
+]
